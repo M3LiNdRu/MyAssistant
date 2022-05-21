@@ -1,0 +1,189 @@
+openapi: 3.0.0
+info:
+  description: ""
+  version: "0.1.0"
+  title: "Expenses API"
+paths:
+  /api/v1/expenses:
+    get:
+      tags:
+        - Expenses
+      summary: "Get all expenses"
+      description: ""
+      operationId: "GetAllExpenses"
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetAllExpenses.Response'
+  /api/v1/expense:
+    post:
+      tags:
+        - Expenses
+      summary: "Add a new expense"
+      description: ""
+      operationId: "AddExpense"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Expense"
+      responses:
+        '200':
+          description: Successful operation
+        '400':
+          description: BadRequest
+        '401':
+          description: Unauthorized
+  /api/v1/expense/{id}:
+    delete:
+      tags:
+        - Expenses
+      summary: "Delete an expense"
+      description: ""
+      operationId: "DelExpense"
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Expense Id
+          schema:
+            type : integer
+            example: 1
+      responses:
+        '200':
+          description: Successful operation
+        '400':
+          description: BadRequest
+        '401':
+          description: Unauthorized
+  /api/v1/categories:
+    get:
+      tags:
+       - Categories
+      summary: "Get all categories"
+      description: ""
+      operationId: "GetAllCategories"
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetAllCategories.Response'
+  /api/v1/category:
+    post:
+      tags:
+       - Categories
+      summary: "Add a new category"
+      description: ""
+      operationId: "AddCategory"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Category"
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetAllCategories.Response'
+  /api/v1/category/{name}:
+    delete:
+      tags:
+       - Categories
+      summary: "Rename a new category"
+      description: ""
+      operationId: "RemoveCategory"
+      parameters:
+        - name: name
+          in: path
+          required: true
+          description: Category Name
+          schema:
+            type : string
+            example: Carburant
+      responses:
+        '200':
+          description: Successful operation
+        '400':
+          description: BadRequest
+        '401':
+          description: Unauthorized
+components:
+  schemas:
+    Category:
+      type: object
+      required:
+      - name
+      - description
+      properties:
+       name:
+        type: string
+        example: Carburant
+       description:
+        type: string
+        example: Despeses de carburant
+    Expense:
+      type: object
+      required:
+      - category
+      - amount
+      properties:
+        id:
+          type: integer
+          example: 1
+        timestamp:
+          type: string
+          format: date-time
+        category:
+          type: string
+          example: Carburant
+        name:
+          type: string
+          example: EL BRUCH
+        amount:
+          type: number
+          format: float
+          example: 56.90
+        currency:
+          type: string
+          example: EUR
+    GetAllExpenses.Response:
+      type: object
+      required:
+      - expenses
+      properties:
+        expenses:
+          type: array
+          items:
+            $ref: '#/components/schemas/Expense'
+          nullable: false
+    GetAllCategories.Response:
+      type: object
+      required:
+      - categories
+      properties:
+        expenses:
+          type: array
+          items:
+            $ref: '#/components/schemas/Category'
+          nullable: false
+  securitySchemes:
+    oAuth:
+      type: oauth2
+      description: This API uses OAuth 2 with the implicit grant flow.
+      flows:
+        authorizationCode:
+          authorizationUrl: https://api.example.com/oauth2/authorize
+          tokenUrl: https://api.example.com/oauth2/token
+          scopes:
+            read_expenses: read your expenses
+            write_expenses: write your expenses
+          
