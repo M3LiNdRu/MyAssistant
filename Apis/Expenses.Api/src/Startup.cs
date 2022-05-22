@@ -1,5 +1,3 @@
-using System;
-using System.IO;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -7,10 +5,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
-using Newtonsoft.Json.Converters;
-using Newtonsoft.Json.Serialization;
 using MyAssistant.Apis.Expenses.Api.Swagger;
 using MyAssistant.Apis.Expenses.Api.Resources.Categories;
+using MyAssistant.Apis.Expenses.Api.Resources.Expenses;
 
 namespace MyAssistant.Apis.Expenses.Api
 {
@@ -43,7 +40,8 @@ namespace MyAssistant.Apis.Expenses.Api
                     c.CustomSchemaIds(type => type.FullName);
                     c.OperationFilter<GeneratePathParamsValidationFilter>();
                 })
-                .RegisterCategoriesFeatures();
+                .RegisterCategoriesFeatures()
+                .RegisterExpensesFeatures();
         }
 
         /// <summary>

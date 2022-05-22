@@ -1,89 +1,64 @@
-using System;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations;
 using MyAssistant.Apis.Expenses.Api.Attributes;
-using MyAssistant.Apis.Expenses.Api.Models;
+using Microsoft.Extensions.Logging;
+using System.Threading.Tasks;
+using System.Threading;
+using System;
 
-namespace MyAssistant.Apis.Expenses.Api.Controllers
+namespace MyAssistant.Apis.Expenses.Api.Resources.Expenses
 { 
-    /// <summary>
-    /// 
-    /// </summary>
     [ApiController]
     public class ExpensesController : ControllerBase
     { 
-        /// <summary>
-        /// Add a new expense
-        /// </summary>
-        /// <param name="body"></param>
-        /// <response code="200">Successful operation</response>
-        /// <response code="400">BadRequest</response>
-        /// <response code="401">Unauthorized</response>
+        private readonly ILogger<ExpensesController> _logger;
+        private readonly IExpensesService _service;
+
+        public ExpensesController(IExpensesService service, ILogger<ExpensesController> logger) 
+        {
+            _logger = logger;
+            _service = service;
+        }
+
         [HttpPost]
         [Route("/api/v1/expense")]
         [ValidateModelState]
         [SwaggerOperation("AddExpense")]
-        public virtual IActionResult AddExpense([FromBody]Expense body)
+        public virtual async Task<IActionResult> AddExpense([FromBody]Request body, CancellationToken cancellationToken)
         { 
-            //TODO: Uncomment the next line to return response 200 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
-            // return StatusCode(200);
-
-            //TODO: Uncomment the next line to return response 400 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
-            // return StatusCode(400);
-
-            //TODO: Uncomment the next line to return response 401 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
-            // return StatusCode(401);
-
-            throw new NotImplementedException();
+            var expense = new Expense {
+                Timestamp = body.Timestamp ?? DateTime.UtcNow,
+                Category = body.Category,
+                Name = body.Name,
+                Amount = body.Amount,
+                Currency = body.Currency ?? "EUR"
+            };
+            await _service.AddAsync(expense, cancellationToken);
+            return Ok();
         }
 
-        /// <summary>
-        /// Delete an expense
-        /// </summary>
-        /// <param name="id">Expense Id</param>
-        /// <response code="200">Successful operation</response>
-        /// <response code="400">BadRequest</response>
-        /// <response code="401">Unauthorized</response>
         [HttpDelete]
         [Route("/api/v1/expense/{id}")]
         [ValidateModelState]
         [SwaggerOperation("DelExpense")]
-        public virtual IActionResult DelExpense([FromRoute][Required]int? id)
+        public virtual async Task<IActionResult> DelExpense([FromRoute][Required]int id, CancellationToken cancellationToken)
         { 
-            //TODO: Uncomment the next line to return response 200 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
-            // return StatusCode(200);
 
-            //TODO: Uncomment the next line to return response 400 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
-            // return StatusCode(400);
-
-            //TODO: Uncomment the next line to return response 401 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
-            // return StatusCode(401);
-
-            throw new NotImplementedException();
+            await _service.DelAsync(id, cancellationToken);
+            return Ok();
         }
 
-        /// <summary>
-        /// Get all expenses
-        /// </summary>
-        /// <response code="200">Successful operation</response>
         [HttpGet]
         [Route("/api/v1/expenses")]
         [ValidateModelState]
         [SwaggerOperation("GetAllExpenses")]
-        [SwaggerResponse(statusCode: 200, type: typeof(GetAllExpensesResponse), description: "Successful operation")]
-        public virtual IActionResult GetAllExpenses()
+        [SwaggerResponse(statusCode: 200, type: typeof(Response), description: "Successful operation")]
+        public virtual async Task<IActionResult> GetAllExpenses(CancellationToken cancellationToken)
         { 
-            //TODO: Uncomment the next line to return response 200 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
-            // return StatusCode(200, default(GetAllExpensesResponse));
-            string exampleJson = null;
-            exampleJson = "{\n  \"expenses\" : [ {\n    \"amount\" : 56.9,\n    \"name\" : \"EL BRUCH\",\n    \"currency\" : \"EUR\",\n    \"id\" : 1,\n    \"category\" : \"Carburant\",\n    \"timestamp\" : \"2000-01-23T04:56:07.000+00:00\"\n  }, {\n    \"amount\" : 56.9,\n    \"name\" : \"EL BRUCH\",\n    \"currency\" : \"EUR\",\n    \"id\" : 1,\n    \"category\" : \"Carburant\",\n    \"timestamp\" : \"2000-01-23T04:56:07.000+00:00\"\n  } ]\n}";
-            
-                        var example = exampleJson != null
-                        ? JsonConvert.DeserializeObject<GetAllExpensesResponse>(exampleJson)
-                        : default(GetAllExpensesResponse);            //TODO: Change the data returned
-            return new ObjectResult(example);
+            var expenses = await _service.GetAsync(cancellationToken);
+            return Ok(expenses);
         }
     }
 }

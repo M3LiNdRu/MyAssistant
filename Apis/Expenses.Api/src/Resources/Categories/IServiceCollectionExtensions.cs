@@ -4,9 +4,9 @@ namespace MyAssistant.Apis.Expenses.Api.Resources.Categories
 { 
     public static class IServiceCollectionExtensions
     { 
-        public static void RegisterCategoriesFeatures(this IServiceCollection services) 
+        public static IServiceCollection RegisterCategoriesFeatures(this IServiceCollection services) 
         {
-            services
+            return services
                 .AddSingleton<ICategoriesService, CategoriesService>()
                 .AddSingleton<ICategoriesRepository, InMemoryRepository>();
         }
