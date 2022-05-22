@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
@@ -38,6 +39,11 @@ namespace MyAssistant.Apis.Expenses.Api.Resources.Expenses
         public Task<IEnumerable<Expense>> GetAsync(CancellationToken cancellationToken)
         {
             return _repository.GetAsync(cancellationToken);
+        }
+
+        public Task<IEnumerable<Expense>> GetFromDateAsync(DateTime date, CancellationToken cancellationToken)
+        {
+            return _repository.GetFromDateAsync(date, cancellationToken);
         }
 
         public Task<IEnumerable<Expense>> GetByCategoryAsync(string category, CancellationToken cancellationToken)

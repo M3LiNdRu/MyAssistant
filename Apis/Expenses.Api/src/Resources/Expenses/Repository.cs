@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -12,6 +13,7 @@ namespace MyAssistant.Apis.Expenses.Api.Resources.Expenses
         Task DelAsync(int id, CancellationToken cancellationToken);
         Task AddAsync(Expense expense, CancellationToken cancellationToken);
         Task<IEnumerable<Expense>> GetByCategoryAsync(string category, CancellationToken cancellationToken);
+        Task<IEnumerable<Expense>> GetFromDateAsync(DateTime date, CancellationToken cancellationToken);
     }
 
     public class InMemoryExpensesRepository : IExpensesRepository
@@ -55,7 +57,18 @@ namespace MyAssistant.Apis.Expenses.Api.Resources.Expenses
 
         public Task<IEnumerable<Expense>> GetByCategoryAsync(string category, CancellationToken cancellationToken)
         {
-            return Task.FromResult(_buffer.Values.Where(e => e.Category.Equals(category, System.StringComparison.OrdinalIgnoreCase)).AsEnumerable());
+            return Task.FromResult(_buffer
+                    .Values
+                    .Where(e => e.Category.Equals(category, System.StringComparison.OrdinalIgnoreCase))
+                    .AsEnumerable());
+        }
+
+        public Task<IEnumerable<Expense>> GetFromDateAsync(DateTime date, CancellationToken cancellationToken)
+        {
+            return Task.FromResult(_buffer
+                    .Values
+                    .Where(e => e.Timestamp >= date)
+                    .AsEnumerable());
         }
     }
 }
