@@ -11,6 +11,7 @@ namespace MyAssistant.Apis.Expenses.Api.Resources.Expenses
         Task AddAsync(Expense expense, CancellationToken cancellationToken);
         Task DelAsync(int id, CancellationToken cancellationToken);
         Task<IEnumerable<Expense>> GetAsync(CancellationToken cancellationToken);
+        Task<IEnumerable<Expense>> GetFromDateAsync(DateTime date, CancellationToken cancellationToken);
     }
 
     public class ExpensesService : IExpensesService

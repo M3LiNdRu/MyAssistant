@@ -60,5 +60,18 @@ namespace MyAssistant.Apis.Expenses.Api.Resources.Expenses
             var expenses = await _service.GetAsync(cancellationToken);
             return Ok(expenses);
         }
+
+        [HttpGet]
+        [Route("/api/v1/expenses/monthly")]
+        [ValidateModelState]
+        [SwaggerOperation("GetMonthlyExpenses")]
+        [SwaggerResponse(statusCode: 200, type: typeof(Response), description: "Successful operation")]
+        public virtual async Task<IActionResult> GetMonthlyExpenses(CancellationToken cancellationToken)
+        { 
+            var today = DateTime.Today;
+            var date = new DateTime(today.Year, today.Month, 1);
+            var expenses = await _service.GetFromDateAsync(date, cancellationToken);
+            return Ok(expenses);
+        }
     }
 }
