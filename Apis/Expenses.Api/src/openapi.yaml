@@ -1,7 +1,7 @@
 openapi: 3.0.0
 info:
   description: ""
-  version: "0.1.0"
+  version: "0.2.0"
   title: "Expenses API"
 paths:
   /api/v1/expenses:
@@ -11,6 +11,20 @@ paths:
       summary: "Get all expenses"
       description: ""
       operationId: "GetAllExpenses"
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetAllExpenses.Response'
+  /api/v1/expenses/monthly:
+    get:
+      tags:
+        - Expenses
+      summary: "Get monthly expenses"
+      description: ""
+      operationId: "GetMonthlyExpenses"
       responses:
         '200':
           description: Successful operation
@@ -186,4 +200,3 @@ components:
           scopes:
             read_expenses: read your expenses
             write_expenses: write your expenses
-          
