@@ -26,6 +26,7 @@ namespace MyAssistant.Apis.Expenses.Api.Resources.Expenses
 
         public Task AddAsync(Expense expense, CancellationToken cancellationToken)
         {
+            //TODO: Check if Category matches with existing, otherwise return error
             return _repository.AddAsync(expense, cancellationToken);
         }
 
@@ -37,6 +38,11 @@ namespace MyAssistant.Apis.Expenses.Api.Resources.Expenses
         public Task<IEnumerable<Expense>> GetAsync(CancellationToken cancellationToken)
         {
             return _repository.GetAsync(cancellationToken);
+        }
+
+        public Task<IEnumerable<Expense>> GetByCategoryAsync(string category, CancellationToken cancellationToken)
+        {
+            return _repository.GetByCategoryAsync(category, cancellationToken);
         }
     }
 }

@@ -11,6 +11,7 @@ namespace MyAssistant.Apis.Expenses.Api.Resources.Expenses
         Task<IEnumerable<Expense>> GetAsync(CancellationToken cancellationToken);
         Task DelAsync(int id, CancellationToken cancellationToken);
         Task AddAsync(Expense expense, CancellationToken cancellationToken);
+        Task<IEnumerable<Expense>> GetByCategoryAsync(string category, CancellationToken cancellationToken);
     }
 
     public class InMemoryExpensesRepository : IExpensesRepository
@@ -50,6 +51,11 @@ namespace MyAssistant.Apis.Expenses.Api.Resources.Expenses
         public Task<IEnumerable<Expense>> GetAsync(CancellationToken cancellationToken)
         {
             return Task.FromResult(_buffer.Values.AsEnumerable());
+        }
+
+        public Task<IEnumerable<Expense>> GetByCategoryAsync(string category, CancellationToken cancellationToken)
+        {
+            return Task.FromResult(_buffer.Values.Where(e => e.Category.Equals(category, System.StringComparison.OrdinalIgnoreCase)).AsEnumerable());
         }
     }
 }
