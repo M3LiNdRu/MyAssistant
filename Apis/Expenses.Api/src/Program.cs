@@ -1,29 +1,21 @@
+
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore;
+using Microsoft.Extensions.Hosting;
 
 namespace MyAssistant.Apis.Expenses.Api
 {
-    /// <summary>
-    /// Program
-    /// </summary>
     public class Program
     {
-        /// <summary>
-        /// Main
-        /// </summary>
-        /// <param name="args"></param>
         public static void Main(string[] args)
         {
             CreateWebHostBuilder(args).Build().Run();
         }
 
-        /// <summary>
-        /// Create the web host builder.
-        /// </summary>
-        /// <param name="args"></param>
-        /// <returns>IWebHostBuilder</returns>
-        public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
-            WebHost.CreateDefaultBuilder(args)
-                .UseStartup<Startup>();
+        public static IHostBuilder CreateWebHostBuilder(string[] args) =>
+            Host.CreateDefaultBuilder(args)
+                .ConfigureWebHostDefaults(webBuilder =>
+                {
+                    webBuilder.UseStartup<Startup>();
+                });
     }
 }
