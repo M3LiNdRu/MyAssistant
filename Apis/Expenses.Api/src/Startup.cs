@@ -8,6 +8,8 @@ using Microsoft.OpenApi.Models;
 using MyAssistant.Apis.Expenses.Api.Swagger;
 using MyAssistant.Apis.Expenses.Api.Resources.Categories;
 using MyAssistant.Apis.Expenses.Api.Resources.Expenses;
+using Microsoft.AspNetCore.Authentication.Google;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace MyAssistant.Apis.Expenses.Api
 {
@@ -28,6 +30,18 @@ namespace MyAssistant.Apis.Expenses.Api
 
             services
                 .AddMvc()
+                .Services
+                .AddOptions()
+                .AddAuthentication(options =>
+                {
+                    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+                    options.DefaultChallengeScheme = GoogleDefaults.AuthenticationScheme;
+                })
+                .AddGoogle(googleOptions =>
+                {
+                    googleOptions.ClientId = Configuration["Authentication:Google:ClientId"];
+                    googleOptions.ClientSecret = Configuration["Authentication:Google:ClientSecret"];
+                })
                 .Services
                 .AddSwaggerGen(c =>
                 {
@@ -54,6 +68,7 @@ namespace MyAssistant.Apis.Expenses.Api
             //TODO: Uncomment this if you need wwwroot folder
             // app.UseStaticFiles();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseSwagger();
