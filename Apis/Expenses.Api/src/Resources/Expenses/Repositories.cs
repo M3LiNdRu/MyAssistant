@@ -1,9 +1,9 @@
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Logging;
 
 namespace MyAssistant.Apis.Expenses.Api.Resources.Expenses
 {
@@ -70,5 +70,49 @@ namespace MyAssistant.Apis.Expenses.Api.Resources.Expenses
                     .Where(e => e.Timestamp >= date)
                     .AsEnumerable());
         }
+    }
+
+    public interface ITagsRepository
+    {
+        Task<IEnumerable<Tag>> GetAsync(CancellationToken cancellationToken);
+        Task DelAsync(string tag, CancellationToken cancellationToken);
+        Task AddAsync(Tag tag, CancellationToken cancellationToken);
+    }
+
+    public class InMemoryTagsRepository : ITagsRepository
+    {
+        private int _counter;
+        private readonly IList<Tag> _buffer;
+        private readonly ILogger<ITagsRepository> _logger;
+
+        public InMemoryTagsRepository(ILogger<ITagsRepository> logger)
+        {
+            _logger = logger;
+            _counter = 0;
+            _buffer = new List<Tag>();
+        }
+
+        public Task AddAsync(Tag expense, CancellationToken cancellationToken)
+        {
+            _buffer.Add(expense);
+
+            return Task.CompletedTask;
+        }
+
+        public Task DelAsync(string tagName, CancellationToken cancellationToken)
+        {
+            if (!_buffer.Any(tag => tag.Name == tagName))
+            {
+                return Task.FromException(new KeyNotFoundException($"Tag with name {tagName} was not found"));
+            }
+
+            return Task.CompletedTask;
+        }
+
+        public Task<IEnumerable<Tag>> GetAsync(CancellationToken cancellationToken)
+        {
+            return Task.FromResult((IEnumerable<Tag>)_buffer);
+        }
+
     }
 }

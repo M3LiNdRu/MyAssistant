@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
@@ -17,19 +18,24 @@ namespace MyAssistant.Apis.Expenses.Api.Resources.Expenses
     public class ExpensesService : IExpensesService
     {
         private readonly IExpensesRepository _repository;
+        private readonly ITagsRepository _tagsRepository;
         private readonly ILogger<IExpensesService> _logger;
 
         public ExpensesService(ILogger<IExpensesService> logger,
-        IExpensesRepository repository)
+        IExpensesRepository repository,
+        ITagsRepository tagsRepository)
         {
             _logger = logger;
             _repository = repository;
+            _tagsRepository = tagsRepository;
         }
 
-        public Task AddAsync(Expense expense, CancellationToken cancellationToken)
+        public async Task AddAsync(Expense expense, CancellationToken cancellationToken)
         {
             //TODO: Check if Category matches with existing, otherwise return error
-            return _repository.AddAsync(expense, cancellationToken);
+
+            await InsertNewTags(expense, cancellationToken);
+            await _repository.AddAsync(expense, cancellationToken);
         }
 
         public Task DelAsync(int id, CancellationToken cancellationToken)
@@ -50,6 +56,16 @@ namespace MyAssistant.Apis.Expenses.Api.Resources.Expenses
         public Task<IEnumerable<Expense>> GetByCategoryAsync(string category, CancellationToken cancellationToken)
         {
             return _repository.GetByCategoryAsync(category, cancellationToken);
+        }
+
+        private async Task InsertNewTags(Expense expense, CancellationToken cancellationToken)
+        {
+            var tags = await _tagsRepository.GetAsync(cancellationToken);
+            var newTagNames = tags.Select(t => t.Name).Where(t => !expense.Tags.Any(t2 => t2 == t));
+            foreach (var tagName in newTagNames)
+            {
+                await _tagsRepository.AddAsync(new Tag { Name = tagName }, cancellationToken);
+            }
         }
     }
 }

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace MyAssistant.Apis.Expenses.Api.Resources.Expenses
 {
@@ -10,6 +11,7 @@ namespace MyAssistant.Apis.Expenses.Api.Resources.Expenses
         public string Name { get; set; }
         public float Amount { get; set; }
         public string Currency { get; set; }
+        public IList<string> Tags { get; set; }
     }
 
 }

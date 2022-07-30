@@ -7,6 +7,7 @@ using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
 using System.Threading;
 using System;
+using System.Linq;
 
 namespace MyAssistant.Apis.Expenses.Api.Resources.Expenses
 { 
@@ -33,7 +34,8 @@ namespace MyAssistant.Apis.Expenses.Api.Resources.Expenses
                 Category = body.Category,
                 Name = body.Name,
                 Amount = body.Amount,
-                Currency = body.Currency ?? "EUR"
+                Currency = body.Currency ?? "EUR",
+                Tags = body.Tags.Distinct().ToList()
             };
             await _service.AddAsync(expense, cancellationToken);
             return Ok();
