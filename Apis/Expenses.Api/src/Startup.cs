@@ -8,20 +8,21 @@ using Microsoft.OpenApi.Models;
 using MyAssistant.Apis.Expenses.Api.Swagger;
 using MyAssistant.Apis.Expenses.Api.Resources.Categories;
 using MyAssistant.Apis.Expenses.Api.Resources.Expenses;
-using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using System.Collections.Generic;
+using Api.Authentication;
 
 namespace MyAssistant.Apis.Expenses.Api
 {
     public class Startup
     {
-        private readonly IWebHostEnvironment _hostingEnv;
+        private readonly IWebHostEnvironment _environment;
 
         private IConfiguration Configuration { get; }
 
         public Startup(IWebHostEnvironment env, IConfiguration configuration)
         {
-            _hostingEnv = env;
+            _environment = env;
             Configuration = configuration;
         }
 
@@ -32,17 +33,10 @@ namespace MyAssistant.Apis.Expenses.Api
                 .AddMvc()
                 .Services
                 .AddOptions()
-                .AddAuthentication(options =>
-                {
-                    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-                    options.DefaultChallengeScheme = GoogleDefaults.AuthenticationScheme;
-                })
-                .AddGoogle(googleOptions =>
-                {
-                    googleOptions.ClientId = Configuration["Authentication:Google:ClientId"];
-                    googleOptions.ClientSecret = Configuration["Authentication:Google:ClientSecret"];
-                })
-                .Services
+                .AddGoogleAuthentication(
+                    authority: Configuration.GetValue<string>("Authentication:Google:Authority"), 
+                    audience: Configuration.GetValue<string>("Authentication:Google:ClientId")
+                )
                 .AddSwaggerGen(c =>
                 {
                     c.SwaggerDoc("0.1.0", new OpenApiInfo
@@ -53,6 +47,32 @@ namespace MyAssistant.Apis.Expenses.Api
                     });
                     c.CustomSchemaIds(type => type.FullName);
                     c.OperationFilter<GeneratePathParamsValidationFilter>();
+                    c.AddSecurityDefinition(name: "Bearer", securityScheme: new OpenApiSecurityScheme
+                    {
+                        Name = "Authorization",
+                        Description = "Enter the Bearer Authorization string as following: `Bearer Generated-JWT-Token`",
+                        In = ParameterLocation.Header,
+                        Type = SecuritySchemeType.ApiKey,
+                        Scheme = "Bearer"
+                    });
+                    c.AddSecurityRequirement(new OpenApiSecurityRequirement
+                    {
+                        {
+                            new OpenApiSecurityScheme
+                            {
+                                Name = "Bearer",
+                                In = ParameterLocation.Header,
+                                Reference = new OpenApiReference
+                                {
+                                    Id = "Bearer",
+                                    Type = ReferenceType.SecurityScheme
+                                }
+                            },
+                            new List<string>()
+                        }
+                    });
+
+
                 })
                 .RegisterCategoriesFeatures()
                 .RegisterExpensesFeatures();
