@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Expenses.App</title>
+  <base href="/">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+</head>
+<body>
+  <app-root></app-root>
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <script>
+      function handleCredentialResponse(response) {
+          console.log("Encoded JWT ID token: " + response.credential);
+      }
+      window.onload = function () {
+          google.accounts.id.initialize({
+            client_id: "1012495556001-1arrtrlhjcpnac4ql6g9783odd8j0h78.apps.googleusercontent.com",
+            callback: handleCredentialResponse
+          });
+          google.accounts.id.renderButton(
+            document.getElementById("buttonDiv"),
+            { theme: "outline", size: "small" }  // customization attributes
+          );
+          google.accounts.id.prompt(); // also display the One Tap dialog
+      }
+  </script>
+</body>
+</html>
