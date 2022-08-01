@@ -8,12 +8,15 @@ import { Expense } from './expense'
   providedIn: 'root'
 })
 export class ExpensesService {
-  private expensesUrl = 'api/heroes';  // URL to web api
-
+  private expensesUrl = 'api/expenses';
+  private httpOptions = {
+    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+  };
+  
   constructor(private http: HttpClient,) { }
 
-  /** GET heroes from the server */
-  getHeroes(): Observable<Expense[]> {
+  /** GET expenses from the server */
+  getExpenses(): Observable<Expense[]> {
     return this.http.get<Expense[]>(this.expensesUrl)
   }
 }
