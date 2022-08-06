@@ -4,6 +4,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { MatToolbarModule } from '@angular/material/toolbar'; 
 import { MatIconModule } from '@angular/material/icon'; 
 import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card'; 
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -13,7 +14,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { FooterComponent } from './footer/footer.component';
 import { ToolbarComponent } from './toolbar/toolbar.component';
 import { FloatButtonComponent } from './float-button/float-button.component';
-
+import { DisplayComponent } from './display/display.component';
 
 
 
@@ -24,7 +25,8 @@ import { FloatButtonComponent } from './float-button/float-button.component';
     ExpensesListComponent,
     FooterComponent,
     ToolbarComponent,
-    FloatButtonComponent
+    FloatButtonComponent,
+    DisplayComponent
   ],
   imports: [
     BrowserModule,
@@ -33,7 +35,8 @@ import { FloatButtonComponent } from './float-button/float-button.component';
     NoopAnimationsModule,
     MatToolbarModule,
     MatIconModule,
-    MatButtonModule
+    MatButtonModule,
+    MatCardModule
   ],
   providers: [],
   bootstrap: [AppComponent]
