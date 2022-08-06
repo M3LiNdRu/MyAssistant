@@ -12,6 +12,7 @@ import { ExpensesListComponent } from './expenses-list/expenses-list.component';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { FooterComponent } from './footer/footer.component';
 import { ToolbarComponent } from './toolbar/toolbar.component';
+import { FloatButtonComponent } from './float-button/float-button.component';
 
 
 
@@ -22,7 +23,8 @@ import { ToolbarComponent } from './toolbar/toolbar.component';
     LoginComponent,
     ExpensesListComponent,
     FooterComponent,
-    ToolbarComponent
+    ToolbarComponent,
+    FloatButtonComponent
   ],
   imports: [
     BrowserModule,
