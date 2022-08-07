@@ -25,6 +25,8 @@ import { ToolbarComponent } from './toolbar/toolbar.component';
 import { FloatButtonComponent } from './float-button/float-button.component';
 import { DisplayComponent } from './display/display.component';
 import { ExpensesFormComponent } from './expenses-form/expenses-form.component';
+import { MainPageComponent } from './main-page/main-page.component';
+import { MonthSummaryComponent } from './month-summary/month-summary.component';
 
 
 
@@ -37,7 +39,9 @@ import { ExpensesFormComponent } from './expenses-form/expenses-form.component';
     ToolbarComponent,
     FloatButtonComponent,
     DisplayComponent,
-    ExpensesFormComponent
+    ExpensesFormComponent,
+    MainPageComponent,
+    MonthSummaryComponent
   ],
   imports: [
     BrowserModule,
