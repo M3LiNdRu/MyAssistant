@@ -13,6 +13,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatChipsModule } from '@angular/material/chips'; 
 import { MatAutocompleteModule } from '@angular/material/autocomplete'; 
+import { MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/core';
+
 
 
 import { AppRoutingModule } from './app-routing.module';
@@ -58,12 +60,16 @@ import { TagsAutocompleteInputComponent } from './tags-autocomplete-input/tags-a
     MatSelectModule,
     MatInputModule,
     MatDatepickerModule,
+    MatNativeDateModule,
     MatChipsModule,
     FormsModule,
     ReactiveFormsModule,
     MatAutocompleteModule
   ],
-  providers: [],
+  providers: [
+    MatDatepickerModule,
+    { provide: MAT_DATE_LOCALE, useValue: 'ca-ES' }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
