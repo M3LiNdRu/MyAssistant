@@ -6,6 +6,8 @@ import { MatChipInputEvent } from '@angular/material/chips';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 
+import { TagsService } from '../tags.service';
+
 @Component({
   selector: 'app-tags-autocomplete-input',
   templateUrl: './tags-autocomplete-input.component.html',
@@ -14,21 +16,27 @@ import { map, startWith } from 'rxjs/operators';
 export class TagsAutocompleteInputComponent implements OnInit {
 
   separatorKeysCodes: number[] = [ENTER, COMMA];
-  fruitCtrl = new FormControl('');
-  filteredFruits: Observable<string[]>;
-  fruits: string[] = ['Lemon'];
-  allFruits: string[] = ['Apple', 'Lemon', 'Lime', 'Orange', 'Strawberry'];
+  tagCtrl = new FormControl('');
+  filteredTags: Observable<string[]>;
+  tags: string[] = ['Vacances 2022'];
+  allTags: string[] = [];
 
-  @ViewChild('fruitInput') fruitInput: ElementRef<HTMLInputElement> = {} as ElementRef;
+  @ViewChild('tagInput') fruitInput: ElementRef<HTMLInputElement> = {} as ElementRef;
 
-  constructor() { 
-    this.filteredFruits = this.fruitCtrl.valueChanges.pipe(
+  constructor(private tagsService: TagsService ) { 
+    this.filteredTags = this.tagCtrl.valueChanges.pipe(
       startWith(null),
-      map((fruit: string | null) => (fruit ? this._filter(fruit) : this.allFruits.slice())),
+      map((fruit: string | null) => (fruit ? this._filter(fruit) : this.allTags.slice())),
     );
   }
 
   ngOnInit(): void {
+    this.getAllTags();
+  }
+
+  getAllTags(): void {
+    this.tagsService.getTags()
+    .subscribe(allTags => this.allTags = allTags.map((t) => t.name));
   }
 
   add(event: MatChipInputEvent): void {
@@ -36,33 +44,33 @@ export class TagsAutocompleteInputComponent implements OnInit {
 
     // Add our fruit
     if (value) {
-      this.fruits.push(value);
+      this.tags.push(value);
     }
 
     // Clear the input value
     event.chipInput!.clear();
 
-    this.fruitCtrl.setValue(null);
+    this.tagCtrl.setValue(null);
   }
 
   remove(fruit: string): void {
-    const index = this.fruits.indexOf(fruit);
+    const index = this.tags.indexOf(fruit);
 
     if (index >= 0) {
-      this.fruits.splice(index, 1);
+      this.tags.splice(index, 1);
     }
   }
 
   selected(event: MatAutocompleteSelectedEvent): void {
-    this.fruits.push(event.option.viewValue);
+    this.tags.push(event.option.viewValue);
     this.fruitInput.nativeElement.value = '';
-    this.fruitCtrl.setValue(null);
+    this.tagCtrl.setValue(null);
   }
 
   private _filter(value: string): string[] {
     const filterValue = value.toLowerCase();
 
-    return this.allFruits.filter(fruit => fruit.toLowerCase().includes(filterValue));
+    return this.allTags.filter(tag => tag.toLowerCase().includes(filterValue));
   }
 
 
