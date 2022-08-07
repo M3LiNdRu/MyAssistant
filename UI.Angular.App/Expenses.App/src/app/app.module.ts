@@ -27,6 +27,7 @@ import { DisplayComponent } from './display/display.component';
 import { ExpensesFormComponent } from './expenses-form/expenses-form.component';
 import { MainPageComponent } from './main-page/main-page.component';
 import { MonthSummaryComponent } from './month-summary/month-summary.component';
+import { TagsAutocompleteInputComponent } from './tags-autocomplete-input/tags-autocomplete-input.component';
 
 
 
@@ -41,7 +42,8 @@ import { MonthSummaryComponent } from './month-summary/month-summary.component';
     DisplayComponent,
     ExpensesFormComponent,
     MainPageComponent,
-    MonthSummaryComponent
+    MonthSummaryComponent,
+    TagsAutocompleteInputComponent
   ],
   imports: [
     BrowserModule,
