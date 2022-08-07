@@ -7,9 +7,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FloatButtonComponent implements OnInit {
 
+  isButtonVisible: boolean = true;
+
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  onClick(): void {
+    this.isButtonVisible = false;
   }
 
 }
