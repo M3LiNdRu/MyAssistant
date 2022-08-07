@@ -18,7 +18,7 @@ export class TagsAutocompleteInputComponent implements OnInit {
   separatorKeysCodes: number[] = [ENTER, COMMA];
   tagCtrl = new FormControl('');
   filteredTags: Observable<string[]>;
-  tags: string[] = ['Vacances 2022'];
+  tags: string[] = [];
   allTags: string[] = [];
 
   @ViewChild('tagInput') fruitInput: ElementRef<HTMLInputElement> = {} as ElementRef;
