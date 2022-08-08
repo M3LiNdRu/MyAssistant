@@ -36,6 +36,11 @@ namespace Library.MongoDb
             return await _db.GetCollection<T>(_collection).Find<T>(FilterDefinition<T>.Empty).ToListAsync<T>(cancellationToken);
         }
 
+        public async Task<IEnumerable<T>> FindAllAsync(Expression<Func<T, bool>> predicate, CancellationToken cancellationToken)
+        {
+            return await _db.GetCollection<T>(_collection).Find<T>(predicate).SortByDescending(exp => exp.Id).ToListAsync<T>(cancellationToken);
+        }
+
         public async Task<T> FindOneAsync(Expression<Func<T, bool>> predicate, CancellationToken cancellationToken)
         {
             return await _db.GetCollection<T>(_collection).Find<T>(predicate).FirstOrDefaultAsync(cancellationToken);

@@ -1,9 +1,10 @@
+using Library.MongoDb;
 using System;
 using System.Collections.Generic;
 
 namespace MyAssistant.Apis.Expenses.Api.Resources.Expenses
 {
-    public class Expense
+    public class Expense : ICollectionDocument<int>
     {
         public int Id { get; set; }
         public DateTime Timestamp { get; set; }

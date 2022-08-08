@@ -1,3 +1,4 @@
+using Library.MongoDb;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -114,5 +115,40 @@ namespace MyAssistant.Apis.Expenses.Api.Resources.Expenses
             return Task.FromResult((IEnumerable<Tag>)_buffer);
         }
 
+    }
+
+    public class MongoDbRepository : IExpensesRepository
+    {
+        private readonly IDataStore<Expense, int> dataStore;
+
+        public MongoDbRepository(IDataStore<Expense, int> dataStore)
+        {
+            this.dataStore = dataStore;
+        }
+
+        public Task AddAsync(Expense expense, CancellationToken cancellationToken)
+        {
+            return this.dataStore.InsertAsync(expense, cancellationToken);
+        }
+
+        public Task DelAsync(int id, CancellationToken cancellationToken)
+        {
+            return this.dataStore.DeleteAsync(e => e.Id == id, cancellationToken);
+        }
+
+        public Task<IEnumerable<Expense>> GetAsync(CancellationToken cancellationToken)
+        {
+            return this.dataStore.FindAllAsync(cancellationToken);
+        }
+
+        public Task<IEnumerable<Expense>> GetByCategoryAsync(string category, CancellationToken cancellationToken)
+        {
+            return this.dataStore.FindAllAsync(expense => expense.Category == category, cancellationToken);
+        }
+
+        public Task<IEnumerable<Expense>> GetFromDateAsync(DateTime date, CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

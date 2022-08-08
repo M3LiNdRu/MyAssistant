@@ -1,3 +1,4 @@
+using Library.MongoDb;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace MyAssistant.Apis.Expenses.Api.Resources.Expenses
@@ -8,7 +9,8 @@ namespace MyAssistant.Apis.Expenses.Api.Resources.Expenses
         {
             return services
                 .AddSingleton<IExpensesService, ExpensesService>()
-                .AddSingleton<IExpensesRepository, InMemoryExpensesRepository>();
+                .AddSingleton<IExpensesRepository, MongoDbRepository>()
+                .AddSingleton<IDataStore<Expense, int>, DataStore<Expense, int>>();
         }
     }
 }
