@@ -61,11 +61,9 @@ namespace MyAssistant.Apis.Expenses.Api.Resources.Expenses
         private async Task InsertNewTags(Expense expense, CancellationToken cancellationToken)
         {
             var tags = await _tagsRepository.GetAsync(cancellationToken);
-            var newTagNames = tags.Select(t => t.Name).Where(t => !expense.Tags.Any(t2 => t2 == t));
-            foreach (var tagName in newTagNames)
-            {
-                await _tagsRepository.AddAsync(new Tag { Name = tagName }, cancellationToken);
-            }
+            var newTagNames = tags.Where(t => !expense.Tags.Any(t2 => t2 == t.Name));
+            
+            await _tagsRepository.AppendTagsAsync(newTagNames, cancellationToken);
         }
     }
 }

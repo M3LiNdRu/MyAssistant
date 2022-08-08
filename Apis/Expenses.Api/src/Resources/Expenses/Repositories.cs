@@ -73,55 +73,11 @@ namespace MyAssistant.Apis.Expenses.Api.Resources.Expenses
         }
     }
 
-    public interface ITagsRepository
-    {
-        Task<IEnumerable<Tag>> GetAsync(CancellationToken cancellationToken);
-        Task DelAsync(string tag, CancellationToken cancellationToken);
-        Task AddAsync(Tag tag, CancellationToken cancellationToken);
-    }
-
-    public class InMemoryTagsRepository : ITagsRepository
-    {
-        private int _counter;
-        private readonly IList<Tag> _buffer;
-        private readonly ILogger<ITagsRepository> _logger;
-
-        public InMemoryTagsRepository(ILogger<ITagsRepository> logger)
-        {
-            _logger = logger;
-            _counter = 0;
-            _buffer = new List<Tag>();
-        }
-
-        public Task AddAsync(Tag expense, CancellationToken cancellationToken)
-        {
-            _buffer.Add(expense);
-
-            return Task.CompletedTask;
-        }
-
-        public Task DelAsync(string tagName, CancellationToken cancellationToken)
-        {
-            if (!_buffer.Any(tag => tag.Name == tagName))
-            {
-                return Task.FromException(new KeyNotFoundException($"Tag with name {tagName} was not found"));
-            }
-
-            return Task.CompletedTask;
-        }
-
-        public Task<IEnumerable<Tag>> GetAsync(CancellationToken cancellationToken)
-        {
-            return Task.FromResult((IEnumerable<Tag>)_buffer);
-        }
-
-    }
-
-    public class MongoDbRepository : IExpensesRepository
+    public class MongoDbExpensesRepository : IExpensesRepository
     {
         private readonly IDataStore<Expense, int> dataStore;
 
-        public MongoDbRepository(IDataStore<Expense, int> dataStore)
+        public MongoDbExpensesRepository(IDataStore<Expense, int> dataStore)
         {
             this.dataStore = dataStore;
         }
@@ -149,6 +105,96 @@ namespace MyAssistant.Apis.Expenses.Api.Resources.Expenses
         public Task<IEnumerable<Expense>> GetFromDateAsync(DateTime date, CancellationToken cancellationToken)
         {
             throw new NotImplementedException();
+        }
+    }
+
+    public interface ITagsRepository
+    {
+        Task<IEnumerable<Tag>> GetAsync(CancellationToken cancellationToken);
+        Task DelAsync(int tag, CancellationToken cancellationToken);
+        Task AddAsync(TagDocument tag, CancellationToken cancellationToken);
+        Task AppendTagsAsync(IEnumerable<Tag> tags, CancellationToken cancellationToken);
+        Task RemoveTagsAsync(IEnumerable<Tag> tags, CancellationToken cancellationToken);
+    }
+
+    public class InMemoryTagsRepository : ITagsRepository
+    {
+        private int _counter;
+        private readonly IList<Tag> _buffer;
+        private readonly ILogger<ITagsRepository> _logger;
+
+        public InMemoryTagsRepository(ILogger<ITagsRepository> logger)
+        {
+            _logger = logger;
+            _counter = 0;
+            _buffer = new List<Tag>();
+        }
+
+        public Task AddAsync(TagDocument tagDocument, CancellationToken cancellationToken)
+        {
+            tagDocument.Names.ForEach(n => _buffer.Add(new Tag { Name = n }));
+
+            return Task.CompletedTask;
+        }
+
+        public Task DelAsync(int tagId, CancellationToken cancellationToken)
+        {
+            _buffer.Clear();
+            return Task.CompletedTask;
+        }
+
+        public Task<IEnumerable<Tag>> GetAsync(CancellationToken cancellationToken)
+        {
+            return Task.FromResult((IEnumerable<Tag>)_buffer);
+        }
+
+        public Task AppendTagsAsync(IEnumerable<Tag> tags, CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task RemoveTagsAsync(IEnumerable<Tag> tags, CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
+        }
+
+    }
+
+    public class MongoDbTagsRepository : ITagsRepository
+    {
+        private readonly IDataStore<TagDocument, int> dataStore;
+
+        public MongoDbTagsRepository(IDataStore<TagDocument, int> dataStore)
+        {
+            this.dataStore = dataStore;
+        }
+
+        public Task AddAsync(TagDocument tag, CancellationToken cancellationToken)
+        {
+            return this.dataStore.InsertAsync(tag, cancellationToken);
+        }
+
+        public Task AppendTagsAsync(IEnumerable<Tag> tags, CancellationToken cancellationToken)
+        {
+            var tagNames = tags.Select(t => t.Name).ToList();
+            return this.dataStore.AppendToArrayAsync(t => t.Id == 0, t => t.Names, tagNames, cancellationToken);
+        }
+
+        public Task DelAsync(int tagId, CancellationToken cancellationToken)
+        {
+            return this.dataStore.DeleteAsync(t => t.Id == tagId, cancellationToken);
+        }
+
+        public async Task<IEnumerable<Tag>> GetAsync(CancellationToken cancellationToken)
+        {
+            var tagDocument = await this.dataStore.FindOneAsync(t => t.Id == 0, cancellationToken);
+            return tagDocument.Names == null ? new List<Tag>() : tagDocument.Names.Select(n => new Tag { Name = n });
+        }
+
+        public Task RemoveTagsAsync(IEnumerable<Tag> tags, CancellationToken cancellationToken)
+        {
+            var tagNames = tags.Select(t => t.Name).ToList();
+            return this.dataStore.RemoveFromArrayAsync(t => t.Id == 0, t => t.Names, tagNames, cancellationToken);
         }
     }
 }

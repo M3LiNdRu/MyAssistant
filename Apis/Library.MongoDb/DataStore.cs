@@ -56,5 +56,17 @@ namespace Library.MongoDb
             var filter = Builders<T>.Filter.Eq(s => s.Id, document.Id);
             await _db.GetCollection<T>(_collection).ReplaceOneAsync(filter, document, cancellationToken: cancellationToken);
         }
+
+        public Task AppendToArrayAsync<TItem>(Expression<Func<T, bool>> predicate, Expression<Func<T, IEnumerable<TItem>>> item, List<TItem> elements, CancellationToken cancellationToken)
+        {
+            var update = Builders<T>.Update.PushEach(item, elements);
+            return  _db.GetCollection<T>(_collection).UpdateOneAsync(predicate, update, cancellationToken: cancellationToken);
+        }
+
+        public Task RemoveFromArrayAsync<TItem>(Expression<Func<T, bool>> predicate, Expression<Func<T, IEnumerable<TItem>>> item, List<TItem> elements, CancellationToken cancellationToken)
+        {
+            var update = Builders<T>.Update.PullAll(item, elements);
+            return _db.GetCollection<T>(_collection).UpdateOneAsync(predicate, update, cancellationToken: cancellationToken);
+        }
     }
 }

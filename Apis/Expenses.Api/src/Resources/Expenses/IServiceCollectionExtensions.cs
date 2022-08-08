@@ -9,8 +9,10 @@ namespace MyAssistant.Apis.Expenses.Api.Resources.Expenses
         {
             return services
                 .AddSingleton<IExpensesService, ExpensesService>()
-                .AddSingleton<IExpensesRepository, MongoDbRepository>()
-                .AddSingleton<IDataStore<Expense, int>, DataStore<Expense, int>>();
+                .AddSingleton<IExpensesRepository, MongoDbExpensesRepository>()
+                .AddSingleton<IDataStore<Expense, int>, DataStore<Expense, int>>()
+                .AddSingleton<IDataStore<TagDocument, int>, DataStore<TagDocument, int>>()
+                .AddSingleton<ITagsRepository, MongoDbTagsRepository>();
         }
     }
 }
