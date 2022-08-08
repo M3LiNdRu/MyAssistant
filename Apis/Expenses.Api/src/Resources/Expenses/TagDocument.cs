@@ -1,11 +1,15 @@
 ﻿using Library.MongoDb;
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
 using System.Collections.Generic;
 
 namespace MyAssistant.Apis.Expenses.Api.Resources.Expenses
 {
-    public class TagDocument : ICollectionDocument<int>
+    public class TagDocument : ICollectionDocument
     {
-        public int Id { get; set; }
+        [BsonId]
+        [BsonRepresentation(BsonType.ObjectId)]
+        public string Id { get; set; }
         public List<string> Names { get; set; }
     }
 }

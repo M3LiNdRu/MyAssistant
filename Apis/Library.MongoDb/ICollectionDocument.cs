@@ -1,7 +1,10 @@
-﻿namespace Library.MongoDb
+﻿using MongoDB.Bson.Serialization.Attributes;
+
+namespace Library.MongoDb
 {
-    public interface ICollectionDocument<T>
+    public interface ICollectionDocument
     {
-        T Id { get; set; }
+        [BsonId]
+        string Id { get; set; }
     }
 }

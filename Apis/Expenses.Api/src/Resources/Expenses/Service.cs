@@ -10,7 +10,7 @@ namespace MyAssistant.Apis.Expenses.Api.Resources.Expenses
     public interface IExpensesService
     {
         Task AddAsync(Expense expense, CancellationToken cancellationToken);
-        Task DelAsync(int id, CancellationToken cancellationToken);
+        Task DelAsync(string id, CancellationToken cancellationToken);
         Task<IEnumerable<Expense>> GetAsync(CancellationToken cancellationToken);
         Task<IEnumerable<Expense>> GetFromDateAsync(DateTime date, CancellationToken cancellationToken);
     }
@@ -38,7 +38,7 @@ namespace MyAssistant.Apis.Expenses.Api.Resources.Expenses
             await _repository.AddAsync(expense, cancellationToken);
         }
 
-        public Task DelAsync(int id, CancellationToken cancellationToken)
+        public Task DelAsync(string id, CancellationToken cancellationToken)
         {
             return _repository.DelAsync(id, cancellationToken);
         }
@@ -50,7 +50,7 @@ namespace MyAssistant.Apis.Expenses.Api.Resources.Expenses
 
         public Task<IEnumerable<Expense>> GetFromDateAsync(DateTime date, CancellationToken cancellationToken)
         {
-            return _repository.GetFromDateAsync(date, cancellationToken);
+            return _repository.GetByMonthAsync(date, cancellationToken);
         }
 
         public Task<IEnumerable<Expense>> GetByCategoryAsync(string category, CancellationToken cancellationToken)
@@ -61,9 +61,14 @@ namespace MyAssistant.Apis.Expenses.Api.Resources.Expenses
         private async Task InsertNewTags(Expense expense, CancellationToken cancellationToken)
         {
             var tags = await _tagsRepository.GetAsync(cancellationToken);
-            var newTagNames = tags.Where(t => !expense.Tags.Any(t2 => t2 == t.Name));
+            var newTagNames = expense.Tags
+                .Where(t => !tags.Any(t2 => t2.Name == t))
+                .Select(t => new Tag { Name = t });
             
-            await _tagsRepository.AppendTagsAsync(newTagNames, cancellationToken);
+            if (newTagNames.Any())
+            {
+                await _tagsRepository.AppendTagsAsync(newTagNames, cancellationToken);
+            }
         }
     }
 }

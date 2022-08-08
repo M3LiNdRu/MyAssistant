@@ -1,5 +1,6 @@
 ﻿using Library.MongoDb.Configuration;
 using Microsoft.Extensions.Options;
+using MongoDB.Bson.Serialization.Conventions;
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
@@ -9,13 +10,21 @@ using System.Threading.Tasks;
 
 namespace Library.MongoDb
 {
-    public class DataStore<T,C> : IDataStore<T,C> where T : ICollectionDocument<C>
+    public class DataStore<T> : IDataStore<T> where T : ICollectionDocument
     {
         private readonly IMongoDatabase _db;
         private readonly string _collection;
 
         public DataStore(IOptions<DbConfigurationSettings> options, string collection)
         {
+            var conventionPack = new ConventionPack
+            {
+                new CamelCaseElementNameConvention(),
+                new IgnoreExtraElementsConvention(true)
+            };
+
+            ConventionRegistry.Register("CustomConventions", conventionPack, _ => true);
+
             var mongo = new MongoClient(options.Value.ConnectionString);
             _db = mongo.GetDatabase(options.Value.Database);
             _collection = collection;

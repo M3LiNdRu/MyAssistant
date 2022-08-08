@@ -28,10 +28,10 @@ namespace MyAssistant.Apis.Expenses.Api.Resources.Summary
         {
             var result = new CurrentSummary();
             var firstDayOfMonth = new DateTime(DateTime.UtcNow.Year, DateTime.UtcNow.Month, 1);
-            var expenses = await this.expensesRepository.GetFromDateAsync(firstDayOfMonth, cancellationToken);
+            var expenses = await this.expensesRepository.GetByMonthAsync(firstDayOfMonth, cancellationToken);
 
             result.Year = firstDayOfMonth.Year.ToString();
-            result.Month = firstDayOfMonth.Month.ToString("MMMM");
+            result.Month = firstDayOfMonth.ToString("MMMM");
             result.TotalAmount = expenses.Sum(expense => expense.Amount);
             var capital = expenses.Where(expense => expense.Amount > 0).Sum(expense => expense.Amount);
 
@@ -47,7 +47,7 @@ namespace MyAssistant.Apis.Expenses.Api.Resources.Summary
         {
             var result = new CompleteSummary();
             var firstDayOfMonth = new DateTime(year, month, 1);
-            var expenses = await this.expensesRepository.GetFromDateAsync(firstDayOfMonth, cancellationToken);
+            var expenses = await this.expensesRepository.GetByMonthAsync(firstDayOfMonth, cancellationToken);
 
             result.Year = firstDayOfMonth.Year.ToString();
             result.Month = firstDayOfMonth.Month.ToString("MMMM");

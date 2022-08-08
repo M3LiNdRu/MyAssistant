@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Library.MongoDb
 {
-    public interface IDataStore<T,C> where T : ICollectionDocument<C>
+    public interface IDataStore<T> where T : ICollectionDocument
     {
         Task<IEnumerable<T>> FindAllAsync(CancellationToken cancellationToken);
         Task<IEnumerable<T>> FindAllAsync(Expression<Func<T, bool>> predicate, CancellationToken cancellationToken);

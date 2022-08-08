@@ -12,7 +12,7 @@ namespace MyAssistant.Apis.Expenses.Api.Resources.Categories
     public interface ICategoriesRepository
     {
         Task AddAsync(Category category, CancellationToken cancellationToken);
-        Task DelAsync(int categoryId, CancellationToken cancellationToken);
+        Task DelAsync(string categoryId, CancellationToken cancellationToken);
         Task<IEnumerable<Category>> GetAsync(CancellationToken cancellationToken);
         Task<Category> GetByNameAsync(string categoryName, CancellationToken cancellationToken);
     }
@@ -20,18 +20,18 @@ namespace MyAssistant.Apis.Expenses.Api.Resources.Categories
     public class InMemoryRepository : ICategoriesRepository
     {
         private int _counter;
-        private readonly IDictionary<int, Category> _buffer;
+        private readonly IDictionary<string, Category> _buffer;
         private readonly ILogger<InMemoryRepository> _logger;
 
         public InMemoryRepository(ILogger<InMemoryRepository> logger) 
         {
             _logger = logger;
-            _buffer = new Dictionary<int, Category>();
+            _buffer = new Dictionary<string, Category>();
             _counter = 0;
         }
         public Task AddAsync(Category category, CancellationToken cancellationToken)
         {
-            category.Id = _counter;
+            category.Id = _counter.ToString();
 
             _buffer.Add(category.Id, category);
 
@@ -40,7 +40,7 @@ namespace MyAssistant.Apis.Expenses.Api.Resources.Categories
             return Task.CompletedTask;
         }
 
-        public Task DelAsync(int categoryId, CancellationToken cancellationToken)
+        public Task DelAsync(string categoryId, CancellationToken cancellationToken)
         {
             if (!_buffer.Remove(categoryId)) 
             {
@@ -64,7 +64,7 @@ namespace MyAssistant.Apis.Expenses.Api.Resources.Categories
         }
     }
 
-    public class MongoDbRepository : DataStore<Category, int>, ICategoriesRepository
+    public class MongoDbRepository : DataStore<Category>, ICategoriesRepository
     {
         public MongoDbRepository(IOptions<DbConfigurationSettings> options) : base(options, "Categories")
         {
@@ -75,7 +75,7 @@ namespace MyAssistant.Apis.Expenses.Api.Resources.Categories
             return base.InsertAsync(category, cancellationToken);
         }
 
-        public Task DelAsync(int categoryId, CancellationToken cancellationToken)
+        public Task DelAsync(string categoryId, CancellationToken cancellationToken)
         {
             return base.DeleteAsync(c => c.Id == categoryId, cancellationToken);
         }

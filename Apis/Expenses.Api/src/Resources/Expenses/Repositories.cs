@@ -13,28 +13,28 @@ namespace MyAssistant.Apis.Expenses.Api.Resources.Expenses
     public interface IExpensesRepository
     {
         Task<IEnumerable<Expense>> GetAsync(CancellationToken cancellationToken);
-        Task DelAsync(int id, CancellationToken cancellationToken);
+        Task DelAsync(string id, CancellationToken cancellationToken);
         Task AddAsync(Expense expense, CancellationToken cancellationToken);
         Task<IEnumerable<Expense>> GetByCategoryAsync(string category, CancellationToken cancellationToken);
-        Task<IEnumerable<Expense>> GetFromDateAsync(DateTime date, CancellationToken cancellationToken);
+        Task<IEnumerable<Expense>> GetByMonthAsync(DateTime date, CancellationToken cancellationToken);
     }
 
     public class InMemoryExpensesRepository : IExpensesRepository
     {
         private int _counter;
-        private readonly IDictionary<int, Expense> _buffer;
+        private readonly IDictionary<string, Expense> _buffer;
         private readonly ILogger<IExpensesRepository> _logger;
 
         public InMemoryExpensesRepository(ILogger<IExpensesRepository> logger)
         {
             _logger = logger;
             _counter = 0;
-            _buffer = new Dictionary<int, Expense> ();
+            _buffer = new Dictionary<string, Expense> ();
         }
 
         public Task AddAsync(Expense expense, CancellationToken cancellationToken)
         {
-            expense.Id = _counter;
+            expense.Id = _counter.ToString();
 
             _buffer.Add(expense.Id, expense);
 
@@ -43,7 +43,7 @@ namespace MyAssistant.Apis.Expenses.Api.Resources.Expenses
             return Task.CompletedTask;
         }
 
-        public Task DelAsync(int id, CancellationToken cancellationToken)
+        public Task DelAsync(string id, CancellationToken cancellationToken)
         {
             if (!_buffer.Remove(id)) 
             {
@@ -66,7 +66,7 @@ namespace MyAssistant.Apis.Expenses.Api.Resources.Expenses
                     .AsEnumerable());
         }
 
-        public Task<IEnumerable<Expense>> GetFromDateAsync(DateTime date, CancellationToken cancellationToken)
+        public Task<IEnumerable<Expense>> GetByMonthAsync(DateTime date, CancellationToken cancellationToken)
         {
             return Task.FromResult(_buffer
                     .Values
@@ -75,7 +75,7 @@ namespace MyAssistant.Apis.Expenses.Api.Resources.Expenses
         }
     }
 
-    public class MongoDbExpensesRepository : DataStore<Expense, int>, IExpensesRepository
+    public class MongoDbExpensesRepository : DataStore<Expense>, IExpensesRepository
     {
         public MongoDbExpensesRepository(IOptions<DbConfigurationSettings> options) : base(options, collection: "Expenses")
         {
@@ -86,7 +86,7 @@ namespace MyAssistant.Apis.Expenses.Api.Resources.Expenses
             return base.InsertAsync(expense, cancellationToken);
         }
 
-        public Task DelAsync(int id, CancellationToken cancellationToken)
+        public Task DelAsync(string id, CancellationToken cancellationToken)
         {
             return base.DeleteAsync(e => e.Id == id, cancellationToken);
         }
@@ -101,16 +101,16 @@ namespace MyAssistant.Apis.Expenses.Api.Resources.Expenses
             return base.FindAllAsync(expense => expense.Category == category, cancellationToken);
         }
 
-        public Task<IEnumerable<Expense>> GetFromDateAsync(DateTime date, CancellationToken cancellationToken)
+        public Task<IEnumerable<Expense>> GetByMonthAsync(DateTime date, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            return base.FindAllAsync(expense => expense.Timestamp >= date && expense.Timestamp < date.AddMonths(1), cancellationToken);
         }
     }
 
     public interface ITagsRepository
     {
         Task<IEnumerable<Tag>> GetAsync(CancellationToken cancellationToken);
-        Task DelAsync(int tag, CancellationToken cancellationToken);
+        Task DelAsync(string tag, CancellationToken cancellationToken);
         Task AddAsync(TagDocument tag, CancellationToken cancellationToken);
         Task AppendTagsAsync(IEnumerable<Tag> tags, CancellationToken cancellationToken);
         Task RemoveTagsAsync(IEnumerable<Tag> tags, CancellationToken cancellationToken);
@@ -136,7 +136,7 @@ namespace MyAssistant.Apis.Expenses.Api.Resources.Expenses
             return Task.CompletedTask;
         }
 
-        public Task DelAsync(int tagId, CancellationToken cancellationToken)
+        public Task DelAsync(string tagId, CancellationToken cancellationToken)
         {
             _buffer.Clear();
             return Task.CompletedTask;
@@ -159,7 +159,7 @@ namespace MyAssistant.Apis.Expenses.Api.Resources.Expenses
 
     }
 
-    public class MongoDbTagsRepository : DataStore<TagDocument,int>, ITagsRepository
+    public class MongoDbTagsRepository : DataStore<TagDocument>, ITagsRepository
     {
         public MongoDbTagsRepository(IOptions<DbConfigurationSettings> options) : base(options, collection: "Tags")
         {
@@ -170,27 +170,29 @@ namespace MyAssistant.Apis.Expenses.Api.Resources.Expenses
             return base.InsertAsync(tag, cancellationToken);
         }
 
-        public Task AppendTagsAsync(IEnumerable<Tag> tags, CancellationToken cancellationToken)
+        public async Task AppendTagsAsync(IEnumerable<Tag> tags, CancellationToken cancellationToken)
         {
+            var document = await base.FindOneAsync(_ => true, cancellationToken);
             var tagNames = tags.Select(t => t.Name).ToList();
-            return base.AppendToArrayAsync(t => t.Id == 0, t => t.Names, tagNames, cancellationToken);
+            await base.AppendToArrayAsync(t => t.Id == document.Id, t => t.Names, tagNames, cancellationToken);
         }
 
-        public Task DelAsync(int tagId, CancellationToken cancellationToken)
+        public Task DelAsync(string tagId, CancellationToken cancellationToken)
         {
             return base.DeleteAsync(t => t.Id == tagId, cancellationToken);
         }
 
         public async Task<IEnumerable<Tag>> GetAsync(CancellationToken cancellationToken)
         {
-            var tagDocument = await base.FindOneAsync(t => t.Id == 0, cancellationToken);
+            var tagDocument = await base.FindOneAsync(_ => true, cancellationToken);
             return tagDocument.Names == null ? new List<Tag>() : tagDocument.Names.Select(n => new Tag { Name = n });
         }
 
-        public Task RemoveTagsAsync(IEnumerable<Tag> tags, CancellationToken cancellationToken)
+        public async Task RemoveTagsAsync(IEnumerable<Tag> tags, CancellationToken cancellationToken)
         {
+            var document = await base.FindOneAsync(_ => true, cancellationToken);
             var tagNames = tags.Select(t => t.Name).ToList();
-            return base.RemoveFromArrayAsync(t => t.Id == 0, t => t.Names, tagNames, cancellationToken);
+            await base.RemoveFromArrayAsync(t => t.Id == document.Id, t => t.Names, tagNames, cancellationToken);
         }
     }
 }

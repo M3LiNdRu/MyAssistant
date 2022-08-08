@@ -45,7 +45,7 @@ namespace MyAssistant.Apis.Expenses.Api.Resources.Expenses
         [Route("/api/v1/expense/{id}")]
         [ValidateModelState]
         [SwaggerOperation("DelExpense")]
-        public virtual async Task<IActionResult> DelExpense([FromRoute][Required]int id, CancellationToken cancellationToken)
+        public virtual async Task<IActionResult> DelExpense([FromRoute][Required]string id, CancellationToken cancellationToken)
         { 
 
             await _service.DelAsync(id, cancellationToken);

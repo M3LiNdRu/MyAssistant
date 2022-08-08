@@ -1,12 +1,16 @@
 using Library.MongoDb;
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
 using System;
 using System.Collections.Generic;
 
 namespace MyAssistant.Apis.Expenses.Api.Resources.Expenses
 {
-    public class Expense : ICollectionDocument<int>
+    public class Expense : ICollectionDocument
     {
-        public int Id { get; set; }
+        [BsonId]
+        [BsonRepresentation(BsonType.ObjectId)]
+        public string Id { get; set; }
         public DateTime Timestamp { get; set; }
         public string Category { get; set; }
         public string Name { get; set; }

@@ -9,6 +9,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using MyAssistant.Apis.Expenses.Api.Resources.Categories;
 using MyAssistant.Apis.Expenses.Api.Resources.Expenses;
+using MyAssistant.Apis.Expenses.Api.Resources.Summary;
 using MyAssistant.Apis.Expenses.Api.Swagger;
 using System.Collections.Generic;
 
@@ -76,7 +77,8 @@ namespace MyAssistant.Apis.Expenses.Api
                 })
                 .ConfigureMongoDb(Configuration)
                 .RegisterCategoriesFeatures()
-                .RegisterExpensesFeatures();
+                .RegisterExpensesFeatures()
+                .RegisterSummaryFeatures();
         }
 
         /// <summary>
