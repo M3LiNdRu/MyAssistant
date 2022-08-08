@@ -10,7 +10,7 @@ namespace MyAssistant.Apis.Expenses.Api.Resources.Expenses
         public DateTime Timestamp { get; set; }
         public string Category { get; set; }
         public string Name { get; set; }
-        public float Amount { get; set; }
+        public decimal Amount { get; set; }
         public string Currency { get; set; }
         public IList<string> Tags { get; set; }
     }

@@ -3,7 +3,9 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Library.MongoDb;
+using Library.MongoDb.Configuration;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 
 namespace MyAssistant.Apis.Expenses.Api.Resources.Categories
 {
@@ -62,33 +64,30 @@ namespace MyAssistant.Apis.Expenses.Api.Resources.Categories
         }
     }
 
-    public class MongoDbRepository : ICategoriesRepository
+    public class MongoDbRepository : DataStore<Category, int>, ICategoriesRepository
     {
-        private readonly IDataStore<Category, int> dataStore;
-
-        public MongoDbRepository(IDataStore<Category, int> dataStore)
+        public MongoDbRepository(IOptions<DbConfigurationSettings> options) : base(options, "Categories")
         {
-            this.dataStore = dataStore;
         }
 
         public Task AddAsync(Category category, CancellationToken cancellationToken)
         {
-            return this.dataStore.InsertAsync(category, cancellationToken);
+            return base.InsertAsync(category, cancellationToken);
         }
 
         public Task DelAsync(int categoryId, CancellationToken cancellationToken)
         {
-            return this.dataStore.DeleteAsync(c => c.Id == categoryId, cancellationToken);
+            return base.DeleteAsync(c => c.Id == categoryId, cancellationToken);
         }
 
         public Task<IEnumerable<Category>> GetAsync(CancellationToken cancellationToken)
         {
-            return this.dataStore.FindAllAsync(cancellationToken);
+            return base.FindAllAsync(cancellationToken);
         }
 
         public Task<Category> GetByNameAsync(string categoryName, CancellationToken cancellationToken)
         {
-            return this.dataStore.FindOneAsync(c => c.Name == categoryName, cancellationToken);
+            return base.FindOneAsync(c => c.Name == categoryName, cancellationToken);
         }
     }
 }

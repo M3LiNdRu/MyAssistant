@@ -1,5 +1,7 @@
 using Library.MongoDb;
+using Library.MongoDb.Configuration;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -73,33 +75,30 @@ namespace MyAssistant.Apis.Expenses.Api.Resources.Expenses
         }
     }
 
-    public class MongoDbExpensesRepository : IExpensesRepository
+    public class MongoDbExpensesRepository : DataStore<Expense, int>, IExpensesRepository
     {
-        private readonly IDataStore<Expense, int> dataStore;
-
-        public MongoDbExpensesRepository(IDataStore<Expense, int> dataStore)
+        public MongoDbExpensesRepository(IOptions<DbConfigurationSettings> options) : base(options, collection: "Expenses")
         {
-            this.dataStore = dataStore;
         }
 
         public Task AddAsync(Expense expense, CancellationToken cancellationToken)
         {
-            return this.dataStore.InsertAsync(expense, cancellationToken);
+            return base.InsertAsync(expense, cancellationToken);
         }
 
         public Task DelAsync(int id, CancellationToken cancellationToken)
         {
-            return this.dataStore.DeleteAsync(e => e.Id == id, cancellationToken);
+            return base.DeleteAsync(e => e.Id == id, cancellationToken);
         }
 
         public Task<IEnumerable<Expense>> GetAsync(CancellationToken cancellationToken)
         {
-            return this.dataStore.FindAllAsync(cancellationToken);
+            return base.FindAllAsync(cancellationToken);
         }
 
         public Task<IEnumerable<Expense>> GetByCategoryAsync(string category, CancellationToken cancellationToken)
         {
-            return this.dataStore.FindAllAsync(expense => expense.Category == category, cancellationToken);
+            return base.FindAllAsync(expense => expense.Category == category, cancellationToken);
         }
 
         public Task<IEnumerable<Expense>> GetFromDateAsync(DateTime date, CancellationToken cancellationToken)
@@ -160,41 +159,38 @@ namespace MyAssistant.Apis.Expenses.Api.Resources.Expenses
 
     }
 
-    public class MongoDbTagsRepository : ITagsRepository
+    public class MongoDbTagsRepository : DataStore<TagDocument,int>, ITagsRepository
     {
-        private readonly IDataStore<TagDocument, int> dataStore;
-
-        public MongoDbTagsRepository(IDataStore<TagDocument, int> dataStore)
+        public MongoDbTagsRepository(IOptions<DbConfigurationSettings> options) : base(options, collection: "Tags")
         {
-            this.dataStore = dataStore;
         }
 
         public Task AddAsync(TagDocument tag, CancellationToken cancellationToken)
         {
-            return this.dataStore.InsertAsync(tag, cancellationToken);
+            return base.InsertAsync(tag, cancellationToken);
         }
 
         public Task AppendTagsAsync(IEnumerable<Tag> tags, CancellationToken cancellationToken)
         {
             var tagNames = tags.Select(t => t.Name).ToList();
-            return this.dataStore.AppendToArrayAsync(t => t.Id == 0, t => t.Names, tagNames, cancellationToken);
+            return base.AppendToArrayAsync(t => t.Id == 0, t => t.Names, tagNames, cancellationToken);
         }
 
         public Task DelAsync(int tagId, CancellationToken cancellationToken)
         {
-            return this.dataStore.DeleteAsync(t => t.Id == tagId, cancellationToken);
+            return base.DeleteAsync(t => t.Id == tagId, cancellationToken);
         }
 
         public async Task<IEnumerable<Tag>> GetAsync(CancellationToken cancellationToken)
         {
-            var tagDocument = await this.dataStore.FindOneAsync(t => t.Id == 0, cancellationToken);
+            var tagDocument = await base.FindOneAsync(t => t.Id == 0, cancellationToken);
             return tagDocument.Names == null ? new List<Tag>() : tagDocument.Names.Select(n => new Tag { Name = n });
         }
 
         public Task RemoveTagsAsync(IEnumerable<Tag> tags, CancellationToken cancellationToken)
         {
             var tagNames = tags.Select(t => t.Name).ToList();
-            return this.dataStore.RemoveFromArrayAsync(t => t.Id == 0, t => t.Names, tagNames, cancellationToken);
+            return base.RemoveFromArrayAsync(t => t.Id == 0, t => t.Names, tagNames, cancellationToken);
         }
     }
 }

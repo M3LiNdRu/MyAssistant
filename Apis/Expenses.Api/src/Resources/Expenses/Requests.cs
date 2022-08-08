@@ -27,7 +27,7 @@ namespace MyAssistant.Apis.Expenses.Api.Resources.Expenses
         [Required]
 
         [DataMember(Name="amount")]
-        public float Amount { get; set; }
+        public decimal Amount { get; set; }
 
         [DataMember(Name="currency")]
         public string Currency { get; set; }
