@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using MyAssistant.Apis.Expenses.Api.Attributes;
 using Swashbuckle.AspNetCore.Annotations;
@@ -7,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace MyAssistant.Apis.Expenses.Api.Resources.Summary
 {
+    [Authorize]
     [ApiController]
     public class SummaryController : ControllerBase
     {

@@ -8,9 +8,11 @@ using System.Threading.Tasks;
 using System.Threading;
 using System;
 using System.Linq;
+using Microsoft.AspNetCore.Authorization;
 
 namespace MyAssistant.Apis.Expenses.Api.Resources.Expenses
-{ 
+{
+    [Authorize]
     [ApiController]
     public class ExpensesController : ControllerBase
     { 
