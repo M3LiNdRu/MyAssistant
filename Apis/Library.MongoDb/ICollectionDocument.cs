@@ -1,7 +1,7 @@
 ﻿namespace Library.MongoDb
 {
-    public interface ICollectionDocument
+    public interface ICollectionDocument<T>
     {
-        string Id { get; set; }
+        T Id { get; set; }
     }
 }

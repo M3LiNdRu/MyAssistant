@@ -1,3 +1,4 @@
+using Library.MongoDb;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace MyAssistant.Apis.Expenses.Api.Resources.Categories
@@ -8,7 +9,8 @@ namespace MyAssistant.Apis.Expenses.Api.Resources.Categories
         {
             return services
                 .AddSingleton<ICategoriesService, CategoriesService>()
-                .AddSingleton<ICategoriesRepository, InMemoryRepository>();
+                .AddSingleton<ICategoriesRepository, MongoDbRepository>()
+                .AddSingleton<IDataStore<Category, int>, DataStore<Category, int>>();
         }
     }
 }

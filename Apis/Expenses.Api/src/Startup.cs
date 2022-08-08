@@ -1,3 +1,5 @@
+using Api.Authentication;
+using Library.MongoDb;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -5,12 +7,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
-using MyAssistant.Apis.Expenses.Api.Swagger;
 using MyAssistant.Apis.Expenses.Api.Resources.Categories;
 using MyAssistant.Apis.Expenses.Api.Resources.Expenses;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+using MyAssistant.Apis.Expenses.Api.Swagger;
 using System.Collections.Generic;
-using Api.Authentication;
 
 namespace MyAssistant.Apis.Expenses.Api
 {
@@ -74,6 +74,7 @@ namespace MyAssistant.Apis.Expenses.Api
 
 
                 })
+                .ConfigureMongoDb(Configuration)
                 .RegisterCategoriesFeatures()
                 .RegisterExpensesFeatures();
         }
