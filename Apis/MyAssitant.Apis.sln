@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.2.32519.379
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Api", "..\Expenses.Api\src\Api.csproj", "{94832E5D-841F-436D-9AE7-2F47FBF99CEE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Api", ".\Expenses.Api\src\Api.csproj", "{94832E5D-841F-436D-9AE7-2F47FBF99CEE}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Expenses.Api", "Expenses.Api", "{C331F55C-ADE3-4852-9095-7E2AF1FEE620}"
 EndProject
