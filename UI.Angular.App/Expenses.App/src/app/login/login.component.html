@@ -1,1 +1,19 @@
-<div id="buttonDiv"></div>
+<div id="g_id_onload"
+         data-client_id="1012495556001-1arrtrlhjcpnac4ql6g9783odd8j0h78.apps.googleusercontent.com"
+         data-callback="googleLogin"
+         data-auto_prompt="false"
+         *ngIf="!loggedIn">
+      </div>
+      <div class="g_id_signin"
+         data-type="standard"
+         data-size="small"
+         data-theme="outline"
+         data-text="sign_in_with"
+         data-shape="rectangular"
+         data-logo_alignment="left"
+         *ngIf="!loggedIn"
+         >
+      </div>
+
+<button *ngIf="loggedIn" (click)="logout()">log out</button>
+    
