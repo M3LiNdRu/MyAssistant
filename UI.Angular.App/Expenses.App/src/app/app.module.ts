@@ -30,6 +30,7 @@ import { ExpensesFormComponent } from './expenses-form/expenses-form.component';
 import { MainPageComponent } from './main-page/main-page.component';
 import { MonthSummaryComponent } from './month-summary/month-summary.component';
 import { TagsAutocompleteInputComponent } from './tags-autocomplete-input/tags-autocomplete-input.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 
 
@@ -45,7 +46,8 @@ import { TagsAutocompleteInputComponent } from './tags-autocomplete-input/tags-a
     ExpensesFormComponent,
     MainPageComponent,
     MonthSummaryComponent,
-    TagsAutocompleteInputComponent
+    TagsAutocompleteInputComponent,
+    PageNotFoundComponent,
   ],
   imports: [
     BrowserModule,

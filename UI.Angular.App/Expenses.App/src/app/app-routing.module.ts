@@ -1,7 +1,18 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { ExpensesFormComponent } from './expenses-form/expenses-form.component';
+import { ExpensesListComponent } from './expenses-list/expenses-list.component';
+import { MainPageComponent } from './main-page/main-page.component';
+import { MonthSummaryComponent } from './month-summary/month-summary.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
-const routes: Routes = [];
+const routes: Routes = [
+  { path: 'summary/last', component: MonthSummaryComponent },
+  { path: 'summary', component: MainPageComponent },
+  { path: 'expense/add', component: ExpensesFormComponent },
+  { path: 'expenses/list', component: ExpensesListComponent },
+  { path: '**', component: PageNotFoundComponent }
+];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

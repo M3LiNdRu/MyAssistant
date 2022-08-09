@@ -1,3 +1,8 @@
-<button mat-fab color="primary" class="float-button" *ngIf="isButtonVisible" (click)="onClick()">
+<button mat-fab 
+    color="primary" 
+    class="float-button" 
+    *ngIf="isButtonVisible()" 
+    routerLink="/expense/add" 
+    routerLinkActive="active" >
     <mat-icon>add</mat-icon>
 </button>

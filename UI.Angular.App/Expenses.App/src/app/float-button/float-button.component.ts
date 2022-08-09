@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-float-button',
@@ -7,15 +8,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FloatButtonComponent implements OnInit {
 
-  isButtonVisible: boolean = true;
-
-  constructor() { }
+  constructor(public router: Router) { }
 
   ngOnInit(): void {
   }
 
-  onClick(): void {
-    this.isButtonVisible = false;
+  isButtonVisible(): boolean {
+    return this.router.url != '/expense/add'
   }
 
 }
