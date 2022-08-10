@@ -1,6 +1,10 @@
 import {Component, OnInit} from '@angular/core';
+
 import { CategoriesService } from '../categories.service';
+import { ExpensesService } from '../expenses.service';
+
 import { Category } from '../category';
+import { Expense } from '../expense';
 
 
 @Component({
@@ -10,9 +14,11 @@ import { Category } from '../category';
 })
 export class ExpensesFormComponent implements OnInit {
   
-  categories: Category[] = []
+  expense?: Expense;
+  categories: Category[] = [];
 
-  constructor(private categoriesService: CategoriesService) { 
+  constructor(private categoriesService: CategoriesService,
+    private expenseService: ExpensesService) { 
   }
 
   ngOnInit(): void {
@@ -22,5 +28,12 @@ export class ExpensesFormComponent implements OnInit {
   getCategories(): void {
     this.categoriesService.getCategories()
     .subscribe(categories => this.categories = categories);
+  }
+
+  add(): void {
+    if (this.expense) {
+      this.expenseService.addExpense(this.expense)
+      .subscribe(() => console.log("Expense Added"));
+    }
   }
 }

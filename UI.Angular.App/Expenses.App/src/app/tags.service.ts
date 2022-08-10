@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 
+import { environment } from '../environments/environment';
+
 import { Tag } from './tag';
 
 @Injectable({
@@ -9,7 +11,7 @@ import { Tag } from './tag';
 })
 export class TagsService {
 
-  private tagsUrl = 'api/tags';
+  private tagsUrl = environment.apiUrl + 'api/tags';
 
   constructor(private http: HttpClient,) { }
 

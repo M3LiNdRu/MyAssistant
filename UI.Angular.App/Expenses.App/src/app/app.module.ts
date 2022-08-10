@@ -15,7 +15,7 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatAutocompleteModule } from '@angular/material/autocomplete'; 
 import { MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/core';
 
-
+import { httpInterceptorProviders } from './http-interceptors'
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -31,7 +31,6 @@ import { MainPageComponent } from './main-page/main-page.component';
 import { MonthSummaryComponent } from './month-summary/month-summary.component';
 import { TagsAutocompleteInputComponent } from './tags-autocomplete-input/tags-autocomplete-input.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
-
 
 
 @NgModule({
@@ -70,7 +69,8 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
   ],
   providers: [
     MatDatepickerModule,
-    { provide: MAT_DATE_LOCALE, useValue: 'ca-ES' }
+    { provide: MAT_DATE_LOCALE, useValue: 'ca-ES' },
+    httpInterceptorProviders
   ],
   bootstrap: [AppComponent]
 })
