@@ -12,15 +12,19 @@
           <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
       </mat-form-field> 
-      <mat-form-field appearance="fill" class="expenses-80-width">
-          <mat-label>Category</mat-label>
-          <mat-select [(ngModel)]="expense.category" [ngModelOptions]="{standalone: true}">
-            <mat-option *ngFor="let cat of categories" [value]="cat.name">
-              {{cat.name}}
-            </mat-option>
-          </mat-select>
+        <div class="expenses-80-width">
+          <mat-form-field appearance="fill" >
+            <mat-label>Category</mat-label>
+            <mat-select [(ngModel)]="expense.category" [ngModelOptions]="{standalone: true}">
+              <mat-option *ngFor="let cat of categories" [value]="cat.name">
+                {{cat.name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="expenses-20-width">
           <button mat-raised-button (click)="openDialog()"><mat-icon>add</mat-icon></button>
-      </mat-form-field>
+        </div>
       <mat-form-field appearance="fill" class="expenses-80-width">
           <mat-label>Amount</mat-label>
           <input matInput [(ngModel)]="expense.amount" [ngModelOptions]="{standalone: true}">
