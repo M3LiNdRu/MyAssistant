@@ -12,7 +12,7 @@ import { Expense } from './expense'
   providedIn: 'root'
 })
 export class ExpensesService {
-  private expensesUrl = environment.apiUrl + 'api/expenses';
+  private expensesUrl = environment.apiUrl + 'api/v1/expense';
   private httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
@@ -21,7 +21,7 @@ export class ExpensesService {
 
   /** GET expenses from the server */
   getExpenses(): Observable<Expense[]> {
-    return this.http.get<Expense[]>(this.expensesUrl)
+    return this.http.get<Expense[]>(environment.apiUrl + 'api/v1/expenses')
   }
 
   addExpense(expense: Expense): Observable<boolean> {

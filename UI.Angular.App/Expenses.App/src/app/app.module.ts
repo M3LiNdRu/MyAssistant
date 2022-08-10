@@ -14,6 +14,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatChipsModule } from '@angular/material/chips'; 
 import { MatAutocompleteModule } from '@angular/material/autocomplete'; 
 import { MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/core';
+import { MatDialogModule } from '@angular/material/dialog';
 
 import { httpInterceptorProviders } from './http-interceptors'
 
@@ -31,6 +32,7 @@ import { MainPageComponent } from './main-page/main-page.component';
 import { MonthSummaryComponent } from './month-summary/month-summary.component';
 import { TagsAutocompleteInputComponent } from './tags-autocomplete-input/tags-autocomplete-input.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { CategoriesFormComponent } from './categories-form/categories-form.component';
 
 
 @NgModule({
@@ -47,6 +49,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
     MonthSummaryComponent,
     TagsAutocompleteInputComponent,
     PageNotFoundComponent,
+    CategoriesFormComponent,
   ],
   imports: [
     BrowserModule,
@@ -65,7 +68,8 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
     MatChipsModule,
     FormsModule,
     ReactiveFormsModule,
-    MatAutocompleteModule
+    MatAutocompleteModule,
+    MatDialogModule
   ],
   providers: [
     MatDatepickerModule,

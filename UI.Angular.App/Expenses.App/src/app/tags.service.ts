@@ -11,7 +11,7 @@ import { Tag } from './tag';
 })
 export class TagsService {
 
-  private tagsUrl = environment.apiUrl + 'api/tags';
+  private tagsUrl = environment.apiUrl + 'api/v1/tags';
 
   constructor(private http: HttpClient,) { }
 
