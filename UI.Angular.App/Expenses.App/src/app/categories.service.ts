@@ -26,7 +26,7 @@ export class CategoriesService {
 
   addCategory(category: Category): Observable<boolean> {
     return this.http.post<Category>(environment.apiUrl + 'api/v1/category', category, this.httpOptions).pipe(
-      tap((newCategory: Category) => console.log(`added category w/ id=${newCategory.id}`)),
+      tap(_ => console.log(`added category w/ id=${category.id}`)),
       catchError(this.handleError<any>('addCategory'))
     );
   }

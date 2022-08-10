@@ -26,7 +26,7 @@ export class ExpensesService {
 
   addExpense(expense: Expense): Observable<boolean> {
     return this.http.post<Expense>(this.expensesUrl, expense, this.httpOptions).pipe(
-      tap((newExpense: Expense) => console.log(`added expense w/ id=${newExpense.id}`)),
+      tap(_ => console.log(`added expense w/ id=${expense.id}`)),
       catchError(this.handleError<any>('addExpense'))
     );
   }
