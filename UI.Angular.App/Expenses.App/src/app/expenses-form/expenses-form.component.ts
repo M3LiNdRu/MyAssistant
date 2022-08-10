@@ -14,7 +14,15 @@ import { Expense } from '../expense';
 })
 export class ExpensesFormComponent implements OnInit {
   
-  expense?: Expense;
+  expense: Expense = {
+    id: "",
+    category: "",
+    amount: 0,
+    currency: "EUR",
+    name: "",
+    tags: [],
+    timestamp: new Date()
+  }
   categories: Category[] = [];
 
   constructor(private categoriesService: CategoriesService,

@@ -3,18 +3,18 @@
     <form class="expenses-form">
       <mat-form-field appearance="fill" class="expenses-80-width">
           <mat-label>Name</mat-label>
-          <input matInput>
+          <input matInput [(ngModel)]="expense.name" [ngModelOptions]="{standalone: true}">
       </mat-form-field>
       <mat-form-field appearance="fill" class="expenses-80-width">
           <mat-label>Date</mat-label>
-          <input matInput [matDatepicker]="picker">
+          <input matInput [matDatepicker]="picker" [(ngModel)]="expense.timestamp" [ngModelOptions]="{standalone: true}">
           <mat-hint>DD/MM/YYYY</mat-hint>
           <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
       </mat-form-field> 
       <mat-form-field appearance="fill" class="expenses-80-width">
           <mat-label>Category</mat-label>
-          <mat-select>
+          <mat-select [(ngModel)]="expense.category" [ngModelOptions]="{standalone: true}">
             <mat-option *ngFor="let cat of categories" [value]="cat.name">
               {{cat.name}}
             </mat-option>
@@ -22,7 +22,7 @@
       </mat-form-field>
       <mat-form-field appearance="fill" class="expenses-80-width">
           <mat-label>Amount</mat-label>
-          <input matInput>
+          <input matInput [(ngModel)]="expense.amount" [ngModelOptions]="{standalone: true}">
       </mat-form-field>     
       <app-tags-autocomplete-input></app-tags-autocomplete-input>
   </form>

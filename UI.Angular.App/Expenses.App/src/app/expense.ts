@@ -1,7 +1,7 @@
 import { Tag } from './tag';
 
 export interface Expense {
-    id: number;
+    id: string;
     name: string;
     category: string;
     timestamp: Date;
