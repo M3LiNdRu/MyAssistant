@@ -29,7 +29,7 @@
           <mat-label>Amount</mat-label>
           <input matInput [(ngModel)]="expense.amount" [ngModelOptions]="{standalone: true}">
       </mat-form-field>     
-      <app-tags-autocomplete-input></app-tags-autocomplete-input>
+      <app-tags-autocomplete-input [(tags)]="expense.tags"></app-tags-autocomplete-input>
   </form>
   </mat-card-content>
   <mat-card-actions>

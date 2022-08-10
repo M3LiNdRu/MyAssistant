@@ -7,5 +7,5 @@ export interface Expense {
     timestamp: Date;
     amount: number;
     currency: string;
-    tags: Tag[]
+    tags: string[]
   }

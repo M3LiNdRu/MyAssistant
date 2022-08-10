@@ -1,5 +1,5 @@
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
-import { Component, ElementRef, ViewChild, OnInit } from '@angular/core';
+import { Component, ElementRef, ViewChild, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { MatChipInputEvent } from '@angular/material/chips';
@@ -15,13 +15,20 @@ import { TagsService } from '../tags.service';
 })
 export class TagsAutocompleteInputComponent implements OnInit {
 
+
   separatorKeysCodes: number[] = [ENTER, COMMA];
   tagCtrl = new FormControl('');
   filteredTags: Observable<string[]>;
+
+  @Input()
   tags: string[] = [];
+
   allTags: string[] = [];
 
   @ViewChild('tagInput') fruitInput: ElementRef<HTMLInputElement> = {} as ElementRef;
+
+  @Output()
+  tagsChange = new EventEmitter<string[]>();
 
   constructor(private tagsService: TagsService ) { 
     this.filteredTags = this.tagCtrl.valueChanges.pipe(
@@ -51,6 +58,7 @@ export class TagsAutocompleteInputComponent implements OnInit {
     event.chipInput!.clear();
 
     this.tagCtrl.setValue(null);
+    this.tagsChange.emit(this.tags);
   }
 
   remove(fruit: string): void {
@@ -59,12 +67,16 @@ export class TagsAutocompleteInputComponent implements OnInit {
     if (index >= 0) {
       this.tags.splice(index, 1);
     }
+
+    this.tagsChange.emit(this.tags);
+
   }
 
   selected(event: MatAutocompleteSelectedEvent): void {
     this.tags.push(event.option.viewValue);
     this.fruitInput.nativeElement.value = '';
     this.tagCtrl.setValue(null);
+    this.tagsChange.emit(this.tags);
   }
 
   private _filter(value: string): string[] {
