@@ -33,6 +33,7 @@ import { MonthSummaryComponent } from './month-summary/month-summary.component';
 import { TagsAutocompleteInputComponent } from './tags-autocomplete-input/tags-autocomplete-input.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { CategoriesFormComponent } from './categories-form/categories-form.component';
+import { NotAuthorizedComponent } from './not-authorized/not-authorized.component';
 
 
 @NgModule({
@@ -50,6 +51,7 @@ import { CategoriesFormComponent } from './categories-form/categories-form.compo
     TagsAutocompleteInputComponent,
     PageNotFoundComponent,
     CategoriesFormComponent,
+    NotAuthorizedComponent,
   ],
   imports: [
     BrowserModule,

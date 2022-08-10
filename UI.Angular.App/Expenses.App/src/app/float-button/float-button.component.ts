@@ -8,13 +8,14 @@ import { Router } from '@angular/router';
 })
 export class FloatButtonComponent implements OnInit {
 
+  private paths: string[] = ['/expense/add','/not-authorized']
   constructor(public router: Router) { }
 
   ngOnInit(): void {
   }
 
   isButtonVisible(): boolean {
-    return this.router.url != '/expense/add'
+    return !this.paths.includes(this.router.url)
   }
 
 }

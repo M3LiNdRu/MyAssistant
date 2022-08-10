@@ -27,7 +27,7 @@
         </div>
       <mat-form-field appearance="fill" class="expenses-80-width">
           <mat-label>Amount</mat-label>
-          <input matInput [(ngModel)]="expense.amount" [ngModelOptions]="{standalone: true}">
+          <input matInput currencyMask [(ngModel)]="expense.amount" [ngModelOptions]="{standalone: true}">
       </mat-form-field>     
       <app-tags-autocomplete-input [(tags)]="expense.tags"></app-tags-autocomplete-input>
   </form>

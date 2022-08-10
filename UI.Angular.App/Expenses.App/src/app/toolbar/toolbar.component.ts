@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router'
 
 @Component({
   selector: 'app-toolbar',
@@ -7,11 +8,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ToolbarComponent implements OnInit {
   current = new Date;
-  
-  constructor() { }
+  loggedIn = false;
+
+  constructor(public router: Router) { }
 
   ngOnInit(): void {
 
   }
 
+  checkLogin(logged: boolean) : void {
+    if (!logged) this.router.navigate(['not-authorized']);
+  }
 }
