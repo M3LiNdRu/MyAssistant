@@ -43,7 +43,7 @@ export class TagsAutocompleteInputComponent implements OnInit {
 
   getAllTags(): void {
     this.tagsService.getTags()
-    .subscribe(allTags => this.allTags = allTags.map((t) => t.name));
+    .subscribe(allTags => this.allTags = allTags.tags);
   }
 
   add(event: MatChipInputEvent): void {

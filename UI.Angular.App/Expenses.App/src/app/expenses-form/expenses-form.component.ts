@@ -9,6 +9,7 @@ import { Category } from '../category';
 import { Expense } from '../expense';
 import { CategoriesFormComponent } from '../categories-form/categories-form.component';
 
+const INGRESSOS = "Ingressos"
 
 @Component({
   selector: 'app-expenses-form',
@@ -45,6 +46,9 @@ export class ExpensesFormComponent implements OnInit {
 
   add(): void {
     if (this.expense) {
+      if (this.expense.category != INGRESSOS) 
+        this.expense.amount *= -1;
+      
       this.expenseService.addExpense(this.expense)
       .subscribe(() => console.log("Expense Added"));
     }

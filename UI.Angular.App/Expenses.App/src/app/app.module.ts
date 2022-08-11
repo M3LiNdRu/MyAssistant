@@ -15,6 +15,7 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatAutocompleteModule } from '@angular/material/autocomplete'; 
 import { MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/core';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle'; 
 
 import { httpInterceptorProviders } from './http-interceptors'
 
@@ -71,7 +72,8 @@ import { NotAuthorizedComponent } from './not-authorized/not-authorized.componen
     FormsModule,
     ReactiveFormsModule,
     MatAutocompleteModule,
-    MatDialogModule
+    MatDialogModule,
+    MatSlideToggleModule
   ],
   providers: [
     MatDatepickerModule,

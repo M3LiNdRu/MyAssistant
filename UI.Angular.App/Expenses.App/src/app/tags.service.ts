@@ -4,7 +4,7 @@ import { Observable, of } from 'rxjs';
 
 import { environment } from '../environments/environment';
 
-import { Tag } from './tag';
+import { Tags } from './tag';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +16,7 @@ export class TagsService {
   constructor(private http: HttpClient,) { }
 
   /** GET expenses from the server */
-  getTags(): Observable<Tag[]> {
-    return this.http.get<Tag[]>(this.tagsUrl)
+  getTags(): Observable<Tags> {
+    return this.http.get<Tags>(this.tagsUrl)
   }
 }
