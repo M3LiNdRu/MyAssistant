@@ -8,7 +8,6 @@ import { Router } from '@angular/router'
 })
 export class ToolbarComponent implements OnInit {
   current = new Date;
-  loggedIn = false;
 
   constructor(public router: Router) { }
 
@@ -16,7 +15,4 @@ export class ToolbarComponent implements OnInit {
 
   }
 
-  checkLogin(logged: boolean) : void {
-    if (!logged) this.router.navigate(['not-authorized']);
-  }
 }
