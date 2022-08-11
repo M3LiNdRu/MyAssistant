@@ -1,4 +1,4 @@
-import { Tag } from './tag';export interface Expense {
+export interface Expense {
     id: string;
     name: string;
     category: string;

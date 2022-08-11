@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-display',
@@ -6,7 +6,10 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./display.component.scss']
 })
 export class DisplayComponent implements OnInit {
-  amount = `2700.00 €`;
+  
+  @Input() 
+  currentAmount: number = 0;
+  
   constructor() { }
 
   ngOnInit(): void {
