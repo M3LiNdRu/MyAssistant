@@ -63,9 +63,11 @@ jobs:
           cd Expenses.App/
           npm i
           npm run build --configuration=production
-      - name: copy dist folder to wwwroot
-        run: |
-          mv Expenses.App/dist/expenses.app/* ${{env.DOTNET_ROOT}}/expensesapi/wwwroot/
+      - name: Upload artifact for deployment job
+        uses: actions/upload-artifact@v2
+        with:
+          name: .spa-app
+          path: ${{env.DOTNET_ROOT}}/Expenses.App/dist
         
   deploy:
     runs-on: ubuntu-latest
@@ -79,6 +81,16 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: .net-app
+
+      - name: Download artifact from build job
+        uses: actions/download-artifact@v2
+        with:
+          name: .spa-app
+
+      - name: Copy SPA into Api wwwroot folder
+        run: |
+          ls .
+          mv .spa-app/* .net-app/wwwroot/
 
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
