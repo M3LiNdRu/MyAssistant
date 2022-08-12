@@ -47,6 +47,7 @@ jobs:
         working-directory: UI.Angular.App/
     steps:
       - uses: actions/checkout@v2
+
       - name: Cache node_modules
         uses: actions/cache@v1
         with:
@@ -54,10 +55,12 @@ jobs:
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-node-
+
       - name: Node ${{ matrix.node-version }}
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
+
       - name: npm install and npm run build
         run: |
           cd Expenses.App/
@@ -65,11 +68,11 @@ jobs:
           npm run build --configuration=production
           ls ./dist/expenses.app/
 
-      #- name: Upload artifact for deployment job
-      #  uses: actions/upload-artifact@v2
-      #  with:
-      #    name: .spa-app
-      #    path: ${{env.DOTNET_ROOT}}/Expenses.App/dist/expenses.app
+      - name: Upload artifact for deployment job
+        uses: actions/upload-artifact@v2
+        with:
+          name: .spa-app
+          path: Expenses.App/dist/expenses.app
         
   #deploy:
   #  runs-on: ubuntu-latest
