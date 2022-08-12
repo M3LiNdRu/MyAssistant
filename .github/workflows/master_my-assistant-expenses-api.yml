@@ -62,7 +62,7 @@ jobs:
         run: |
           cd Expenses.App/
           npm i
-          npm --prefix package.json run build --configuration=production
+          npm run build --configuration=production
       - name: copy dist folder to wwwroot
         run: |
           mv dist/expenses.app/* ${{env.DOTNET_ROOT}}/expensesapi/wwwroot/
