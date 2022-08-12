@@ -65,7 +65,7 @@ jobs:
           npm run build --configuration=production
       - name: copy dist folder to wwwroot
         run: |
-          mv dist/expenses.app/* ${{env.DOTNET_ROOT}}/expensesapi/wwwroot/
+          mv Expenses.App/dist/expenses.app/* ${{env.DOTNET_ROOT}}/expensesapi/wwwroot/
         
   deploy:
     runs-on: ubuntu-latest
