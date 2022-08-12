@@ -63,8 +63,7 @@ jobs:
           cd Expenses.App/
           npm i
           npm run build --configuration=production
-          ls ./dist
-          ls ./dist/expense.app/
+          ls ./dist/expenses.app/
 
       #- name: Upload artifact for deployment job
       #  uses: actions/upload-artifact@v2
