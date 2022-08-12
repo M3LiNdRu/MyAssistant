@@ -1,2 +1,11 @@
-<app-display [currentAmount]="summary.totalAmount"></app-display>
-<google-chart [type]="myType" [data]="myData" ></google-chart>
+<div>
+    <app-display [currentAmount]="summary.totalAmount"></app-display>
+
+</div>
+<div>
+    <google-chart [type]="myType" [data]="myData" ></google-chart>
+</div>
+<mat-divider></mat-divider>
+<div class="center">
+    <button mat-raised-button color="primary" routerLink="/expenses/list" routerLinkActive="active" >Expenses List</button>
+</div>
