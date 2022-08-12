@@ -31,7 +31,7 @@ jobs:
         run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/expensesapi
 
       - name: Upload artifact for deployment job
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: .net-app
           path: ${{env.DOTNET_ROOT}}/expensesapi
@@ -69,10 +69,10 @@ jobs:
           ls ./dist/expenses.app/
 
       - name: Upload artifact for deployment job
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: .spa-app
-          path: Expenses.App/dist/expenses.app
+          path: Expenses.App/dist/expenses.app/
         
   #deploy:
   #  runs-on: ubuntu-latest
