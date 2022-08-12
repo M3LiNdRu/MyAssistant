@@ -37,7 +37,8 @@ namespace MyAssistant.Apis.Expenses.Api.Resources.Summary
 
             foreach(var cat in expenses.Where(expense => expense.Amount < 0).GroupBy(expense => expense.Category))
             {
-                result.ProgressBar.Add(cat.Key, (int)(cat.Sum(ex => ex.Amount) / capital) * 100);
+                var percentage = Convert.ToInt32(Math.Round((cat.Sum(ex => ex.Amount * -1) / capital) * 100, 0));
+                result.ProgressBar.Add(cat.Key, percentage);
             }
 
             return result;
@@ -56,8 +57,9 @@ namespace MyAssistant.Apis.Expenses.Api.Resources.Summary
 
             foreach (var cat in expenses.Where(expense => expense.Amount < 0).GroupBy(expense => expense.Category))
             {
-                result.ProgressBar.Add(cat.Key, (int)(cat.Sum(ex => ex.Amount) / result.Start) * 100);
-                result.SpentByCategory.Add(cat.Key, cat.Sum(ex => ex.Amount));
+                var percentage = Convert.ToInt32(Math.Round((cat.Sum(ex => ex.Amount * -1) / result.Start) * 100, 0));
+                result.ProgressBar.Add(cat.Key, percentage);
+                result.SpentByCategory.Add(cat.Key, cat.Sum(ex => ex.Amount * -1));
             }
 
             return result;
