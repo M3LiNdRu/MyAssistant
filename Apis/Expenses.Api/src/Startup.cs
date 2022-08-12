@@ -90,8 +90,7 @@ namespace MyAssistant.Apis.Expenses.Api
         {
             app.UseRouting();
 
-            //TODO: Uncomment this if you need wwwroot folder
-            // app.UseStaticFiles();
+            app.UseStaticFiles();
 
             app.UseAuthentication();
             app.UseAuthorization();
@@ -102,9 +101,11 @@ namespace MyAssistant.Apis.Expenses.Api
                 c.SwaggerEndpoint("0.1.0/swagger.yaml", "Expenses Api v1"); 
             });
 
-            //TODO: Use Https Redirection
-            // app.UseHttpsRedirection();
-
+            if (!env.IsDevelopment())
+            {
+                app.UseHttpsRedirection();
+            }
+            
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
