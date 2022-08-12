@@ -86,15 +86,15 @@ jobs:
         with:
           name: .net-app
 
+      - name: Mkdir wwwroot folder
+        run: |
+          mkdir ./wwwroot/
+
       - name: Download artifact from build job
         uses: actions/download-artifact@v2
         with:
           name: .spa-app
-
-      - name: Copy SPA into Api wwwroot folder
-        run: |
-          ls .
-          mv .spa-app/* .net-app/wwwroot/
+          path: ./wwwroot/
 
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
