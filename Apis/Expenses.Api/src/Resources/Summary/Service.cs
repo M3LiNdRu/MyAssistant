@@ -33,11 +33,11 @@ namespace MyAssistant.Apis.Expenses.Api.Resources.Summary
             result.Year = firstDayOfMonth.Year.ToString();
             result.Month = firstDayOfMonth.ToString("MMMM");
             result.TotalAmount = expenses.Sum(expense => expense.Amount);
-            var capital = expenses.Where(expense => expense.Amount > 0).Sum(expense => expense.Amount);
+            var totalSpent = Math.Abs(expenses.Where(expense => expense.Amount < 0).Sum(expense => expense.Amount));
 
             foreach(var cat in expenses.Where(expense => expense.Amount < 0).GroupBy(expense => expense.Category))
             {
-                var percentage = Convert.ToInt32(Math.Round((cat.Sum(ex => ex.Amount * -1) / capital) * 100, 0));
+                var percentage = Convert.ToInt32(Math.Round(cat.Sum(ex => Math.Abs(ex.Amount) / totalSpent) * 100, 0));
                 result.ProgressBar.Add(cat.Key, percentage);
             }
 
@@ -57,9 +57,9 @@ namespace MyAssistant.Apis.Expenses.Api.Resources.Summary
 
             foreach (var cat in expenses.Where(expense => expense.Amount < 0).GroupBy(expense => expense.Category))
             {
-                var percentage = Convert.ToInt32(Math.Round((cat.Sum(ex => ex.Amount * -1) / result.Start) * 100, 0));
+                var percentage = Convert.ToInt32(Math.Round((cat.Sum(ex => Math.Abs(ex.Amount)) / result.Start) * 100, 0));
                 result.ProgressBar.Add(cat.Key, percentage);
-                result.SpentByCategory.Add(cat.Key, cat.Sum(ex => ex.Amount * -1));
+                result.SpentByCategory.Add(cat.Key, cat.Sum(ex => Math.Abs(ex.Amount)));
             }
 
             return result;
