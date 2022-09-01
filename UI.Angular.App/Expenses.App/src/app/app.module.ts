@@ -16,6 +16,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/core';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider'; 
+import { MatTableModule } from '@angular/material/table'; 
 
 import { GoogleChartsModule } from 'angular-google-charts';
 
@@ -76,7 +77,8 @@ import { NotAuthorizedComponent } from './not-authorized/not-authorized.componen
     MatAutocompleteModule,
     MatDialogModule,
     MatDividerModule,
-    GoogleChartsModule 
+    GoogleChartsModule,
+    MatTableModule
   ],
   providers: [
     MatDatepickerModule,

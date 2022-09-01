@@ -23,4 +23,29 @@ export class ExpensesListComponent implements OnInit {
     .subscribe(expenses => this.expenses = expenses);
   }
 
+  getTotalCost(): number {
+    return this.expenses.map(t => t.amount).reduce((acc, value) => acc + value, 0);
+  }
+
+  columns = [
+    {
+      columnDef: 'name',
+      header: 'Name',
+      cell: (element: Expense) => `${element.name}`,
+    },
+    {
+      columnDef: 'category',
+      header: 'Category',
+      cell: (element: Expense) => `${element.category}`,
+    },
+    {
+      columnDef: 'value',
+      header: 'Value',
+      cell: (element: Expense) => `${element.amount} ${element.currency}`,
+    },
+  ];
+
+
+  displayedColumns = this.columns.map(c => c.columnDef);
+
 }
