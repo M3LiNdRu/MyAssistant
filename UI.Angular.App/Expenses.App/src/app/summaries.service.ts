@@ -6,6 +6,7 @@ import { catchError, map, tap } from 'rxjs/operators';
 
 import { environment } from 'src/environments/environment';
 import { CurrentSummary } from './currentSummary';
+import { MonthlySummary } from './monthlySummary';
 
 @Injectable({
   providedIn: 'root'
@@ -21,6 +22,13 @@ export class SummariesService {
   /** GET summary from the server */
   getSummary(): Observable<CurrentSummary> {
     return this.http.get<CurrentSummary>(environment.apiUrl + 'api/v1/summary/current', this.httpOptions).pipe(
+      tap(summary => console.log(`getting summary month=${summary.month}`)),
+      catchError(this.handleError<any>('getting summary'))
+    );
+  }
+
+  getMonthlySummary(year: number, month: number): Observable<MonthlySummary> {
+    return this.http.get<MonthlySummary>(environment.apiUrl + '/api/v1/summary/monthly/' + year +'/' + month, this.httpOptions).pipe(
       tap(summary => console.log(`getting summary month=${summary.month}`)),
       catchError(this.handleError<any>('getting summary'))
     );
