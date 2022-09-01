@@ -37,7 +37,8 @@ namespace MyAssistant.Apis.Expenses.Api
                 .AddOptions()
                 .AddGoogleAuthentication(
                     authority: Configuration.GetValue<string>("Authentication:Google:Authority"), 
-                    audience: Configuration.GetValue<string>("Authentication:Google:ClientId")
+                    audience: Configuration.GetValue<string>("Authentication:Google:ClientId"),
+                    allowedSub: Configuration.GetValue<string>("Authentication:AllowedSub")
                 )
                 .AddSwaggerGen(c =>
                 {

@@ -19,5 +19,15 @@ namespace Api.Resources.Developer
         {
             return Ok("You are in!");
         }
+
+        [AllowAnonymous()]
+        [HttpGet]
+        [Route("/api/v1/developer/anonymous")]
+        [SwaggerOperation("CheckAnonymous")]
+        [SwaggerResponse(statusCode: 200, description: "Successful operation")]
+        public virtual async Task<IActionResult> CheckAnonymous(CancellationToken cancellationToken)
+        {
+            return Ok("You are in!");
+        }
     }
 }

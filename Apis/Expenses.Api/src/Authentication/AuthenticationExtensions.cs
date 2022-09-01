@@ -1,7 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using System;
+using System.Collections.Generic;
+using System.Security.Claims;
 
 namespace Api.Authentication
 {
@@ -10,7 +13,8 @@ namespace Api.Authentication
         public static IServiceCollection AddGoogleAuthentication(
             this IServiceCollection services,
             string authority,
-            string audience
+            string audience,
+            string allowedSub
             )
         {
             var validationParameters = new TokenValidationParameters
@@ -37,7 +41,18 @@ namespace Api.Authentication
                 //x.SecurityTokenValidators.Clear();
                 //x.SecurityTokenValidators.Add(new GoogleJwtTokenValidator(audience));
             });
-            
+
+            services.AddAuthorization(options =>
+             {
+                 var policy = new AuthorizationPolicyBuilder()
+                    .RequireAuthenticatedUser()
+                    .RequireAssertion(context => context.User.HasClaim(c =>
+                        c.Issuer == authority && allowedSub == c.Subject.FindFirst(ClaimTypes.NameIdentifier).Value))
+                    .Build();
+
+                 options.DefaultPolicy = policy;
+             });
+
 
             return services;
         }
