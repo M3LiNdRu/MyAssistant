@@ -90,7 +90,8 @@ namespace MyAssistant.Apis.Expenses.Api
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
         {
             app.UseRouting();
-
+            
+            app.UseDefaultFiles();
             app.UseStaticFiles();
 
             app.UseAuthentication();
