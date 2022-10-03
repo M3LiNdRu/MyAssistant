@@ -15,11 +15,11 @@ export class ExpensesListComponent implements OnInit {
   constructor(private expensesService: ExpensesService) { }
 
   ngOnInit(): void {
-    this.getExpenses();
+    this.getMonthlyExpenses();
   }
 
-  getExpenses(): void {
-    this.expensesService.getExpenses()
+  getMonthlyExpenses(): void {
+    this.expensesService.getMonthlyExpenses()
     .subscribe(expenses => this.expenses = expenses);
   }
 
