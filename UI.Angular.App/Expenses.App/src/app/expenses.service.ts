@@ -29,6 +29,11 @@ export class ExpensesService {
     return this.http.get<Expense[]>(environment.apiUrl + 'api/v1/expenses/monthly')
   }
 
+  /** GET expenses from the server */
+  getMonthlyExpensesByYearAndMonth(year: number, month: number): Observable<Expense[]> {
+    return this.http.get<Expense[]>(environment.apiUrl + 'api/v1/expenses/monthly/' + year + '/' + month)
+  }
+
   addExpense(expense: Expense): Observable<boolean> {
     return this.http.post<Expense>(this.expensesUrl, expense, this.httpOptions).pipe(
       tap(_ => console.log(`added expense w/ id=${expense.id}`)),

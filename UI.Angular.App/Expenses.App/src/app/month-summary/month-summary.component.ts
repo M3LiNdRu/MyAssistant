@@ -35,16 +35,16 @@ export class MonthSummaryComponent implements OnInit {
   ngOnInit(): void {
     this.getSummary();
     this.populateChart();
-    this.getExpenses();
+    this.getMonthlyExpenses();
   }
 
-  getExpenses(): void {
-    this.expensesService.getMonthlyExpenses()
+  getMonthlyExpenses(): void {
+    this.expensesService.getMonthlyExpensesByYearAndMonth(2022, 9)
     .subscribe(expenses => this.expenses = expenses);
   }
 
   getSummary(): void {
-    this.summariesService.getMonthlySummary(2022, 8)
+    this.summariesService.getMonthlySummary(2022, 9)
     .subscribe(summary => this.summary = summary);
   }
 
