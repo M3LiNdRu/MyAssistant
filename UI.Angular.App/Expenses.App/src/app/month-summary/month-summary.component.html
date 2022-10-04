@@ -1,9 +1,18 @@
 <div>
+  <mat-card class="example-card">
+    <mat-card-title-group>
+      <mat-card-title class="red-text">Gastat: {{ summary.start-summary.saved }} €</mat-card-title>
+      <mat-card-title class="green-text">Estalviat: {{ summary.saved }} €</mat-card-title>
+      <mat-card-subtitle>Ingressos: {{ summary.start }} €</mat-card-subtitle>
+    </mat-card-title-group>
+</mat-card>
+</div>
+<div>
     <google-chart [type]="myType" [data]="myData" ></google-chart>
 </div>
 <mat-divider></mat-divider>
 <div>
-    <table mat-table [dataSource]="expenses" class="mat-elevation-z8 demo-table">
+    <table mat-table [dataSource]="list" class="mat-elevation-z8">
         <ng-container *ngFor="let column of table_columns" [matColumnDef]="column.columnDef">
           <th mat-header-cell *matHeaderCellDef>
             {{column.header}}
@@ -11,9 +20,13 @@
           <td mat-cell *matCellDef="let row">
             {{column.cell(row)}}
           </td>
+          <td mat-footer-cell *matFooterCellDef>
+            {{column.columnDef === 'category' ? 'Total' : column.columnDef === 'value' ? getTotalCost() + ' EUR' : ' ' }}
+          </td>
         </ng-container>
       
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        <tr mat-footer-row *matFooterRowDef="displayedColumns"></tr>
     </table>
 </div>

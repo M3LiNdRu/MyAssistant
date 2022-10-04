@@ -7,6 +7,6 @@ export interface MonthlySummary {
     spentByCategory: Dictionary<number>
 }
 
-interface Dictionary<T> {
+export interface Dictionary<T> {
     [Key: string]: T;
 }

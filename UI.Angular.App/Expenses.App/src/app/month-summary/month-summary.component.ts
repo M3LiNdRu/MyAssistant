@@ -25,6 +25,7 @@ export class MonthSummaryComponent implements OnInit {
   columns: Column[] = ['Categoria', '%'];
   myData: any[][] = [['Buit', 100]];
   myType: ChartType;
+  list: any[] = [];
 
   constructor(private summariesService: SummariesService,
     private expensesService: ExpensesService) 
@@ -34,7 +35,6 @@ export class MonthSummaryComponent implements OnInit {
 
   ngOnInit(): void {
     this.getSummary();
-    this.populateChart();
     this.getMonthlyExpenses();
   }
 
@@ -45,31 +45,35 @@ export class MonthSummaryComponent implements OnInit {
 
   getSummary(): void {
     this.summariesService.getMonthlySummary(2022, 9)
-    .subscribe(summary => this.summary = summary);
+    .subscribe(summary => {
+      this.summary = summary;
+      this.list = Object.entries(summary.spentByCategory).map(([key, value]) => ({key: key, value: value})).sort((n1,n2) => n2.value - n1.value);
+      this.populateChart();
+    });
+  }
+
+  getTotalCost(): number {
+    return Math.round(this.expenses.map(t => t.amount).reduce((acc, value) => acc + value, 0));
   }
 
   populateChart(): void {
-    if (Object.keys(this.summary.spentByCategory).length > 0) {
-      this.columns = Object.keys(this.summary.spentByCategory);
-      this.myData = Object.entries(this.summary.spentByCategory);
+    if (Object.keys(this.summary.progressBar).length > 0) {
+      this.columns = Object.keys(this.summary.progressBar);
+      this.myData = Object.entries(this.summary.progressBar);
     }
   }
 
+
   table_columns = [
-    {
-      columnDef: 'name',
-      header: 'Name',
-      cell: (element: Expense) => `${element.name}`,
-    },
     {
       columnDef: 'category',
       header: 'Category',
-      cell: (element: Expense) => `${element.category}`,
+      cell: (element: any) => `${element.key}`,
     },
     {
       columnDef: 'value',
       header: 'Value',
-      cell: (element: Expense) => `${element.amount} ${element.currency}`,
+      cell: (element: any) => `${element.value} €`,
     },
   ];
 
