@@ -9,8 +9,14 @@ tr.mat-footer-row {
 
 .green-text {
     color: green;
-  }
+}
 
-  .red-text {
+.red-text {
     color: red;
-  }
+}
+
+.table-container {
+    margin-top: 10px;
+    max-height: 300px;
+    overflow: auto;
+}
