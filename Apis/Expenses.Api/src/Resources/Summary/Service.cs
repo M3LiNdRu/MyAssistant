@@ -51,7 +51,7 @@ namespace MyAssistant.Apis.Expenses.Api.Resources.Summary
             var expenses = await this.expensesRepository.GetByMonthAsync(firstDayOfMonth, cancellationToken);
 
             result.Year = firstDayOfMonth.Year.ToString();
-            result.Month = firstDayOfMonth.Month.ToString("MMMM");
+            result.Month = firstDayOfMonth.ToString("MMMM");
             result.Saved = expenses.Sum(expense => expense.Amount);
             result.Start = expenses.Where(expense => expense.Amount > 0).Sum(expense => expense.Amount);
             var totalSpent = Math.Abs(expenses.Where(expense => expense.Amount < 0).Sum(expense => expense.Amount));
