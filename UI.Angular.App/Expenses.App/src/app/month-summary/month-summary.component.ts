@@ -39,12 +39,12 @@ export class MonthSummaryComponent implements OnInit {
   }
 
   getMonthlyExpenses(): void {
-    this.expensesService.getMonthlyExpensesByYearAndMonth(2022, 9)
+    this.expensesService.getMonthlyExpensesByYearAndMonth(2022, 10)
     .subscribe(expenses => this.expenses = expenses);
   }
 
   getSummary(): void {
-    this.summariesService.getMonthlySummary(2022, 9)
+    this.summariesService.getMonthlySummary(2022, 10)
     .subscribe(summary => {
       this.summary = summary;
       this.list = Object.entries(summary.spentByCategory).map(([key, value]) => ({key: key, value: value})).sort((n1,n2) => n2.value - n1.value);
