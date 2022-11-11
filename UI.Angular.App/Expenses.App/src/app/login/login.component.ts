@@ -1,4 +1,6 @@
-import { AfterViewInit, Component, ElementRef, EventEmitter, Output } from '@angular/core';
+import { AfterViewInit, Component, ElementRef } from '@angular/core';
+
+import { LoginService } from '../login.service';
 
 @Component({
   selector: 'app-login',
@@ -10,16 +12,17 @@ export class LoginComponent implements AfterViewInit {
   loggedIn: boolean = false;
 
 
-  constructor(private elementRef: ElementRef) {
+  constructor(
+    private elementRef: ElementRef, 
+    private loginService: LoginService) {
   }
 
   ngOnInit() {
-    this.loggedIn = localStorage.getItem('id_token') != null;
-    
-    (window as any).googleLogin = function(response: any) {
-      localStorage.setItem('id_token', response.credential);
-      this.loggedIn = true;
-    } 
+    this.loggedIn = this.loginService.isUserLoggedIn();
+    if (!this.loggedIn) {
+      this.loginService.login(); 
+      this.loginService.loggedIn.subscribe(value => this.loggedIn = value);
+    }
   }
 
   ngAfterViewInit() {
@@ -30,7 +33,7 @@ export class LoginComponent implements AfterViewInit {
   }
 
   logout(): void {
-    localStorage.removeItem("id_token");
+    this.loginService.logout();
     this.loggedIn = false;
   }
 

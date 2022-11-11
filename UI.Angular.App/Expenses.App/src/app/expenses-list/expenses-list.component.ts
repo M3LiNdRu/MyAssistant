@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnChanges, Input } from '@angular/core';
 
 import { Expense } from '../expense';
 import { ExpensesService } from '../expenses.service';
@@ -8,23 +8,24 @@ import { ExpensesService } from '../expenses.service';
   templateUrl: './expenses-list.component.html',
   styleUrls: ['./expenses-list.component.scss']
 })
-export class ExpensesListComponent implements OnInit {
+export class ExpensesListComponent implements OnChanges {
 
+  @Input() public date = new Date();
   expenses: Expense[] = [];
 
   constructor(private expensesService: ExpensesService) { }
 
-  ngOnInit(): void {
-    this.getMonthlyExpenses();
+  ngOnChanges(): void {
+    this.getMonthlyExpenses(this.date);
   }
 
-  getMonthlyExpenses(): void {
-    this.expensesService.getMonthlyExpenses()
+  getMonthlyExpenses(date: Date): void {
+    this.expensesService.getMonthlyExpensesByYearAndMonth(this.date.getFullYear(), this.date.getMonth()+1)
     .subscribe(expenses => this.expenses = expenses);
   }
 
   getTotalCost(): number {
-    return this.expenses.map(t => t.amount).reduce((acc, value) => acc + value, 0);
+    return Math.round(this.expenses.map(t => t.amount).reduce((acc, value) => acc + value, 0));
   }
 
   columns = [

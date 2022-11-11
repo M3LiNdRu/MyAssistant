@@ -8,12 +8,12 @@ import { NotAuthorizedComponent } from './not-authorized/not-authorized.componen
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 const routes: Routes = [
-  { path: 'summary/last', component: MonthSummaryComponent },
-  { path: 'summary', component: MainPageComponent },
-  { path: 'expense/add', component: ExpensesFormComponent },
-  { path: 'expenses/list', component: ExpensesListComponent },
+  //{ path: '', component: MonthSummaryComponent },
+  //{ path: 'summary', component: MainPageComponent },
+  //{ path: 'expense/add', component: ExpensesFormComponent },
+  //{ path: 'expenses/list', component: ExpensesListComponent },
   { path: 'not-authorized', component: NotAuthorizedComponent },
-  { path: '**', component: PageNotFoundComponent }
+  //{ path: '**', component: PageNotFoundComponent }
 ];
 
 @NgModule({

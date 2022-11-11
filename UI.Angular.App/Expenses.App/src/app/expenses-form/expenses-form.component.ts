@@ -1,13 +1,15 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 import { CategoriesService } from '../categories.service';
 import { ExpensesService } from '../expenses.service';
 
+import { CategoriesFormComponent } from '../categories-form/categories-form.component';
+
 import { Category } from '../category';
 import { Expense } from '../expense';
-import { CategoriesFormComponent } from '../categories-form/categories-form.component';
+
 
 const INGRESSOS = "Ingressos"
 
@@ -17,7 +19,9 @@ const INGRESSOS = "Ingressos"
   styleUrls: ['./expenses-form.component.scss']
 })
 export class ExpensesFormComponent implements OnInit {
-  
+
+  @Output() public displaySummaryEvent = new EventEmitter<boolean>();
+
   expense: Expense = {
     id: "",
     category: "",
@@ -50,7 +54,10 @@ export class ExpensesFormComponent implements OnInit {
         this.expense.amount *= -1;
       
       this.expenseService.addExpense(this.expense)
-      .subscribe(() => console.log("Expense Added"));
+      .subscribe(() => {
+        console.log("Expense Added");
+        this.displaySummaryEvent.emit(true);
+      });
     }
   }
 

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -7,15 +7,15 @@ import { Router } from '@angular/router';
   styleUrls: ['./float-button.component.scss']
 })
 export class FloatButtonComponent implements OnInit {
-
-  private paths: string[] = ['/expense/add','/not-authorized']
+  @Output() public displayExpenseFormEvent = new EventEmitter<boolean>();
+  
   constructor(public router: Router) { }
 
   ngOnInit(): void {
   }
 
-  isButtonVisible(): boolean {
-    return !this.paths.includes(this.router.url)
+  displayExpensesForm(): void {
+    this.displayExpenseFormEvent.emit(true);
   }
 
 }

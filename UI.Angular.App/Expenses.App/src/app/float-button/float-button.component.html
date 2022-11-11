@@ -1,8 +1,6 @@
 <button mat-fab 
     color="primary" 
     class="float-button" 
-    *ngIf="isButtonVisible()" 
-    routerLink="/expense/add" 
-    routerLinkActive="active" >
+    (click)="displayExpensesForm()"  >
     <mat-icon>add</mat-icon>
 </button>

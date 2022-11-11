@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { MonthlySummary } from '../monthlySummary';
 import { ChartType, Column } from 'angular-google-charts';
 import { SummariesService } from '../summaries.service';
@@ -10,17 +10,11 @@ import { Expense } from '../expense';
   templateUrl: './month-summary.component.html',
   styleUrls: ['./month-summary.component.scss']
 })
-export class MonthSummaryComponent implements OnInit {
+export class MonthSummaryComponent implements OnChanges {
 
-  summary: MonthlySummary = {
-    month: "",
-    year: "",
-    saved: 0,
-    start: 0,
-    progressBar: {},
-    spentByCategory: {}
-  };
-
+  @Input() public date = new Date();
+  
+  summary: MonthlySummary;
   expenses: Expense[] = [];
   columns: Column[] = ['Categoria', '%'];
   myData: any[][] = [['Buit', 100]];
@@ -31,25 +25,39 @@ export class MonthSummaryComponent implements OnInit {
     private expensesService: ExpensesService) 
   {
     this.myType = ChartType.PieChart;
+    this.summary = {
+      month: "",
+      year: "",
+      saved: 0,
+      start: 0,
+      progressBar: {},
+      spentByCategory: {}
+    };
   }
 
-  ngOnInit(): void {
+  ngOnChanges(changes: SimpleChanges): void {
+    console.log("ngOnChanges::Getting expenses from date: " + this.date);
     this.getSummary();
     this.getMonthlyExpenses();
   }
 
   getMonthlyExpenses(): void {
-    this.expensesService.getMonthlyExpensesByYearAndMonth(2022, 10)
+    this.expensesService.getMonthlyExpensesByYearAndMonth(this.date.getFullYear(), this.date.getMonth()+1)
     .subscribe(expenses => this.expenses = expenses);
   }
 
   getSummary(): void {
-    this.summariesService.getMonthlySummary(2022, 10)
+    this.summariesService.getMonthlySummary(this.date.getFullYear(), this.date.getMonth()+1)
     .subscribe(summary => {
       this.summary = summary;
       this.list = Object.entries(summary.spentByCategory).map(([key, value]) => ({key: key, value: value})).sort((n1,n2) => n2.value - n1.value);
+      this.resetChart();
       this.populateChart();
     });
+  }
+  
+  resetChart(): void {
+    this.myData = [['Buit', 100]];
   }
 
   getTotalCost(): number {

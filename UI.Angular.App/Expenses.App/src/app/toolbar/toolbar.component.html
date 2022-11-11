@@ -5,15 +5,15 @@
         <app-login></app-login>
     </mat-toolbar-row>
     <mat-toolbar-row>
-        <button mat-icon-button class="toolbar-icon" routerLink="/summary/last" routerLinkActive="active">
+        <button mat-icon-button class="toolbar-icon" (click)="previous()">
             <mat-icon>arrow_circle_left</mat-icon>
         </button>
         <span class="toolbar-spacer"></span>
-        <button mat-button class="toolbar-icon" routerLink="/summary" routerLinkActive="active" >
-            <span>{{current | date:'MMMM yyyy'}}</span>
+        <button mat-button class="toolbar-icon" (click)="showExpensesList()">
+            <span>{{ currentMonth | date:'MMMM yyyy' }}</span>
         </button>
         <span class="toolbar-spacer"></span>
-        <button mat-icon-button class="toolbar-icon" routerLink="/notfound" routerLinkActive="active" >
+        <button mat-icon-button class="toolbar-icon" (click)="next()" >
             <mat-icon>arrow_circle_right</mat-icon>
         </button>
     </mat-toolbar-row>

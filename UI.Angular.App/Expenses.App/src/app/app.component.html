@@ -1,6 +1,18 @@
-<app-toolbar></app-toolbar>
+<app-toolbar (monthChangedEvent)="useMonth($event)" (showExpensesListEvent)="displayExpensesList($event)"></app-toolbar>
 <div class="content" role="main">
-    <app-float-button></app-float-button>
+    <div *ngIf="display && loggedIn">
+        <app-month-summary [date]="current"></app-month-summary>
+        <app-float-button (displayExpenseFormEvent)="displayExpensesForm($event)"></app-float-button>
+    </div>
+    <div *ngIf="displayForm">
+        <app-expenses-form (displaySummaryEvent)="displaySummary($any($event))"></app-expenses-form>
+    </div>
+    <div *ngIf="displayList">
+        <app-expenses-list [date]="current"></app-expenses-list>
+    </div>
+    <div *ngIf="!loggedIn">
+        <span>Please, login</span>
+    </div>
 </div>
 <app-footer></app-footer>
 <router-outlet></router-outlet>

@@ -1,14 +1,14 @@
 <div>
-  <mat-card class="example-card">
+  <mat-card>
     <mat-card-title-group>
       <mat-card-title class="red-text">Gastat: {{ summary.start-summary.saved }} €</mat-card-title>
-      <mat-card-title class="green-text">Estalviat: {{ summary.saved }} €</mat-card-title>
+      <mat-card-title *ngIf="summary.saved > 0" class="green-text">Estalviat: {{ summary.saved }} €</mat-card-title>
       <mat-card-subtitle>Ingressos: {{ summary.start }} €</mat-card-subtitle>
     </mat-card-title-group>
 </mat-card>
 </div>
 <div>
-    <google-chart [type]="myType" [data]="myData" ></google-chart>
+    <google-chart class="chart" [type]="myType" [data]="myData" ></google-chart>
 </div>
 <mat-divider></mat-divider>
 <div class="table-container">
