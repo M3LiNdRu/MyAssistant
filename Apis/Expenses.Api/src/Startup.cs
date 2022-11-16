@@ -9,6 +9,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using MyAssistant.Apis.Expenses.Api.Resources.Categories;
 using MyAssistant.Apis.Expenses.Api.Resources.Expenses;
+using MyAssistant.Apis.Expenses.Api.Resources.Historigrams;
 using MyAssistant.Apis.Expenses.Api.Resources.Summary;
 using MyAssistant.Apis.Expenses.Api.Resources.Tags;
 using MyAssistant.Apis.Expenses.Api.Swagger;
@@ -81,6 +82,7 @@ namespace MyAssistant.Apis.Expenses.Api
                 .RegisterCategoriesFeatures()
                 .RegisterExpensesFeatures()
                 .RegisterSummaryFeatures()
+                .RegisterHistorigramsFeatures()
                 .RegisterTagsFeatures();
         }
 
