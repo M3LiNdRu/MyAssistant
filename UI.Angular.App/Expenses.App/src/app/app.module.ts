@@ -17,6 +17,7 @@ import { MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/core';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider'; 
 import { MatTableModule } from '@angular/material/table'; 
+import { MatTabsModule } from '@angular/material/tabs';
 
 import { GoogleChartsModule } from 'angular-google-charts';
 
@@ -78,7 +79,8 @@ import { NotAuthorizedComponent } from './not-authorized/not-authorized.componen
     MatDialogModule,
     MatDividerModule,
     GoogleChartsModule,
-    MatTableModule
+    MatTableModule,
+    MatTabsModule
   ],
   providers: [
     MatDatepickerModule,

@@ -8,7 +8,14 @@
 </mat-card>
 </div>
 <div>
-    <google-chart class="chart" [type]="myType" [data]="myData" ></google-chart>
+  <mat-tab-group>
+    <mat-tab label="Summary"> 
+      <google-chart class="chart" [type]="myType" [data]="myData" ></google-chart> 
+    </mat-tab>
+    <mat-tab label="Historigram"> 
+      <google-chart class="chart" [type]="myHistorigramType" [columns]="myHistorigramColumns" [data]="myHistorigramData" ></google-chart> 
+    </mat-tab>
+  </mat-tab-group>
 </div>
 <mat-divider></mat-divider>
 <div class="table-container">
