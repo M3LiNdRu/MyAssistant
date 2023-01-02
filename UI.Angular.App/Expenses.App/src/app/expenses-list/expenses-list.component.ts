@@ -21,7 +21,7 @@ export class ExpensesListComponent implements OnChanges {
 
   getMonthlyExpenses(date: Date): void {
     this.expensesService.getMonthlyExpensesByYearAndMonth(this.date.getFullYear(), this.date.getMonth()+1)
-    .subscribe(expenses => this.expenses = expenses);
+    .subscribe(expenses => this.expenses = expenses.sort((a,b) => (new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime())));
   }
 
   getTotalCost(): number {
@@ -38,6 +38,11 @@ export class ExpensesListComponent implements OnChanges {
       columnDef: 'category',
       header: 'Category',
       cell: (element: Expense) => `${element.category}`,
+    },
+    {
+      columnDef: 'timestamp',
+      header: 'Date',
+      cell: (element: Expense) => `${new Date(element.timestamp).toDateString()}`,
     },
     {
       columnDef: 'value',
