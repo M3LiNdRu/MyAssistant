@@ -61,7 +61,7 @@ export class MonthSummaryComponent implements OnChanges {
   }
 
   getTotalCost(): number {
-    return Math.round(this.expenses.map(t => t.amount).reduce((acc, value) => acc + value, 0));
+    return Math.round(this.expenses.filter(e => e.amount < 0).map(t => t.amount).reduce((acc, value) => acc + value, 0));
   }
 
   populateChart(): void {
