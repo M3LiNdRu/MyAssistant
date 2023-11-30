@@ -18,6 +18,9 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider'; 
 import { MatTableModule } from '@angular/material/table'; 
 import { MatTabsModule } from '@angular/material/tabs';
+import { MatMenuModule } from '@angular/material/menu';
+
+import { SocialLoginModule, SocialAuthServiceConfig, GoogleLoginProvider, GoogleSigninButtonModule  } from '@abacritt/angularx-social-login';
 
 import { GoogleChartsModule } from 'angular-google-charts';
 
@@ -80,12 +83,32 @@ import { NotAuthorizedComponent } from './not-authorized/not-authorized.componen
     MatDividerModule,
     GoogleChartsModule,
     MatTableModule,
-    MatTabsModule
+    MatTabsModule,
+    SocialLoginModule,
+    GoogleSigninButtonModule,
+    MatMenuModule
   ],
   providers: [
     MatDatepickerModule,
     { provide: MAT_DATE_LOCALE, useValue: 'ca-ES' },
-    httpInterceptorProviders
+    httpInterceptorProviders,
+    {
+      provide: 'SocialAuthServiceConfig',
+      useValue: {
+        autoLogin: true,
+        providers: [
+          {
+            id: GoogleLoginProvider.PROVIDER_ID,
+            provider: new GoogleLoginProvider(
+              '1012495556001-1arrtrlhjcpnac4ql6g9783odd8j0h78.apps.googleusercontent.com'
+            )
+          }
+        ],
+        onError: (err) => {
+          console.error(err);
+        }
+      } as SocialAuthServiceConfig,
+    }
   ],
   bootstrap: [AppComponent]
 })

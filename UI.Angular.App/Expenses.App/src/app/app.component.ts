@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { LoginService } from './login.service';
+import { SocialAuthService } from "@abacritt/angularx-social-login";
 
 @Component({
   selector: 'app-root',
@@ -14,12 +14,12 @@ export class AppComponent implements OnInit {
   displayList = false;
   loggedIn = false;
 
-  constructor(private loginService: LoginService) {
-    
+  constructor(private authService: SocialAuthService) {
+  
   }
 
   ngOnInit(): void {
-    this.loginService.loggedIn.subscribe(value => this.loggedIn = value);
+    this.authService.authState.subscribe((user) => { this.loggedIn = (user != null); });
   }
 
   useMonth(month: Date) {

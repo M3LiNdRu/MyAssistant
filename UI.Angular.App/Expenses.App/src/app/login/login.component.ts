@@ -1,40 +1,45 @@
-import { AfterViewInit, Component, ElementRef } from '@angular/core';
+import { OnInit, Component, ElementRef } from '@angular/core';
+import { SocialAuthService, GoogleLoginProvider, SocialUser } from "@abacritt/angularx-social-login";
 
-import { LoginService } from '../login.service';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements AfterViewInit {
+export class LoginComponent implements OnInit {
   
+  private accessToken = '';
+  user: SocialUser = new SocialUser();
   loggedIn: boolean = false;
 
 
   constructor(
     private elementRef: ElementRef, 
-    private loginService: LoginService) {
+    private authService: SocialAuthService) {
   }
 
   ngOnInit() {
-    this.loggedIn = this.loginService.isUserLoggedIn();
-    if (!this.loggedIn) {
-      this.loginService.login(); 
-      this.loginService.loggedIn.subscribe(value => this.loggedIn = value);
-    }
+    this.authService.authState.subscribe((user) => {
+      this.user = user;
+      this.loggedIn = (user != null);
+      if (this.loggedIn) {
+        this.accessToken = user.idToken;
+        localStorage.setItem("id_token", this.accessToken);
+      }
+    });
   }
 
-  ngAfterViewInit() {
-    const s = document.createElement("script");
-    s.type = "text/javascript";
-    s.src = "https://accounts.google.com/gsi/client";
-    this.elementRef.nativeElement.appendChild(s);
+  signOut(): void {
+    this.authService.signOut();
+    localStorage.removeItem("id_token");
   }
 
-  logout(): void {
-    this.loginService.logout();
-    this.loggedIn = false;
+  getAccessToken(): void {
+    this.authService.getAccessToken(GoogleLoginProvider.PROVIDER_ID).then(accessToken => this.accessToken = accessToken);
   }
 
+  refreshToken(): void {
+    this.authService.refreshAccessToken(GoogleLoginProvider.PROVIDER_ID);
+  }
 }

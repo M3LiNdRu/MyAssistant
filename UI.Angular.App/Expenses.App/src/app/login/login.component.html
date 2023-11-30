@@ -1,19 +1,18 @@
-<div id="g_id_onload"
-         data-client_id="1012495556001-1arrtrlhjcpnac4ql6g9783odd8j0h78.apps.googleusercontent.com"
-         data-callback="googleLogin"
-         data-auto_prompt="false"
-         *ngIf="!loggedIn">
-      </div>
-      <div class="g_id_signin"
-         data-type="standard"
-         data-size="small"
-         data-theme="outline"
-         data-text="sign_in_with"
-         data-shape="rectangular"
-         data-logo_alignment="left"
-         *ngIf="!loggedIn"
-         >
-      </div>
+<div *ngIf="loggedIn; else loginBlock">
 
-<button *ngIf="loggedIn" (click)="logout()">log out</button>
-    
+   <img class="profile-photo" alt="{{user.firstName}}" src="{{user.photoUrl}}" [matMenuTriggerFor]="menu">
+   
+   <mat-menu #menu="matMenu">
+       <!-- <button mat-menu-item routerLink="/profile/me" routerLinkActive="active" >
+           <mat-icon>settings</mat-icon>
+           <span>Perfil</span>
+         </button> -->
+       <button mat-menu-item (click)="signOut()">
+         <mat-icon>logout</mat-icon>
+         <span>Desconnectar</span>
+       </button>
+     </mat-menu>
+</div>
+<ng-template #loginBlock>
+   <asl-google-signin-button type='standard' size='medium' shape='pill'></asl-google-signin-button>
+</ng-template>
