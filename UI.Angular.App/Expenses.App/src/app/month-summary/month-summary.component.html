@@ -1,29 +1,27 @@
-<div id="main-div">
-  <div id="month-div">
-    <mat-card appearance="outlined">
-      <mat-card-title-group>
-        <mat-card-title class="red-text">Gastat: {{ summary.start-summary.saved }} €</mat-card-title>
-        <mat-card-title *ngIf="summary.saved > 0" class="green-text">Estalviat: {{ summary.saved }} €</mat-card-title>
-        <mat-card-subtitle>Ingressos: {{ summary.start }} €</mat-card-subtitle>
-      </mat-card-title-group>
-    </mat-card>
-  </div>
-  <div id="year-div">
-    <mat-card appearance="outlined">
-      <mat-card-title-group>
-        <mat-card-title class="green-text">Total estalviat: {{historigram.totalSavings}} €</mat-card-title>
-        <mat-card-subtitle>Total ingressos: {{historigram.totalEarned}} €</mat-card-subtitle>
-        <mat-card-subtitle>Total despeses: {{historigram.totalSpent}} €</mat-card-subtitle>
-      </mat-card-title-group>
-    </mat-card>
-  </div>
-</div>
 <div>
   <mat-tab-group>
     <mat-tab label="Summary"> 
+      <div>
+        <mat-card class="mat-elevation-z0">
+          <mat-card-title-group>
+            <mat-card-title class="red-text">Spent: {{ summary.start-summary.saved | number : '1.2-2' }} €</mat-card-title>
+            <mat-card-title *ngIf="summary.saved > 0" class="green-text">Earned: {{ summary.saved | number : '1.2-2' }} €</mat-card-title>
+            <mat-card-subtitle>Savings: {{ summary.start | number : '1.2-2' }} €</mat-card-subtitle>
+          </mat-card-title-group>
+        </mat-card>
+      </div>
       <google-chart class="chart" [type]="summaryType" [data]="summaryData" ></google-chart> 
     </mat-tab>
     <mat-tab label="Historigram"> 
+      <div>
+        <mat-card class="mat-elevation-z0">
+          <mat-card-title-group>
+            <mat-card-title class="green-text">Total estalviat: {{ historigram.totalSavings | number : '1.2-2' }} €</mat-card-title>
+            <mat-card-subtitle>Total ingressos: {{ historigram.totalEarned | number : '1.2-2'  }} €</mat-card-subtitle>
+            <mat-card-subtitle>Total despeses: {{ historigram.totalSpent | number : '1.2-2' }} €</mat-card-subtitle>
+          </mat-card-title-group>
+        </mat-card>
+      </div>
       <google-chart class="chart" [type]="historigramType" [columns]="historigramColumns" [data]="historigramData" ></google-chart> 
     </mat-tab>
   </mat-tab-group>

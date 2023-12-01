@@ -25,16 +25,11 @@ tr.mat-mdc-footer-row {
     padding-top: 5px;
 }
 
-#main-div { 
+mat-card { 
     margin: 0 5px;
-    height: 75px;
-}
-#month-div    {
-    width: 250px;
-    float: left;
+    height: 100px;
 }
 
-#year-div  {
-    width: 250px;
-    margin-left: 250px;
+google-chart {
+    width: 100%;
 }
