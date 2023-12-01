@@ -19,25 +19,14 @@ export class MonthSummaryComponent implements OnChanges {
   summary: MonthlySummary;
   historigram: Historigram;
   expenses: Expense[] = [];
-  columns: Column[] = ['Categoria', '%'];
-  myHistorigramColumns = [
-    'Element',
-    'Density',
-    { type: 'number', role: 'interval' },
-    { type: 'number', role: 'interval' },
-    { type: 'string', role: 'annotation' },
-    { type: 'string', role: 'annotationText' }
-  ];
-  myHistorigramData : Row[] = [
-    ['April', 1000, 900, 1100, 'A', 'Stolen data'],
-    ['May', 1170, 1000, 1200, 'B', 'Coffee spill'],
-    ['June', 660, 550, 800, 'C', 'Wumpus attack'],
-    ['July', 1030, null, null, null, null]
-  ];
-  myHistorigramType: ChartType;
+  summaryColumns: Column[] = ['Categoria', '%'];
+  historigramColumns = ['Month', 'saved', 'spent', 'earned'];
 
-  myData: any[][] = [['Buit', 100]];
-  myType: ChartType;
+  historigramData: any[][] = [];
+  historigramType: ChartType;
+
+  summaryData: any[][] = [['Buit', 100]];
+  summaryType: ChartType;
   
   list: any[] = [];
 
@@ -45,8 +34,8 @@ export class MonthSummaryComponent implements OnChanges {
     private expensesService: ExpensesService,
     private historigramService: HistorigramService) 
   {
-    this.myType = ChartType.PieChart;
-    this.myHistorigramType = ChartType.LineChart;
+    this.summaryType = ChartType.PieChart;
+    this.historigramType = ChartType.LineChart;
     
     this.summary = {
       month: "",
@@ -69,12 +58,16 @@ export class MonthSummaryComponent implements OnChanges {
     console.log("ngOnChanges::Getting expenses from date: " + this.date);
     this.getSummary();
     this.getMonthlyExpenses();
-    //this.getHistorigram();
+    this.getHistorigram();
   }
 
   getHistorigram(): void {
     this.historigramService.getHistorigram()
-    .subscribe(historigram => this.historigram = historigram);
+    .subscribe(historigram => {
+      this.historigram = historigram;
+      this.resetHistorigramChart();
+      this.populateHistorigramChart();
+    });
   }
 
   getMonthlyExpenses(): void {
@@ -87,29 +80,36 @@ export class MonthSummaryComponent implements OnChanges {
     .subscribe(summary => {
       this.summary = summary;
       this.list = Object.entries(summary.spentByCategory).map(([key, value]) => ({key: key, value: value})).sort((n1,n2) => n2.value - n1.value);
-      this.resetChart();
-      this.populateCharts();
+      this.resetSummaryChart();
+      this.populateSummaryChart();
     });
   }
   
-  resetChart(): void {
-    this.myData = [['Buit', 100]];
-    this.myHistorigramData = [[]];
+  resetSummaryChart(): void {
+    this.summaryData = [['Buit', 100]];
+  }
+
+  resetHistorigramChart(): void {
+    this.historigramData = [[]];
   }
 
   getTotalCost(): number {
     return Math.round(this.expenses.filter(e => e.amount < 0).map(t => t.amount).reduce((acc, value) => acc + value, 0));
   }
 
-  populateCharts(): void {
+  populateSummaryChart(): void {
     if (Object.keys(this.summary.progressBar).length > 0) {
-      this.columns = Object.keys(this.summary.progressBar);
-      this.myData = Object.entries(this.summary.progressBar);
+      this.summaryColumns = Object.keys(this.summary.progressBar);
+      this.summaryData = Object.entries(this.summary.progressBar);
     }
+  }
 
+  populateHistorigramChart(): void {
     if (Object.keys(this.historigram.progressLine).length > 0) {
-      //this.historigramColumns = Object.keys(this.historigram.progressLine);
-      //this.myHistorigramData = Object.entries(this.historigram.progressLine);
+      this.historigramData = Object.keys(this.historigram.progressLine)
+                          .map((key) => ({key: key, value: this.historigram.progressLine[key]}))
+                          .map((value) => ([value.key, value.value.saved, value.value.spent, value.value.earned]));
+      console.log(this.historigramData);
     }
   }
 
