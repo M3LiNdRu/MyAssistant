@@ -108,7 +108,7 @@ export class MonthSummaryComponent implements OnChanges {
     if (Object.keys(this.historigram.progressLine).length > 0) {
       this.historigramData = Object.keys(this.historigram.progressLine)
                           .map((key) => ({key: key, value: this.historigram.progressLine[key]}))
-                          .map((value) => ([value.key, value.value.saved, value.value.spent, value.value.earned]));
+                          .map((value) => ([value.key.substring(5,7), value.value.saved, value.value.spent, value.value.earned]));
       console.log(this.historigramData);
     }
   }

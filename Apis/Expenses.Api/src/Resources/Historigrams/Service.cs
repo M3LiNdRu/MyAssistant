@@ -35,7 +35,7 @@ namespace MyAssistant.Apis.Expenses.Api.Resources.Historigrams
                 result.TotalEarned = Math.Abs(expenses.Where(expense => expense.Amount > 0).Sum(expense => expense.Amount));
 
                 var saved = 0M;
-                foreach(var month in expenses.GroupBy(m => m.Timestamp.Month))
+                foreach(var month in expenses.Where(e => e.Timestamp >= DateTime.Today.AddMonths(-11)).GroupBy(m => m.Timestamp.Month))
                 {
                     var spent = Math.Abs(month.Where(expense => expense.Amount < 0).Sum(expense => expense.Amount));
                     var earned = Math.Abs(month.Where(expense => expense.Amount > 0).Sum(expense => expense.Amount));
