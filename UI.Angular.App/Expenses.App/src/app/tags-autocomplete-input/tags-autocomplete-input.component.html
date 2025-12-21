@@ -1,14 +1,14 @@
 <mat-form-field class="expenses-80-width" appearance="fill">
     <mat-label>Special Tags</mat-label>
-    <mat-chip-list #chipList >
-        <mat-chip
+    <mat-chip-grid #chipList >
+        <mat-chip-row
           *ngFor="let tag of tags"
           (removed)="remove(tag)">
           {{tag}}
           <button matChipRemove>
             <mat-icon>cancel</mat-icon>
           </button>
-        </mat-chip>
+        </mat-chip-row>
         <input
           placeholder="New tag..."
           #tagInput
@@ -17,7 +17,7 @@
           [matChipInputFor]="chipList"
           [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
           (matChipInputTokenEnd)="add($event)">
-      </mat-chip-list>
+      </mat-chip-grid>
       <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
         <mat-option *ngFor="let tag of filteredTags | async" [value]="tag">
           {{tag}}

@@ -2,7 +2,7 @@
   <mat-tab-group>
     <mat-tab label="Summary"> 
       <div>
-        <mat-card class="mat-elevation-z0">
+        <mat-card appearance="outlined" class="mat-elevation-z0">
           <mat-card-title-group>
             <mat-card-title class="red-text">Spent: {{ summary.start-summary.saved | number : '1.2-2' }} €</mat-card-title>
             <mat-card-title *ngIf="summary.saved > 0" class="green-text">Earned: {{ summary.saved | number : '1.2-2' }} €</mat-card-title>
@@ -14,7 +14,7 @@
     </mat-tab>
     <mat-tab label="Historigram"> 
       <div>
-        <mat-card class="mat-elevation-z0">
+        <mat-card appearance="outlined" class="mat-elevation-z0">
           <mat-card-title-group>
             <mat-card-title class="green-text">Total estalviat: {{ historigram.totalSavings | number : '1.2-2' }} €</mat-card-title>
             <mat-card-subtitle>Total ingressos: {{ historigram.totalEarned | number : '1.2-2'  }} €</mat-card-subtitle>

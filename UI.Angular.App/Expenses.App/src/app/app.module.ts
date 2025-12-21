@@ -11,7 +11,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select'; 
 import { MatInputModule } from '@angular/material/input'; 
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatLegacyChipsModule as MatChipsModule } from '@angular/material/legacy-chips'; 
+import { MatChipsModule } from '@angular/material/chips'; 
 import { MatAutocompleteModule } from '@angular/material/autocomplete'; 
 import { MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/core';
 import { MatDialogModule } from '@angular/material/dialog';
