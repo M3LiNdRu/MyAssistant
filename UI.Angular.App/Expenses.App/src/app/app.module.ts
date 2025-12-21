@@ -20,7 +20,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatMenuModule } from '@angular/material/menu';
 
-import { SocialLoginModule, SocialAuthServiceConfig, GoogleLoginProvider, GoogleSigninButtonModule  } from '@abacritt/angularx-social-login';
+import { SocialLoginModule, SocialAuthServiceConfig, GoogleLoginProvider, GoogleSigninButtonModule, SOCIAL_AUTH_CONFIG  } from '@abacritt/angularx-social-login';
 
 import { GoogleChartsModule } from 'angular-google-charts';
 
@@ -88,7 +88,7 @@ import { NotAuthorizedComponent } from './not-authorized/not-authorized.componen
         { provide: MAT_DATE_LOCALE, useValue: 'ca-ES' },
         httpInterceptorProviders,
         {
-            provide: 'SocialAuthServiceConfig',
+            provide: SOCIAL_AUTH_CONFIG,
             useValue: {
                 autoLogin: true,
                 providers: [
