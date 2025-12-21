@@ -1,18 +1,17 @@
-<div *ngIf="loggedIn; else loginBlock">
-
-   <img class="profile-photo" alt="{{user.firstName}}" src="{{user.photoUrl}}" [matMenuTriggerFor]="menu">
-   
-   <mat-menu #menu="matMenu">
-       <!-- <button mat-menu-item routerLink="/profile/me" routerLinkActive="active" >
-           <mat-icon>settings</mat-icon>
-           <span>Perfil</span>
-         </button> -->
-       <button mat-menu-item (click)="signOut()">
-         <mat-icon>logout</mat-icon>
-         <span>Desconnectar</span>
-       </button>
-     </mat-menu>
+@if (loggedIn) {
+  <div>
+    <img class="profile-photo" alt="{{user.firstName}}" src="{{user.photoUrl}}" [matMenuTriggerFor]="menu">
+    <mat-menu #menu="matMenu">
+      <!-- <button mat-menu-item routerLink="/profile/me" routerLinkActive="active" >
+      <mat-icon>settings</mat-icon>
+      <span>Perfil</span>
+    </button> -->
+    <button mat-menu-item (click)="signOut()">
+      <mat-icon>logout</mat-icon>
+      <span>Desconnectar</span>
+    </button>
+  </mat-menu>
 </div>
-<ng-template #loginBlock>
-   <asl-google-signin-button type='standard' size='medium' shape='pill'></asl-google-signin-button>
-</ng-template>
+} @else {
+  <asl-google-signin-button type='standard' size='medium' shape='pill'></asl-google-signin-button>
+}

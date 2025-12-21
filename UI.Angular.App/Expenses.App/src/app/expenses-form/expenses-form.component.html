@@ -2,41 +2,42 @@
   <mat-card-content>
     <form class="expenses-form">
       <mat-form-field appearance="fill" class="expenses-80-width">
-          <mat-label>Name</mat-label>
-          <input matInput [(ngModel)]="expense.name" [ngModelOptions]="{standalone: true}">
+        <mat-label>Name</mat-label>
+        <input matInput [(ngModel)]="expense.name" [ngModelOptions]="{standalone: true}">
       </mat-form-field>
       <mat-form-field appearance="fill" class="expenses-80-width">
-          <mat-label>Date</mat-label>
-          <input matInput [matDatepicker]="picker" [(ngModel)]="expense.timestamp" [ngModelOptions]="{standalone: true}">
-          <mat-hint>DD/MM/YYYY</mat-hint>
-          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-          <mat-datepicker #picker></mat-datepicker>
-      </mat-form-field> 
-        <div class="expenses-80-width">
-          <mat-form-field appearance="fill" >
-            <mat-label>Category</mat-label>
-            <mat-select [(ngModel)]="expense.category" [ngModelOptions]="{standalone: true}">
-              <mat-option *ngFor="let cat of categories" [value]="cat.name">
+        <mat-label>Date</mat-label>
+        <input matInput [matDatepicker]="picker" [(ngModel)]="expense.timestamp" [ngModelOptions]="{standalone: true}">
+        <mat-hint>DD/MM/YYYY</mat-hint>
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+      <div class="expenses-80-width">
+        <mat-form-field appearance="fill" >
+          <mat-label>Category</mat-label>
+          <mat-select [(ngModel)]="expense.category" [ngModelOptions]="{standalone: true}">
+            @for (cat of categories; track cat) {
+              <mat-option [value]="cat.name">
                 {{cat.name}}
               </mat-option>
-            </mat-select>
-          </mat-form-field>
-        </div>
-        <div class="expenses-20-width">
-          <button mat-raised-button (click)="openDialog()"><mat-icon>add</mat-icon></button>
-        </div>
+            }
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="expenses-20-width">
+        <button mat-raised-button (click)="openDialog()"><mat-icon>add</mat-icon></button>
+      </div>
       <mat-form-field appearance="fill" class="expenses-80-width">
-          <mat-label>Amount</mat-label>
-          <input matInput currencyMask [(ngModel)]="expense.amount" [ngModelOptions]="{standalone: true}">
-      </mat-form-field>     
+        <mat-label>Amount</mat-label>
+        <input matInput currencyMask [(ngModel)]="expense.amount" [ngModelOptions]="{standalone: true}">
+      </mat-form-field>
       <app-tags-autocomplete-input [(tags)]="expense.tags"></app-tags-autocomplete-input>
-  </form>
+    </form>
   </mat-card-content>
   <mat-card-actions>
-    <button mat-raised-button 
+    <button mat-raised-button
       color="primary"
       (click)="add()"
-      >Add</button>
+    >Add</button>
   </mat-card-actions>
- </mat-card>
- 
+</mat-card>

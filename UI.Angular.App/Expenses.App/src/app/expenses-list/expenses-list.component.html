@@ -1,5 +1,6 @@
 <table mat-table [dataSource]="expenses" class="mat-elevation-z8 demo-table">
-    <ng-container *ngFor="let column of columns" [matColumnDef]="column.columnDef">
+  @for (column of columns; track column) {
+    <ng-container [matColumnDef]="column.columnDef">
       <th mat-header-cell *matHeaderCellDef>
         {{column.header}}
       </th>
@@ -10,9 +11,9 @@
         {{ column.columnDef === 'name' ? 'Total' : column.columnDef === 'value' ? getTotalCost() + ' EUR' : ' ' }}
       </td>
     </ng-container>
-  
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-    <tr mat-footer-row *matFooterRowDef="displayedColumns"></tr>
+  }
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  <tr mat-footer-row *matFooterRowDef="displayedColumns"></tr>
 </table>
-  
