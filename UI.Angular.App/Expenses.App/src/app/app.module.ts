@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { MatToolbarModule } from '@angular/material/toolbar'; 
@@ -44,72 +44,64 @@ import { CategoriesFormComponent } from './categories-form/categories-form.compo
 import { NotAuthorizedComponent } from './not-authorized/not-authorized.component';
 
 
-@NgModule({
-  declarations: [
-    AppComponent,
-    LoginComponent,
-    ExpensesListComponent,
-    FooterComponent,
-    ToolbarComponent,
-    FloatButtonComponent,
-    DisplayComponent,
-    ExpensesFormComponent,
-    MainPageComponent,
-    MonthSummaryComponent,
-    TagsAutocompleteInputComponent,
-    PageNotFoundComponent,
-    CategoriesFormComponent,
-    NotAuthorizedComponent,
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    HttpClientModule,
-    NoopAnimationsModule,
-    MatToolbarModule,
-    MatIconModule,
-    MatButtonModule,
-    MatCardModule,
-    MatFormFieldModule,
-    MatSelectModule,
-    MatInputModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
-    MatChipsModule,
-    FormsModule,
-    ReactiveFormsModule,
-    MatAutocompleteModule,
-    MatDialogModule,
-    MatDividerModule,
-    GoogleChartsModule,
-    MatTableModule,
-    MatTabsModule,
-    SocialLoginModule,
-    GoogleSigninButtonModule,
-    MatMenuModule
-  ],
-  providers: [
-    MatDatepickerModule,
-    { provide: MAT_DATE_LOCALE, useValue: 'ca-ES' },
-    httpInterceptorProviders,
-    {
-      provide: 'SocialAuthServiceConfig',
-      useValue: {
-        autoLogin: true,
-        providers: [
-          {
-            id: GoogleLoginProvider.PROVIDER_ID,
-            provider: new GoogleLoginProvider(
-              '1012495556001-1arrtrlhjcpnac4ql6g9783odd8j0h78.apps.googleusercontent.com'
-            )
-          }
-        ],
-        onError: (err) => {
-          console.error(err);
-        }
-      } as SocialAuthServiceConfig,
-    }
-  ],
-  bootstrap: [AppComponent]
-})
+@NgModule({ declarations: [
+        AppComponent,
+        LoginComponent,
+        ExpensesListComponent,
+        FooterComponent,
+        ToolbarComponent,
+        FloatButtonComponent,
+        DisplayComponent,
+        ExpensesFormComponent,
+        MainPageComponent,
+        MonthSummaryComponent,
+        TagsAutocompleteInputComponent,
+        PageNotFoundComponent,
+        CategoriesFormComponent,
+        NotAuthorizedComponent,
+    ],
+    bootstrap: [AppComponent], imports: [BrowserModule,
+        AppRoutingModule,
+        NoopAnimationsModule,
+        MatToolbarModule,
+        MatIconModule,
+        MatButtonModule,
+        MatCardModule,
+        MatFormFieldModule,
+        MatSelectModule,
+        MatInputModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
+        MatChipsModule,
+        FormsModule,
+        ReactiveFormsModule,
+        MatAutocompleteModule,
+        MatDialogModule,
+        MatDividerModule,
+        GoogleChartsModule,
+        MatTableModule,
+        MatTabsModule,
+        SocialLoginModule,
+        GoogleSigninButtonModule,
+        MatMenuModule], providers: [
+        MatDatepickerModule,
+        { provide: MAT_DATE_LOCALE, useValue: 'ca-ES' },
+        httpInterceptorProviders,
+        {
+            provide: 'SocialAuthServiceConfig',
+            useValue: {
+                autoLogin: true,
+                providers: [
+                    {
+                        id: GoogleLoginProvider.PROVIDER_ID,
+                        provider: new GoogleLoginProvider('1012495556001-1arrtrlhjcpnac4ql6g9783odd8j0h78.apps.googleusercontent.com')
+                    }
+                ],
+                onError: (err) => {
+                    console.error(err);
+                }
+            } as SocialAuthServiceConfig,
+        },
+        provideHttpClient(withInterceptorsFromDi())
+    ] })
 export class AppModule { }
