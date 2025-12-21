@@ -23,7 +23,7 @@ export class LoginComponent implements OnInit {
     this.authService.authState.subscribe((user) => {
       this.user = user;
       this.loggedIn = (user != null);
-      if (this.loggedIn) {
+      if (this.loggedIn && user.idToken) {
         this.accessToken = user.idToken;
         localStorage.setItem("id_token", this.accessToken);
       }
