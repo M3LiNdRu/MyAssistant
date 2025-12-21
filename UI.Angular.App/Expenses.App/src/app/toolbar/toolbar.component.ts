@@ -2,9 +2,10 @@ import { Component, OnInit, Output, EventEmitter  } from '@angular/core';
 import { Router } from '@angular/router'
 
 @Component({
-  selector: 'app-toolbar',
-  templateUrl: './toolbar.component.html',
-  styleUrls: ['./toolbar.component.scss']
+    selector: 'app-toolbar',
+    templateUrl: './toolbar.component.html',
+    styleUrls: ['./toolbar.component.scss'],
+    standalone: false
 })
 export class ToolbarComponent implements OnInit {
   public currentMonth: Date;

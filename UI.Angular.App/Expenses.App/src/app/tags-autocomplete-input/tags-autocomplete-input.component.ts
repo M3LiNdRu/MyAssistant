@@ -9,9 +9,10 @@ import { map, startWith } from 'rxjs/operators';
 import { TagsService } from '../tags.service';
 
 @Component({
-  selector: 'app-tags-autocomplete-input',
-  templateUrl: './tags-autocomplete-input.component.html',
-  styleUrls: ['./tags-autocomplete-input.component.scss']
+    selector: 'app-tags-autocomplete-input',
+    templateUrl: './tags-autocomplete-input.component.html',
+    styleUrls: ['./tags-autocomplete-input.component.scss'],
+    standalone: false
 })
 export class TagsAutocompleteInputComponent implements OnInit {
 

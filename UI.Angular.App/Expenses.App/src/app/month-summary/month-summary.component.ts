@@ -8,9 +8,10 @@ import { HistorigramService } from '../historigram.service';
 import { Historigram } from '../historigram';
 
 @Component({
-  selector: 'app-month-summary',
-  templateUrl: './month-summary.component.html',
-  styleUrls: ['./month-summary.component.scss']
+    selector: 'app-month-summary',
+    templateUrl: './month-summary.component.html',
+    styleUrls: ['./month-summary.component.scss'],
+    standalone: false
 })
 export class MonthSummaryComponent implements OnChanges {
 

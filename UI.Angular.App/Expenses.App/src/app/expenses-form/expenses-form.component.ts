@@ -14,9 +14,10 @@ import { Expense } from '../expense';
 const INGRESSOS = "Ingressos"
 
 @Component({
-  selector: 'app-expenses-form',
-  templateUrl: './expenses-form.component.html',
-  styleUrls: ['./expenses-form.component.scss']
+    selector: 'app-expenses-form',
+    templateUrl: './expenses-form.component.html',
+    styleUrls: ['./expenses-form.component.scss'],
+    standalone: false
 })
 export class ExpensesFormComponent implements OnInit {
 
