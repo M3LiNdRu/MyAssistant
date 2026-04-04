@@ -61,10 +61,15 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
-      - name: npm install and npm run build
+      - name: npm install and npm run test
         run: |
           cd Expenses.App/
           npm i --legacy-peer-deps
+          npm run test -- --watch=false --browsers=ChromeHeadless
+
+      - name: npm run build
+        run: |
+          cd Expenses.App/
           npm run build --configuration=production
 
       - name: Upload artifact for deployment job
