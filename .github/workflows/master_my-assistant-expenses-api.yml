@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: Apis/
+        working-directory: src/expenses-api/
     steps:
       - uses: actions/checkout@v4
 
@@ -44,7 +44,7 @@ jobs:
         node-version: [20.x]
     defaults:
       run:
-        working-directory: UI.Angular.App/
+        working-directory: src/UI.Angular.App/
     steps:
       - uses: actions/checkout@v4
 
@@ -71,7 +71,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: .spa-app
-          path: ./UI.Angular.App/Expenses.App/dist/expenses.app/browser/*
+          path: ./src/UI.Angular.App/Expenses.App/dist/expenses.app/browser/*
         
   deploy:
     runs-on: ubuntu-latest
