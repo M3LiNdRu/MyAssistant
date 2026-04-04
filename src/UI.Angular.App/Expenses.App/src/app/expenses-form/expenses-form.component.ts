@@ -51,9 +51,14 @@ export class ExpensesFormComponent implements OnInit {
 
   add(): void {
     if (this.expense) {
-      if (this.expense.category != INGRESSOS) 
+      if (this.expense.category != INGRESSOS)
         this.expense.amount *= -1;
-      
+
+      // Set time to noon to prevent UTC conversion shifting the date to the previous day
+      const date = new Date(this.expense.timestamp);
+      date.setHours(12, 0, 0, 0);
+      this.expense.timestamp = date;
+
       this.expenseService.addExpense(this.expense)
       .subscribe(() => {
         console.log("Expense Added");
