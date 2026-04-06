@@ -1,4 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 import { CategoriesFormComponent } from './categories-form.component';
 
@@ -8,7 +10,18 @@ describe('CategoriesFormComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CategoriesFormComponent ]
+      declarations: [ CategoriesFormComponent ],
+      providers: [
+        {
+          provide: MatDialogRef,
+          useValue: { close: jasmine.createSpy('close') },
+        },
+        {
+          provide: MAT_DIALOG_DATA,
+          useValue: { name: '', description: '' },
+        },
+      ],
+      schemas: [NO_ERRORS_SCHEMA],
     })
     .compileComponents();
 

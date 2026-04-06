@@ -1,4 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 import { MonthSummaryComponent } from './month-summary.component';
 
@@ -8,7 +10,9 @@ describe('MonthSummaryComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ MonthSummaryComponent ]
+      imports: [HttpClientTestingModule],
+      declarations: [ MonthSummaryComponent ],
+      schemas: [NO_ERRORS_SCHEMA],
     })
     .compileComponents();
 
