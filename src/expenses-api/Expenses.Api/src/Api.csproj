@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Description>Expenses Api</Description>
     <Copyright>MyAssistant</Copyright>
-    <TargetFramework>net10</TargetFramework>
+    <TargetFramework>net10.0</TargetFramework>
     <AssemblyName>MyAssistant.Apis.Expenses.Api</AssemblyName>
     <UserSecretsId>eab04de2-fbac-46b0-a875-8d02b442579a</UserSecretsId>
   </PropertyGroup>
