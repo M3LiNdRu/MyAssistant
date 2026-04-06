@@ -1,6 +1,8 @@
 import { TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
+import { SocialAuthService } from '@abacritt/angularx-social-login';
+import { of } from 'rxjs';
 
 describe('AppComponent', () => {
   beforeEach(async () => {
@@ -10,6 +12,14 @@ describe('AppComponent', () => {
       ],
       declarations: [
         AppComponent
+      ],
+      providers: [
+        {
+          provide: SocialAuthService,
+          useValue: {
+            authState: of(null),
+          },
+        },
       ],
     }).compileComponents();
   });
