@@ -3,6 +3,8 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
 import { SocialAuthService } from '@abacritt/angularx-social-login';
 import { of } from 'rxjs';
+import { ToolbarComponent } from './toolbar/toolbar.component';
+import { FooterComponent } from './footer/footer.component';
 
 describe('AppComponent', () => {
   beforeEach(async () => {
@@ -11,7 +13,9 @@ describe('AppComponent', () => {
         RouterTestingModule
       ],
       declarations: [
-        AppComponent
+        AppComponent,
+        ToolbarComponent,
+        FooterComponent,
       ],
       providers: [
         {
@@ -36,10 +40,10 @@ describe('AppComponent', () => {
     expect(app.title).toEqual('Expenses.App');
   });
 
-  it('should render title', () => {
+  it('should render login message when not logged in', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('.content span')?.textContent).toContain('Expenses.App app is running!');
+    expect(compiled.querySelector('.content span')?.textContent).toContain('Please, login');
   });
 });
