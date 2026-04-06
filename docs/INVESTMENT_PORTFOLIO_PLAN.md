@@ -114,7 +114,7 @@ Follow the existing MyAssistant architecture pattern (expense manager) to build 
 
 ## Technology Stack
 
-- **Backend**: ASP.NET Core 8, MongoDB C# driver, Entity Framework (optional)
+- **Backend**: ASP.NET Core 10, MongoDB C# driver, Entity Framework (optional)
 - **Frontend**: Angular (latest from project), Angular Material, angular-google-charts
 - **External APIs**: Market data provider (CoinGecko for crypto preferred)
 - **Infrastructure**: Azure App Service, GitHub Actions CI/CD

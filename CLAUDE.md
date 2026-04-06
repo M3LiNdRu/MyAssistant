@@ -4,11 +4,11 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-MyAssistant is a personal assistant tool for managing expenses. It consists of a .NET 8 backend API and an Angular frontend SPA, deployed together to Azure App Service.
+MyAssistant is a personal assistant tool for managing expenses. It consists of a .NET 10 backend API and an Angular frontend SPA, deployed together to Azure App Service.
 
 ## Architecture
 
-- **Backend**: `src/expenses-api/` — ASP.NET Core 8 Web API with MongoDB storage
+- **Backend**: `src/expenses-api/` — ASP.NET Core 10 Web API with MongoDB storage
   - `Expenses.Api/src/` — Main API project (assembly: `MyAssistant.Apis.Expenses.Api`)
   - `Library.MongoDb/` — Shared MongoDB data access library
   - Solution file: `src/expenses-api/MyAssitant.Apis.sln` (note the typo "Assitant")

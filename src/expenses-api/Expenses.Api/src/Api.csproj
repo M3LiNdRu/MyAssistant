@@ -2,12 +2,12 @@
   <PropertyGroup>
     <Description>Expenses Api</Description>
     <Copyright>MyAssistant</Copyright>
-    <TargetFramework>net8</TargetFramework>
+    <TargetFramework>net10</TargetFramework>
     <AssemblyName>MyAssistant.Apis.Expenses.Api</AssemblyName>
     <UserSecretsId>eab04de2-fbac-46b0-a875-8d02b442579a</UserSecretsId>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.12" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="10.0.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="7.2.0" />
     <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="7.2.0" />
     <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="7.2.0" />

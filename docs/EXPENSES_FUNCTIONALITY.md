@@ -264,7 +264,7 @@ The Expenses Manager is the core feature of MyAssistant, a personal assistant to
 ## Backend Architecture
 
 ### Stack
-- **Framework**: ASP.NET Core 8
+- **Framework**: ASP.NET Core 10
 - **Database**: MongoDB
 - **API Patterns**: RESTful API with clear resource endpoints
 - **Logging**: Integrated logging throughout
