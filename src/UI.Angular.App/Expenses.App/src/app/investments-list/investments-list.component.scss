@@ -1,0 +1,81 @@
+.container {
+  padding: 20px;
+}
+
+.portfolio-selector {
+  margin-bottom: 20px;
+  padding: 20px;
+
+  mat-form-field {
+    width: 300px;
+  }
+}
+
+.summary-card {
+  margin-bottom: 20px;
+  padding: 20px;
+
+  h3 {
+    margin-top: 0;
+  }
+
+  .summary-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+
+    .summary-item {
+      display: flex;
+      flex-direction: column;
+      border: 1px solid #ddd;
+      padding: 10px;
+      border-radius: 4px;
+
+      .label {
+        font-weight: bold;
+        color: #666;
+        font-size: 12px;
+      }
+
+      .value {
+        font-size: 18px;
+        margin-top: 5px;
+
+        &.positive {
+          color: green;
+        }
+
+        &.negative {
+          color: red;
+        }
+      }
+    }
+  }
+}
+
+.investments-table {
+  margin-bottom: 20px;
+  padding: 20px;
+
+  h3 {
+    margin-top: 0;
+  }
+
+  table {
+    width: 100%;
+
+    .positive {
+      color: green;
+      font-weight: bold;
+    }
+
+    .negative {
+      color: red;
+      font-weight: bold;
+    }
+  }
+}
+
+button {
+  margin-top: 20px;
+}

@@ -1,0 +1,69 @@
+.container {
+  padding: 20px;
+  max-width: 1000px;
+  margin: 0 auto;
+
+  h2 {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+}
+
+.portfolio-list {
+  button {
+    margin-bottom: 20px;
+
+    mat-icon {
+      margin-right: 8px;
+    }
+  }
+}
+
+.table-card {
+  overflow-x: auto;
+
+  table {
+    width: 100%;
+  }
+}
+
+.form-card {
+  max-width: 600px;
+  margin: 0 auto 20px;
+  padding: 20px;
+
+  h3 {
+    margin-top: 0;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    mat-form-field {
+      width: 100%;
+    }
+  }
+
+  .button-group {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin-top: 20px;
+
+    button {
+      width: 150px;
+    }
+  }
+}
+
+.empty-state {
+  text-align: center;
+  padding: 40px;
+  color: #999;
+}
+
+.back-button {
+  margin-top: 20px;
+}

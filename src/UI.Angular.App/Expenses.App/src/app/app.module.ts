@@ -19,6 +19,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatTableModule } from '@angular/material/table'; 
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 import { SocialLoginModule, SocialAuthServiceConfig, GoogleLoginProvider, GoogleSigninButtonModule, SOCIAL_AUTH_CONFIG  } from '@abacritt/angularx-social-login';
 
@@ -42,6 +43,9 @@ import { TagsAutocompleteInputComponent } from './tags-autocomplete-input/tags-a
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { CategoriesFormComponent } from './categories-form/categories-form.component';
 import { NotAuthorizedComponent } from './not-authorized/not-authorized.component';
+import { InvestmentsListComponent } from './investments-list/investments-list.component';
+import { InvestmentsFormComponent } from './investments-form/investments-form.component';
+import { PortfolioManagementComponent } from './portfolio-management/portfolio-management.component';
 
 
 @NgModule({ declarations: [
@@ -59,6 +63,9 @@ import { NotAuthorizedComponent } from './not-authorized/not-authorized.componen
         PageNotFoundComponent,
         CategoriesFormComponent,
         NotAuthorizedComponent,
+        InvestmentsListComponent,
+        InvestmentsFormComponent,
+        PortfolioManagementComponent,
     ],
     bootstrap: [AppComponent], imports: [BrowserModule,
         AppRoutingModule,
@@ -83,7 +90,8 @@ import { NotAuthorizedComponent } from './not-authorized/not-authorized.componen
         MatTabsModule,
         SocialLoginModule,
         GoogleSigninButtonModule,
-        MatMenuModule], providers: [
+        MatMenuModule,
+        MatTooltipModule], providers: [
         MatDatepickerModule,
         { provide: MAT_DATE_LOCALE, useValue: 'ca-ES' },
         httpInterceptorProviders,
