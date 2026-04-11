@@ -1,0 +1,98 @@
+{
+  "name": "MyAssistant - Full Stack Dev",
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "devcontainer",
+  "workspaceFolder": "/workspace",
+
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-dotnettools.csharp",
+        "ms-dotnettools.vscode-dotnet-runtime",
+        "ms-dotnettools.dotnet-interactive-vscode",
+        "ms-vscode.makefile-tools",
+        "Angular.ng-template",
+        "esbenp.prettier-vscode",
+        "dbaeumer.vscode-eslint",
+        "streetsidesoftware.code-spell-checker",
+        "eamodio.gitlens",
+        "ms-vscode.remote-explorer",
+        "mhutchie.git-graph",
+        "ms-mssql.mssql",
+        "mongodb.mongodb-vscode",
+        "humao.rest-client",
+        "NuGetForVisualStudio.nuget"
+      ],
+      "settings": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "editor.formatOnSave": true,
+        "[csharp]": {
+          "editor.defaultFormatter": "ms-dotnettools.csharp"
+        },
+        "[typescript]": {
+          "editor.defaultFormatter": "esbenp.prettier-vscode"
+        },
+        "[html]": {
+          "editor.defaultFormatter": "esbenp.prettier-vscode"
+        },
+        "[scss]": {
+          "editor.defaultFormatter": "esbenp.prettier-vscode"
+        },
+        "omnisharp.enableEditorConfigSupport": true,
+        "omnisharp.enableRoslynAnalyzers": true,
+        "omnisharp.projectLoadTimeout": 60,
+        "dotnet.defaultSolutionOrFolder": "src/expenses-api",
+        "angular.enable-strict-mode-prompt": false
+      }
+    }
+  },
+
+  "forwardPorts": [
+    5000,
+    5001,
+    4200,
+    27017,
+    9090
+  ],
+  "portsAttributes": {
+    "5000": {
+      "label": "API HTTP",
+      "onAutoForward": "notify"
+    },
+    "5001": {
+      "label": "API HTTPS",
+      "onAutoForward": "notify"
+    },
+    "4200": {
+      "label": "Angular Dev Server",
+      "onAutoForward": "notify"
+    },
+    "27017": {
+      "label": "MongoDB",
+      "onAutoForward": "silent"
+    },
+    "9090": {
+      "label": "Swagger UI",
+      "onAutoForward": "notify"
+    }
+  },
+
+  "postCreateCommand": "bash .devcontainer/post-create.sh",
+
+  "remoteEnv": {
+    "MONGO_CONNECTION_STRING": "mongodb://mongodb:27017",
+    "ASPNETCORE_URLS": "http://+:5000;https://+:5001",
+    "ASPNETCORE_ENVIRONMENT": "Development"
+  },
+
+  "mounts": [
+    "source=${localEnv:HOME}/.gitconfig,target=/home/vscode/.gitconfig,type=bind,consistency=cached",
+    "source=${localEnv:HOME}/.ssh,target=/home/vscode/.ssh,type=bind,consistency=cached"
+  ],
+
+  "features": {
+    "ghcr.io/devcontainers/features/git:1": {
+      "version": "latest"
+    }
+  }
+}

@@ -1,0 +1,14 @@
+# DevContainer artifacts
+*.log
+.DS_Store
+Thumbs.db
+
+# Development artifacts (generated during post-create)
+dev-commands.md
+
+# IDE
+.vscode/
+.idea/
+
+# Docker
+.docker/
