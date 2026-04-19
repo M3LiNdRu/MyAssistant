@@ -1,6 +1,6 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Portfolio } from '../investment';
+import { Portfolio } from '../portfolio';
 import { InvestmentsService } from '../investments.service';
 
 @Component({
