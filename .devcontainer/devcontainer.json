@@ -80,7 +80,8 @@
   "postCreateCommand": "bash .devcontainer/post-create.sh",
 
   "remoteEnv": {
-    "MONGO_CONNECTION_STRING": "mongodb://mongodb:27017",
+    "MongoSettings__ConnectionString": "mongodb://mongodb:27017",
+    "MongoSettings__Database": "expensesdb",
     "ASPNETCORE_URLS": "http://+:5000;https://+:5001",
     "ASPNETCORE_ENVIRONMENT": "Development"
   },
