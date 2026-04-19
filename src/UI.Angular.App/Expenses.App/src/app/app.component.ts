@@ -13,10 +13,13 @@ export class AppComponent implements OnInit {
   display = true;
   displayForm = false;
   displayList = false;
+  displayInvestmentsList = false;
+  displayInvestmentsForm = false;
+  displayPortfolioManagement = false;
   loggedIn = false;
 
   constructor(private authService: SocialAuthService) {
-  
+
   }
 
   ngOnInit(): void {
@@ -32,17 +35,53 @@ export class AppComponent implements OnInit {
     console.log("display summary: " + display);
     this.display = display;
     this.displayForm = false;
+    this.displayInvestmentsList = false;
+    this.displayInvestmentsForm = false;
+    this.displayPortfolioManagement = false;
   }
 
   displayExpensesList(display: boolean) {
-    this.display = !display; 
+    this.display = !display;
     this.displayForm = false;
+    this.displayInvestmentsList = false;
+    this.displayInvestmentsForm = false;
+    this.displayPortfolioManagement = false;
     this.displayList = display;
   }
 
   displayExpensesForm(display: boolean) {
     this.display = !display;
     this.displayForm = display;
+    this.displayInvestmentsList = false;
+    this.displayInvestmentsForm = false;
+    this.displayPortfolioManagement = false;
+  }
+
+  displayInvestments(display: boolean) {
+    this.display = !display;
+    this.displayForm = false;
+    this.displayList = false;
+    this.displayInvestmentsList = display;
+    this.displayInvestmentsForm = false;
+    this.displayPortfolioManagement = false;
+  }
+
+  displayInvestmentsFormEvent(display: boolean) {
+    this.display = !display;
+    this.displayForm = false;
+    this.displayList = false;
+    this.displayInvestmentsList = false;
+    this.displayInvestmentsForm = display;
+    this.displayPortfolioManagement = false;
+  }
+
+  displayPortfolios(display: boolean) {
+    this.display = !display;
+    this.displayForm = false;
+    this.displayList = false;
+    this.displayInvestmentsList = false;
+    this.displayInvestmentsForm = false;
+    this.displayPortfolioManagement = display;
   }
 
 }
