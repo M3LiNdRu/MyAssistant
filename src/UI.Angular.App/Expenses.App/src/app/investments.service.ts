@@ -5,7 +5,8 @@ import { Observable, of } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 
 import { environment } from '../environments/environment';
-import { Portfolio, Investment, PortfolioSummary } from './investment';
+import { Investment, PortfolioSummary } from './investment';
+import { Portfolio } from './portfolio';
 
 @Injectable({
   providedIn: 'root'
