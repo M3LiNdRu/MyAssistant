@@ -1,15 +1,14 @@
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using MyAssistant.Apis.Expenses.Api.Attributes;
-using Swashbuckle.AspNetCore.Annotations;
-using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using MyAssistant.Apis.Expenses.Api.Attributes;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace MyAssistant.Apis.Expenses.Api.Resources.Investments
 {
