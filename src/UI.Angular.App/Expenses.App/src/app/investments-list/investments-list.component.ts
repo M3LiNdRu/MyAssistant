@@ -1,5 +1,6 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { Investment, Portfolio, PortfolioSummary } from '../investment';
+import { Investment, PortfolioSummary } from '../investment';
+import { Portfolio } from '../portfolio';
 import { InvestmentsService } from '../investments.service';
 
 @Component({
