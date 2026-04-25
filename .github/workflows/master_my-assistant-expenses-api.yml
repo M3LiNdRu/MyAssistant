@@ -21,7 +21,7 @@ jobs:
       - name: Set up .NET Core
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: '10.0.x'
+          dotnet-version: "10.0.x"
           include-prerelease: true
 
       - name: Build with dotnet
@@ -77,12 +77,12 @@ jobs:
         with:
           name: .spa-app
           path: ./src/UI.Angular.App/Expenses.App/dist/expenses.app/browser/*
-        
+
   deploy:
     runs-on: ubuntu-latest
     needs: build-spa
     environment:
-      name: 'Production'
+      name: "Production"
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
 
     steps:
@@ -91,22 +91,18 @@ jobs:
         with:
           name: .net-app
 
-      - name: Mkdir wwwroot folder
-        run: |
-          mkdir ./wwwroot/
-
       - name: Download artifact from build job
         uses: actions/download-artifact@v4
         with:
           name: .spa-app
-          path: ./wwwroot/
+          path: ./
 
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v2
         with:
-          app-name: 'my-assistant-expenses-api'
-          slot-name: 'Production'
+          app-name: "my-assistant-expenses-api"
+          slot-name: "Production"
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_0CBA23ABCE2445578F5380A9D247EFB7 }}
           package: .
 
@@ -127,7 +123,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20.x'
+          node-version: "20.x"
 
       - name: Install semantic-release plugins
         run: npm i -D semantic-release @semantic-release/changelog @semantic-release/git
