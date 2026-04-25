@@ -91,15 +91,11 @@ jobs:
         with:
           name: .net-app
 
-      - name: Mkdir wwwroot folder
-        run: |
-          mkdir ./wwwroot/
-
       - name: Download artifact from build job
         uses: actions/download-artifact@v4
         with:
           name: .spa-app
-          path: ./wwwroot/wwwroot/
+          path: ./wwwroot/
 
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
