@@ -76,7 +76,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: .spa-app
-          path: ./src/UI.Angular.App/Expenses.App/dist/expenses.app/browser/*
+          path: Expenses.App/dist/expenses.app/browser/
 
   deploy:
     runs-on: ubuntu-latest
@@ -91,11 +91,15 @@ jobs:
         with:
           name: .net-app
 
+      - name: Mkdir wwwroot folder
+        run: |
+          mkdir ./wwwroot/
+
       - name: Download artifact from build job
         uses: actions/download-artifact@v4
         with:
           name: .spa-app
-          path: ./
+          path: ./wwwroot/
 
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
