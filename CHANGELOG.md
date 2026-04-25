@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/M3LiNdRu/MyAssistant/compare/v1.0.0...v1.1.0) (2026-04-25)
+
+
+### Features
+
+* new transactions business domain ([f3f4f60](https://github.com/M3LiNdRu/MyAssistant/commit/f3f4f6028991b95c95dcf2cc7d7b84ad91710447))
+
 # 1.0.0 (2026-04-19)
 
 
