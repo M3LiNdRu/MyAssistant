@@ -76,7 +76,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: .spa-app
-          path: Expenses.App/dist/expenses.app/browser/
+          path: ./Expenses.App/dist/expenses.app/browser/
 
   deploy:
     runs-on: ubuntu-latest
