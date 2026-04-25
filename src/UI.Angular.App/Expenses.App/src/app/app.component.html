@@ -16,14 +16,14 @@
       <app-expenses-list [date]="current"></app-expenses-list>
     </div>
   }
-  @if (displayInvestmentsList) {
+  @if (displayTransactionsList) {
     <div>
-      <app-investments-list (displaySummaryEvent)="displaySummary($any($event))"></app-investments-list>
+      <app-transactions-list (displaySummaryEvent)="displaySummary($any($event))"></app-transactions-list>
     </div>
   }
-  @if (displayInvestmentsForm) {
+  @if (displayTransactionsForm) {
     <div>
-      <app-investments-form (displaySummaryEvent)="displaySummary($any($event))"></app-investments-form>
+      <app-transactions-form (displaySummaryEvent)="displaySummary($any($event))"></app-transactions-form>
     </div>
   }
   @if (displayPortfolioManagement) {

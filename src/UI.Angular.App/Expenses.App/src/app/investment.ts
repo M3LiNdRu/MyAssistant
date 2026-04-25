@@ -1,32 +1,29 @@
-export interface Investment {
+export interface PortfolioDto {
   id: string;
-  portfolioId: string;
-  assetType: string;
+  name: string;
+}
+
+export interface Transaction {
+  id: string;
+  portfolio: PortfolioDto;
   symbol: string;
+  assetType: string;
+  type: 'Buy' | 'Sell';
   quantity: number;
-  purchasePrice: number;
-  purchaseDate: Date;
-  currentPrice: number;
-  totalCost?: number;
-  totalValue?: number;
-  gainLoss?: number;
-  gainLossPercent?: number;
+  price: number;
+  date: Date;
+  notes?: string;
   createdAt: Date;
   updatedAt: Date;
 }
 
-export interface PortfolioSummary {
+export interface TransactionRequest {
   portfolioId: string;
-  totalInvestments: number;
-  totalCost: number;
-  totalValue: number;
-  gainLoss: number;
-  gainLossPercent: number;
-  assetAllocation: { [key: string]: AssetAllocation };
-}
-
-export interface AssetAllocation {
-  type: string;
-  value: number;
-  percentage: number;
+  symbol: string;
+  assetType: string;
+  type: 'Buy' | 'Sell';
+  quantity: number;
+  price: number;
+  date: Date;
+  notes?: string;
 }

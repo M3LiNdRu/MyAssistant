@@ -10,7 +10,9 @@ namespace MyAssistant.Apis.Expenses.Api.Resources.Investments
                 .AddSingleton<IPortfoliosService, PortfoliosService>()
                 .AddSingleton<IPortfoliosRepository, MongoDbPortfoliosRepository>()
                 .AddSingleton<IInvestmentsService, InvestmentsService>()
-                .AddSingleton<IInvestmentsRepository, MongoDbInvestmentsRepository>();
+                .AddSingleton<IInvestmentsRepository, MongoDbInvestmentsRepository>()
+                .AddSingleton<ITransactionsService, TransactionsService>()
+                .AddSingleton<ITransactionsRepository, MongoDbTransactionsRepository>();
         }
     }
 }

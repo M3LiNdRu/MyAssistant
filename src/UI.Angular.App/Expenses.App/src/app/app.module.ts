@@ -43,8 +43,8 @@ import { TagsAutocompleteInputComponent } from './tags-autocomplete-input/tags-a
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { CategoriesFormComponent } from './categories-form/categories-form.component';
 import { NotAuthorizedComponent } from './not-authorized/not-authorized.component';
-import { InvestmentsListComponent } from './investments-list/investments-list.component';
-import { InvestmentsFormComponent } from './investments-form/investments-form.component';
+import { TransactionsListComponent } from './transactions-list/transactions-list.component';
+import { TransactionsFormComponent } from './transactions-form/transactions-form.component';
 import { PortfolioManagementComponent } from './portfolio-management/portfolio-management.component';
 
 
@@ -63,8 +63,8 @@ import { PortfolioManagementComponent } from './portfolio-management/portfolio-m
         PageNotFoundComponent,
         CategoriesFormComponent,
         NotAuthorizedComponent,
-        InvestmentsListComponent,
-        InvestmentsFormComponent,
+        TransactionsListComponent,
+        TransactionsFormComponent,
         PortfolioManagementComponent,
     ],
     bootstrap: [AppComponent], imports: [BrowserModule,

@@ -13,8 +13,8 @@ export class AppComponent implements OnInit {
   display = true;
   displayForm = false;
   displayList = false;
-  displayInvestmentsList = false;
-  displayInvestmentsForm = false;
+  displayTransactionsList = false;
+  displayTransactionsForm = false;
   displayPortfolioManagement = false;
   loggedIn = false;
 
@@ -35,16 +35,16 @@ export class AppComponent implements OnInit {
     console.log("display summary: " + display);
     this.display = display;
     this.displayForm = false;
-    this.displayInvestmentsList = false;
-    this.displayInvestmentsForm = false;
+    this.displayTransactionsList = false;
+    this.displayTransactionsForm = false;
     this.displayPortfolioManagement = false;
   }
 
   displayExpensesList(display: boolean) {
     this.display = !display;
     this.displayForm = false;
-    this.displayInvestmentsList = false;
-    this.displayInvestmentsForm = false;
+    this.displayTransactionsList = false;
+    this.displayTransactionsForm = false;
     this.displayPortfolioManagement = false;
     this.displayList = display;
   }
@@ -52,8 +52,8 @@ export class AppComponent implements OnInit {
   displayExpensesForm(display: boolean) {
     this.display = !display;
     this.displayForm = display;
-    this.displayInvestmentsList = false;
-    this.displayInvestmentsForm = false;
+    this.displayTransactionsList = false;
+    this.displayTransactionsForm = false;
     this.displayPortfolioManagement = false;
   }
 
@@ -61,17 +61,17 @@ export class AppComponent implements OnInit {
     this.display = !display;
     this.displayForm = false;
     this.displayList = false;
-    this.displayInvestmentsList = display;
-    this.displayInvestmentsForm = false;
+    this.displayTransactionsList = display;
+    this.displayTransactionsForm = false;
     this.displayPortfolioManagement = false;
   }
 
-  displayInvestmentsFormEvent(display: boolean) {
+  displayTransactionsFormEvent(display: boolean) {
     this.display = !display;
     this.displayForm = false;
     this.displayList = false;
-    this.displayInvestmentsList = false;
-    this.displayInvestmentsForm = display;
+    this.displayTransactionsList = false;
+    this.displayTransactionsForm = display;
     this.displayPortfolioManagement = false;
   }
 
@@ -79,8 +79,8 @@ export class AppComponent implements OnInit {
     this.display = !display;
     this.displayForm = false;
     this.displayList = false;
-    this.displayInvestmentsList = false;
-    this.displayInvestmentsForm = false;
+    this.displayTransactionsList = false;
+    this.displayTransactionsForm = false;
     this.displayPortfolioManagement = display;
   }
 

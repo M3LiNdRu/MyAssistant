@@ -57,4 +57,39 @@ namespace MyAssistant.Apis.Expenses.Api.Resources.Investments
         [DataMember(Name = "currentPrice")]
         public decimal CurrentPrice { get; set; }
     }
+
+    [DataContract]
+    public record TransactionRequest
+    {
+        [Required]
+        [DataMember(Name = "portfolioId")]
+        public string PortfolioId { get; set; }
+
+        [Required]
+        [DataMember(Name = "symbol")]
+        public string Symbol { get; set; }
+
+        [Required]
+        [DataMember(Name = "assetType")]
+        public string AssetType { get; set; }
+
+        [Required]
+        [DataMember(Name = "type")]
+        public TransactionType Type { get; set; }
+
+        [Required]
+        [DataMember(Name = "quantity")]
+        public decimal Quantity { get; set; }
+
+        [Required]
+        [DataMember(Name = "price")]
+        public decimal Price { get; set; }
+
+        [Required]
+        [DataMember(Name = "date")]
+        public DateTime Date { get; set; }
+
+        [DataMember(Name = "notes")]
+        public string Notes { get; set; }
+    }
 }

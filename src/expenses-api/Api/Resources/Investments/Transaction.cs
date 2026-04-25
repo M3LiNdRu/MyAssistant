@@ -3,7 +3,7 @@ using Library.MongoDb;
 
 namespace MyAssistant.Apis.Expenses.Api.Resources.Investments
 {
-    public class Investment : ICollectionDocument
+    public class Transaction : ICollectionDocument
     {
         public string Id { get; set; }
 
@@ -13,22 +13,24 @@ namespace MyAssistant.Apis.Expenses.Api.Resources.Investments
 
         public string AssetType { get; set; }
 
+        public TransactionType Type { get; set; }
+
+        public decimal Quantity { get; set; }
+
+        public decimal Price { get; set; }
+
         public DateTime Date { get; set; }
 
-        public decimal NetQuantity { get; set; }
-
-        public decimal AvgCostBasis { get; set; }
-
-        public decimal CurrentPrice { get; set; }
-
-        public decimal MarketValue { get; set; }
-
-        public decimal UnrealizedGain { get; set; }
-
-        public decimal RealizedGain { get; set; }
+        public string Notes { get; set; }
 
         public DateTime CreatedAt { get; set; }
 
         public DateTime UpdatedAt { get; set; }
+    }
+
+    public enum TransactionType
+    {
+        Buy,
+        Sell
     }
 }

@@ -61,6 +61,28 @@ namespace MyAssistant.Apis.Expenses.Api.Resources.Investments
         }
     }
 
+    public interface ITransactionsService
+    {
+        Task<Transaction> AddTransactionAsync(Transaction transaction, CancellationToken cancellationToken);
+    }
+
+    public class TransactionsService : ITransactionsService
+    {
+        private readonly ITransactionsRepository _repository;
+        private readonly ILogger<TransactionsService> _logger;
+
+        public TransactionsService(ITransactionsRepository repository, ILogger<TransactionsService> logger)
+        {
+            _repository = repository;
+            _logger = logger;
+        }
+
+        public Task<Transaction> AddTransactionAsync(Transaction transaction, CancellationToken cancellationToken)
+        {
+            return _repository.AddAsync(transaction, cancellationToken);
+        }
+    }
+
     public class InvestmentsService : IInvestmentsService
     {
         private readonly IInvestmentsRepository _repository;

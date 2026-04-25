@@ -28,9 +28,48 @@ namespace MyAssistant.Apis.Expenses.Api.Resources.Investments
         Task<IEnumerable<Investment>> GetByPortfolioIdAsync(string portfolioId, CancellationToken cancellationToken);
     }
 
+    public interface ITransactionsRepository
+    {
+        Task<Transaction> AddAsync(Transaction transaction, CancellationToken cancellationToken);
+    }
+
+    public class InMemoryTransactionsRepository : ITransactionsRepository
+    {
+        private readonly IDictionary<string, Transaction> _buffer;
+
+        public InMemoryTransactionsRepository()
+        {
+            _buffer = new Dictionary<string, Transaction>();
+        }
+
+        public Task<Transaction> AddAsync(Transaction transaction, CancellationToken cancellationToken)
+        {
+            transaction.Id = Guid.NewGuid().ToString();
+            transaction.CreatedAt = DateTime.UtcNow;
+            transaction.UpdatedAt = DateTime.UtcNow;
+            _buffer.Add(transaction.Id, transaction);
+            return Task.FromResult(transaction);
+        }
+    }
+
+    public class MongoDbTransactionsRepository : DataStore<Transaction>, ITransactionsRepository
+    {
+        public MongoDbTransactionsRepository(IOptions<DbConfigurationSettings> options) : base(options, "Transactions")
+        {
+        }
+
+        public async Task<Transaction> AddAsync(Transaction transaction, CancellationToken cancellationToken)
+        {
+            transaction.Id = Guid.NewGuid().ToString();
+            transaction.CreatedAt = DateTime.UtcNow;
+            transaction.UpdatedAt = DateTime.UtcNow;
+            await base.InsertAsync(transaction, cancellationToken);
+            return transaction;
+        }
+    }
+
     public class InMemoryPortfoliosRepository : IPortfoliosRepository
     {
-        private int _counter;
         private readonly IDictionary<string, Portfolio> _buffer;
         private readonly ILogger<InMemoryPortfoliosRepository> _logger;
 
@@ -38,16 +77,14 @@ namespace MyAssistant.Apis.Expenses.Api.Resources.Investments
         {
             _logger = logger;
             _buffer = new Dictionary<string, Portfolio>();
-            _counter = 0;
         }
 
         public Task AddAsync(Portfolio portfolio, CancellationToken cancellationToken)
         {
-            portfolio.Id = _counter.ToString();
+            portfolio.Id = Guid.NewGuid().ToString();
             portfolio.CreatedAt = DateTime.UtcNow;
             portfolio.UpdatedAt = DateTime.UtcNow;
             _buffer.Add(portfolio.Id, portfolio);
-            _counter++;
             return Task.CompletedTask;
         }
 
@@ -84,7 +121,6 @@ namespace MyAssistant.Apis.Expenses.Api.Resources.Investments
 
     public class InMemoryInvestmentsRepository : IInvestmentsRepository
     {
-        private int _counter;
         private readonly IDictionary<string, Investment> _buffer;
         private readonly ILogger<InMemoryInvestmentsRepository> _logger;
 
@@ -92,16 +128,14 @@ namespace MyAssistant.Apis.Expenses.Api.Resources.Investments
         {
             _logger = logger;
             _buffer = new Dictionary<string, Investment>();
-            _counter = 0;
         }
 
         public Task AddAsync(Investment investment, CancellationToken cancellationToken)
         {
-            investment.Id = _counter.ToString();
+            investment.Id = Guid.NewGuid().ToString();
             investment.CreatedAt = DateTime.UtcNow;
             investment.UpdatedAt = DateTime.UtcNow;
             _buffer.Add(investment.Id, investment);
-            _counter++;
             return Task.CompletedTask;
         }
 
@@ -132,7 +166,7 @@ namespace MyAssistant.Apis.Expenses.Api.Resources.Investments
 
         public Task<IEnumerable<Investment>> GetByPortfolioIdAsync(string portfolioId, CancellationToken cancellationToken)
         {
-            return Task.FromResult(_buffer.Values.Where(i => i.PortfolioId == portfolioId).AsEnumerable());
+            return Task.FromResult(_buffer.Values.Where(i => i.Portfolio.Id == portfolioId).AsEnumerable());
         }
     }
 
@@ -144,6 +178,7 @@ namespace MyAssistant.Apis.Expenses.Api.Resources.Investments
 
         public Task AddAsync(Portfolio portfolio, CancellationToken cancellationToken)
         {
+            portfolio.Id = Guid.NewGuid().ToString();
             portfolio.CreatedAt = DateTime.UtcNow;
             portfolio.UpdatedAt = DateTime.UtcNow;
             return base.InsertAsync(portfolio, cancellationToken);
@@ -179,6 +214,7 @@ namespace MyAssistant.Apis.Expenses.Api.Resources.Investments
 
         public Task AddAsync(Investment investment, CancellationToken cancellationToken)
         {
+            investment.Id = Guid.NewGuid().ToString();
             investment.CreatedAt = DateTime.UtcNow;
             investment.UpdatedAt = DateTime.UtcNow;
             return base.InsertAsync(investment, cancellationToken);
@@ -202,7 +238,7 @@ namespace MyAssistant.Apis.Expenses.Api.Resources.Investments
 
         public Task<IEnumerable<Investment>> GetByPortfolioIdAsync(string portfolioId, CancellationToken cancellationToken)
         {
-            return base.FindAllAsync(i => i.PortfolioId == portfolioId, cancellationToken);
+            return base.FindAllAsync(i => i.Portfolio.Id == portfolioId, cancellationToken);
         }
     }
 }
