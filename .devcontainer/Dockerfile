@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/devcontainers/dotnet:1-10-bullseye
+FROM mcr.microsoft.com/devcontainers/dotnet:dev-10.0-noble
 
 # Install Node.js (latest LTS)
 RUN curl -fsSL https://deb.nodesource.com/setup_lts.x | bash - \
@@ -10,10 +10,12 @@ RUN npm install -g @angular/cli
 
 # Install additional development tools
 RUN apt-get update && apt-get install -y \
-    mongodb-tools \
     postgresql-client \
     git-flow \
     && rm -rf /var/lib/apt/lists/*
+
+RUN wget https://fastdl.mongodb.org/tools/db/mongodb-database-tools-debian10-x86_64-100.16.1.deb
+RUN dpkg -i mongodb-database-tools-debian10-x86_64-100.16.1.deb
 
 # Install .NET tools
 RUN dotnet tool install -g dotnet-ef \
