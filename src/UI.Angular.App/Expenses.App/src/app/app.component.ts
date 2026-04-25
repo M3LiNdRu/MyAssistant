@@ -10,9 +10,9 @@ import { SocialAuthService } from "@abacritt/angularx-social-login";
 export class AppComponent implements OnInit {
   title = 'Expenses.App';
   current = new Date();
-  display = true;
+  display = false;
   displayForm = false;
-  displayList = false;
+  displayList = true;
   displayTransactionsList = false;
   displayTransactionsForm = false;
   displayPortfolioManagement = false;
@@ -57,16 +57,7 @@ export class AppComponent implements OnInit {
     this.displayPortfolioManagement = false;
   }
 
-  displayInvestments(display: boolean) {
-    this.display = !display;
-    this.displayForm = false;
-    this.displayList = false;
-    this.displayTransactionsList = display;
-    this.displayTransactionsForm = false;
-    this.displayPortfolioManagement = false;
-  }
-
-  displayTransactionsFormEvent(display: boolean) {
+displayTransactionsFormEvent(display: boolean) {
     this.display = !display;
     this.displayForm = false;
     this.displayList = false;

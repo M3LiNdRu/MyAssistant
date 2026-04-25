@@ -31,6 +31,7 @@ namespace MyAssistant.Apis.Expenses.Api.Resources.Investments
     public interface ITransactionsRepository
     {
         Task<Transaction> AddAsync(Transaction transaction, CancellationToken cancellationToken);
+        Task<IEnumerable<Transaction>> GetRecentByUserIdAsync(string userId, int limit, CancellationToken cancellationToken);
     }
 
     public class InMemoryTransactionsRepository : ITransactionsRepository
@@ -50,6 +51,15 @@ namespace MyAssistant.Apis.Expenses.Api.Resources.Investments
             _buffer.Add(transaction.Id, transaction);
             return Task.FromResult(transaction);
         }
+
+        public Task<IEnumerable<Transaction>> GetRecentByUserIdAsync(string userId, int limit, CancellationToken cancellationToken)
+        {
+            var result = _buffer.Values
+                .Where(t => t.Portfolio != null)
+                .OrderByDescending(t => t.Date)
+                .Take(limit);
+            return Task.FromResult(result);
+        }
     }
 
     public class MongoDbTransactionsRepository : DataStore<Transaction>, ITransactionsRepository
@@ -65,6 +75,12 @@ namespace MyAssistant.Apis.Expenses.Api.Resources.Investments
             transaction.UpdatedAt = DateTime.UtcNow;
             await base.InsertAsync(transaction, cancellationToken);
             return transaction;
+        }
+
+        public async Task<IEnumerable<Transaction>> GetRecentByUserIdAsync(string userId, int limit, CancellationToken cancellationToken)
+        {
+            var all = await base.FindAllAsync(t => t.Portfolio != null, cancellationToken);
+            return all.OrderByDescending(t => t.Date).Take(limit);
         }
     }
 

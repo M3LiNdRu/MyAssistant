@@ -1,6 +1,7 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Portfolio } from '../portfolio';
+import { Transaction } from '../investment';
 import { InvestmentsService } from '../investments.service';
 
 @Component({
@@ -11,14 +12,15 @@ import { InvestmentsService } from '../investments.service';
 })
 export class PortfolioManagementComponent implements OnInit {
   @Output() displaySummaryEvent = new EventEmitter<boolean>();
-  @Output() displayInvestmentsEvent = new EventEmitter<boolean>();
 
   portfolios: Portfolio[] = [];
+  recentTransactions: Transaction[] = [];
   portfolioForm!: FormGroup;
   isFormVisible = false;
   editingPortfolioId: string | null = null;
 
-  displayedColumns: string[] = ['name', 'description', 'createdAt', 'actions'];
+  portfolioColumns: string[] = ['name', 'description', 'createdAt', 'actions'];
+  transactionColumns: string[] = ['date', 'portfolio', 'type', 'symbol', 'assetType', 'quantity', 'price'];
 
   constructor(
     private fb: FormBuilder,
@@ -29,6 +31,7 @@ export class PortfolioManagementComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadPortfolios();
+    this.loadRecentTransactions();
   }
 
   createForm(): void {
@@ -44,6 +47,12 @@ export class PortfolioManagementComponent implements OnInit {
     });
   }
 
+  loadRecentTransactions(): void {
+    this.investmentsService.getRecentTransactions(10).subscribe(transactions => {
+      this.recentTransactions = transactions;
+    });
+  }
+
   showForm(): void {
     this.isFormVisible = true;
     this.editingPortfolioId = null;
@@ -53,68 +62,38 @@ export class PortfolioManagementComponent implements OnInit {
   editPortfolio(portfolio: Portfolio): void {
     this.isFormVisible = true;
     this.editingPortfolioId = portfolio.id;
-    this.portfolioForm.patchValue({
-      name: portfolio.name,
-      description: portfolio.description
-    });
+    this.portfolioForm.patchValue({ name: portfolio.name, description: portfolio.description });
   }
 
   savePortfolio(): void {
-    if (this.portfolioForm.valid) {
-      const portfolioData = this.portfolioForm.value;
+    if (this.portfolioForm.invalid) return;
 
-      if (this.editingPortfolioId) {
-        this.investmentsService.updatePortfolio(this.editingPortfolioId, portfolioData).subscribe(
-          () => {
-            console.log('Portfolio updated successfully');
-            this.isFormVisible = false;
-            this.portfolioForm.reset();
-            this.loadPortfolios();
-          },
-          error => {
-            console.error('Error updating portfolio:', error);
-          }
-        );
-      } else {
-        this.investmentsService.createPortfolio(portfolioData).subscribe(
-          () => {
-            console.log('Portfolio created successfully');
-            this.isFormVisible = false;
-            this.portfolioForm.reset();
-            this.loadPortfolios();
-          },
-          error => {
-            console.error('Error creating portfolio:', error);
-          }
-        );
-      }
-    }
+    const data = this.portfolioForm.value;
+    const action = this.editingPortfolioId
+      ? this.investmentsService.updatePortfolio(this.editingPortfolioId, data)
+      : this.investmentsService.createPortfolio(data);
+
+    action.subscribe({
+      next: () => {
+        this.isFormVisible = false;
+        this.portfolioForm.reset();
+        this.loadPortfolios();
+      },
+      error: err => console.error('Error saving portfolio:', err)
+    });
   }
 
   deletePortfolio(portfolioId: string): void {
-    if (confirm('Are you sure you want to delete this portfolio and all its investments?')) {
-      this.investmentsService.deletePortfolio(portfolioId).subscribe(
-        () => {
-          console.log('Portfolio deleted successfully');
-          this.loadPortfolios();
-        },
-        error => {
-          console.error('Error deleting portfolio:', error);
-        }
-      );
+    if (confirm('Are you sure you want to delete this portfolio?')) {
+      this.investmentsService.deletePortfolio(portfolioId).subscribe({
+        next: () => this.loadPortfolios(),
+        error: err => console.error('Error deleting portfolio:', err)
+      });
     }
-  }
-
-  viewPortfolio(portfolioId: string): void {
-    this.displayInvestmentsEvent.emit(true);
   }
 
   cancelForm(): void {
     this.isFormVisible = false;
     this.portfolioForm.reset();
-  }
-
-  goBack(): void {
-    this.displaySummaryEvent.emit(true);
   }
 }

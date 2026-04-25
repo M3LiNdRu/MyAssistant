@@ -1,4 +1,4 @@
-<app-toolbar (monthChangedEvent)="useMonth($event)" (showExpensesListEvent)="displayExpensesList($event)" (showInvestmentsEvent)="displayInvestments($event)" (showPortfoliosEvent)="displayPortfolios($event)"></app-toolbar>
+<app-toolbar [showMonthBar]="!displayPortfolioManagement" (monthChangedEvent)="useMonth($event)" (showExpensesListEvent)="displayExpensesList($event)" (showPortfoliosEvent)="displayPortfolios($event)"></app-toolbar>
 <div class="content" role="main">
   @if (display && loggedIn) {
     <div>
@@ -28,7 +28,7 @@
   }
   @if (displayPortfolioManagement) {
     <div>
-      <app-portfolio-management (displaySummaryEvent)="displaySummary($any($event))" (displayInvestmentsEvent)="displayInvestments($any($event))"></app-portfolio-management>
+      <app-portfolio-management (displaySummaryEvent)="displaySummary($any($event))"></app-portfolio-management>
     </div>
   }
   @if (!loggedIn) {

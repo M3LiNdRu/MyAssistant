@@ -1,61 +1,10 @@
 <div class="container">
   <h2>Portfolio Management</h2>
 
-  @if (!isFormVisible) {
-    <div class="portfolio-list">
-      <button mat-raised-button color="primary" (click)="showForm()">
-        <mat-icon>add</mat-icon>
-        Create New Portfolio
-      </button>
-
-      @if (portfolios.length > 0) {
-        <mat-card class="table-card">
-          <table mat-table [dataSource]="portfolios">
-            <!-- Name column -->
-            <ng-container matColumnDef="name">
-              <th mat-header-cell *matHeaderCellDef>Portfolio Name</th>
-              <td mat-cell *matCellDef="let element">{{ element.name }}</td>
-            </ng-container>
-
-            <!-- Description column -->
-            <ng-container matColumnDef="description">
-              <th mat-header-cell *matHeaderCellDef>Description</th>
-              <td mat-cell *matCellDef="let element">{{ element.description || '-' }}</td>
-            </ng-container>
-
-            <!-- Created date column -->
-            <ng-container matColumnDef="createdAt">
-              <th mat-header-cell *matHeaderCellDef>Created</th>
-              <td mat-cell *matCellDef="let element">{{ element.createdAt | date:'short' }}</td>
-            </ng-container>
-
-            <!-- Actions column -->
-            <ng-container matColumnDef="actions">
-              <th mat-header-cell *matHeaderCellDef>Actions</th>
-              <td mat-cell *matCellDef="let element">
-                <button mat-icon-button matTooltip="View Investments" (click)="viewPortfolio(element.id)">
-                  <mat-icon>visibility</mat-icon>
-                </button>
-                <button mat-icon-button matTooltip="Edit" (click)="editPortfolio(element)">
-                  <mat-icon>edit</mat-icon>
-                </button>
-                <button mat-icon-button matTooltip="Delete" (click)="deletePortfolio(element.id)">
-                  <mat-icon>delete</mat-icon>
-                </button>
-              </td>
-            </ng-container>
-
-            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-          </table>
-        </mat-card>
-      } @else {
-        <mat-card class="empty-state">
-          <p>No portfolios yet. Create your first portfolio to get started!</p>
-        </mat-card>
-      }
-    </div>
-  }
+  <button mat-raised-button color="primary" (click)="showForm()">
+    <mat-icon>add</mat-icon>
+    Create New Portfolio
+  </button>
 
   @if (isFormVisible) {
     <mat-card class="form-card">
@@ -72,16 +21,61 @@
         </mat-form-field>
 
         <div class="button-group">
-          <button mat-raised-button color="primary" type="submit" [disabled]="!portfolioForm.valid">
-            {{ editingPortfolioId ? 'Update' : 'Create' }} Portfolio
+          <button mat-raised-button color="primary" type="submit" [disabled]="portfolioForm.invalid">
+            {{ editingPortfolioId ? 'Update' : 'Create' }}
           </button>
-          <button mat-raised-button type="button" (click)="cancelForm()">
-            Cancel
-          </button>
+          <button mat-raised-button type="button" (click)="cancelForm()">Cancel</button>
         </div>
       </form>
     </mat-card>
   }
 
-  <button mat-raised-button (click)="goBack()" class="back-button">Back</button>
+  <mat-card class="table-card">
+    <h3>Last 10 Transactions</h3>
+    @if (recentTransactions.length > 0) {
+      <table mat-table [dataSource]="recentTransactions">
+
+        <ng-container matColumnDef="date">
+          <th mat-header-cell *matHeaderCellDef>Date</th>
+          <td mat-cell *matCellDef="let t">{{ t.date | date:'dd/MM/yyyy' }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="portfolio">
+          <th mat-header-cell *matHeaderCellDef>Portfolio</th>
+          <td mat-cell *matCellDef="let t">{{ t.portfolio.name }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="type">
+          <th mat-header-cell *matHeaderCellDef>Type</th>
+          <td mat-cell *matCellDef="let t">{{ t.type }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="symbol">
+          <th mat-header-cell *matHeaderCellDef>Symbol</th>
+          <td mat-cell *matCellDef="let t">{{ t.symbol }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="assetType">
+          <th mat-header-cell *matHeaderCellDef>Asset Type</th>
+          <td mat-cell *matCellDef="let t">{{ t.assetType }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="quantity">
+          <th mat-header-cell *matHeaderCellDef>Quantity</th>
+          <td mat-cell *matCellDef="let t">{{ t.quantity | number:'1.0-6' }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="price">
+          <th mat-header-cell *matHeaderCellDef>Price</th>
+          <td mat-cell *matCellDef="let t">{{ t.price | currency }}</td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="transactionColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: transactionColumns;"></tr>
+      </table>
+    } @else {
+      <p>No transactions yet. Add your first transaction to get started!</p>
+    }
+  </mat-card>
+
 </div>

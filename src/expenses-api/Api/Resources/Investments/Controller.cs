@@ -176,6 +176,35 @@ namespace MyAssistant.Apis.Expenses.Api.Resources.Investments
 
         #region Transaction Endpoints
 
+        [HttpGet]
+        [Route("/api/v1/transactions/recent")]
+        [ValidateModelState]
+        [SwaggerOperation("GetRecentTransactions")]
+        [SwaggerResponse(statusCode: 200, type: typeof(IEnumerable<TransactionResponse>), description: "Last N transactions for the user")]
+        public virtual async Task<IActionResult> GetRecentTransactions(
+            [FromQuery] int limit = 10,
+            CancellationToken cancellationToken = default)
+        {
+            var transactions = await _transactionsService.GetRecentTransactionsAsync(GetUserId(), limit, cancellationToken);
+
+            var responses = transactions.Select(t => new TransactionResponse
+            {
+                Id = t.Id,
+                Portfolio = t.Portfolio,
+                Symbol = t.Symbol,
+                AssetType = t.AssetType,
+                Type = t.Type,
+                Quantity = t.Quantity,
+                Price = t.Price,
+                Date = t.Date,
+                Notes = t.Notes,
+                CreatedAt = t.CreatedAt,
+                UpdatedAt = t.UpdatedAt
+            });
+
+            return Ok(responses);
+        }
+
         [HttpPost]
         [Route("/api/v1/transaction")]
         [ValidateModelState]

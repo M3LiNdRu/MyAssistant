@@ -50,6 +50,12 @@ export class InvestmentsService {
     );
   }
 
+  getRecentTransactions(limit: number = 10): Observable<Transaction[]> {
+    return this.http.get<Transaction[]>(`${this.transactionsUrl}s/recent?limit=${limit}`).pipe(
+      catchError(this.handleError<Transaction[]>('getRecentTransactions', []))
+    );
+  }
+
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
       console.error(`${operation} failed:`, error);

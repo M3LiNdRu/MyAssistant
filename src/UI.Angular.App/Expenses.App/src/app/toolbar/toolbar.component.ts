@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter  } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter  } from '@angular/core';
 import { Router } from '@angular/router'
 
 @Component({
@@ -8,12 +8,10 @@ import { Router } from '@angular/router'
     standalone: false
 })
 export class ToolbarComponent implements OnInit {
+  @Input() showMonthBar = true;
   public currentMonth: Date;
-  private expensesList = false;
-  private investmentsList = false;
   @Output() public monthChangedEvent = new EventEmitter<Date>();
   @Output() public showExpensesListEvent = new EventEmitter<boolean>();
-  @Output() public showInvestmentsEvent = new EventEmitter<boolean>();
   @Output() public showPortfoliosEvent = new EventEmitter<boolean>();
 
   constructor(public router: Router)
@@ -27,15 +25,7 @@ export class ToolbarComponent implements OnInit {
   }
 
   showExpensesList(): void {
-    this.expensesList = !this.expensesList;
-    this.investmentsList = false;
-    this.showExpensesListEvent.emit(this.expensesList);
-  }
-
-  showInvestments(): void {
-    this.investmentsList = !this.investmentsList;
-    this.expensesList = false;
-    this.showInvestmentsEvent.emit(this.investmentsList);
+    this.showExpensesListEvent.emit(true);
   }
 
   showPortfolios(): void {

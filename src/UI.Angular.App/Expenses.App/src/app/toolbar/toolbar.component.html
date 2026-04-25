@@ -2,17 +2,18 @@
     <mat-toolbar-row>
         <span>My Expenses</span>
         <span class="toolbar-spacer"></span>
+        <button mat-button (click)="showExpensesList()">
+            <mat-icon>receipt_long</mat-icon>
+            <span>Expenses</span>
+        </button>
         <button mat-button (click)="showPortfolios()">
             <mat-icon>folder_special</mat-icon>
-            <span>Portfolios</span>
-        </button>
-        <button mat-button (click)="showInvestments()">
-            <mat-icon>trending_up</mat-icon>
-            <span>Investments</span>
+            <span>Portfolio</span>
         </button>
         <span class="toolbar-spacer"></span>
         <app-login></app-login>
     </mat-toolbar-row>
+    @if (showMonthBar) {
     <mat-toolbar-row>
         <button mat-icon-button class="toolbar-icon" (click)="previous()">
             <mat-icon>arrow_circle_left</mat-icon>
@@ -26,4 +27,5 @@
             <mat-icon>arrow_circle_right</mat-icon>
         </button>
     </mat-toolbar-row>
+    }
 </mat-toolbar>
