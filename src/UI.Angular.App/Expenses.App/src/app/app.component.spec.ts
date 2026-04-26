@@ -1,28 +1,40 @@
+import { Component } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
 import { AppComponent } from './app.component';
 import { SocialAuthService } from '@abacritt/angularx-social-login';
 import { of } from 'rxjs';
 import { ToolbarComponent } from './toolbar/toolbar.component';
 import { FooterComponent } from './footer/footer.component';
 
+@Component({ selector: 'app-login', template: '', standalone: false })
+class LoginStubComponent {}
+
+@Component({ selector: 'app-footer', template: '', standalone: false })
+class FooterStubComponent {}
+
 describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        RouterTestingModule
+        RouterTestingModule,
+        MatToolbarModule,
+        MatIconModule,
+        MatButtonModule,
       ],
       declarations: [
         AppComponent,
         ToolbarComponent,
-        FooterComponent,
+        LoginStubComponent,
+        FooterStubComponent,
       ],
       providers: [
         {
           provide: SocialAuthService,
-          useValue: {
-            authState: of(null),
-          },
+          useValue: { authState: of(null) },
         },
       ],
     }).compileComponents();
@@ -34,16 +46,16 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'Expenses.App'`, () => {
+  it(`should have as title 'MyAssistant'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('Expenses.App');
+    expect(app.title).toEqual('MyAssistant');
   });
 
-  it('should render login message when not logged in', () => {
+  it('should not be logged in by default', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('.content span')?.textContent).toContain('Please, login');
+    const app = fixture.componentInstance;
+    expect(app.loggedIn).toBeFalse();
   });
 });
