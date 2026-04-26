@@ -12,6 +12,7 @@ export class ToolbarComponent implements OnInit {
   public currentMonth: Date;
   @Output() public monthChangedEvent = new EventEmitter<Date>();
   @Output() public showExpensesListEvent = new EventEmitter<boolean>();
+  @Output() public showExpensesSummaryEvent = new EventEmitter<boolean>();
   @Output() public showPortfoliosEvent = new EventEmitter<boolean>();
 
   constructor(public router: Router)
@@ -22,6 +23,10 @@ export class ToolbarComponent implements OnInit {
   ngOnInit(): void {
     this.setMonth(0);
     this.monthChangedEvent.emit(this.currentMonth);
+  }
+
+  showExpensesSummary(): void {
+    this.showExpensesSummaryEvent.emit(true);
   }
 
   showExpensesList(): void {

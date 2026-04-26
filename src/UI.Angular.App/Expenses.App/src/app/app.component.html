@@ -1,4 +1,4 @@
-<app-toolbar [showMonthBar]="!displayPortfolioManagement" (monthChangedEvent)="useMonth($event)" (showExpensesListEvent)="displayExpensesList($event)" (showPortfoliosEvent)="displayPortfolios($event)"></app-toolbar>
+<app-toolbar [showMonthBar]="!displayPortfolioManagement" (monthChangedEvent)="useMonth($event)" (showExpensesSummaryEvent)="displayExpensesSummary($event)" (showExpensesListEvent)="displayExpensesList($event)" (showPortfoliosEvent)="displayPortfolios($event)"></app-toolbar>
 <div class="content" role="main">
   @if (display && loggedIn) {
     <div>

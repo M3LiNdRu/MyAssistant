@@ -12,7 +12,7 @@ export class AppComponent implements OnInit {
   current = new Date();
   display = true;
   displayForm = false;
-  displayList = true;
+  displayList = false;
   displayTransactionsList = false;
   displayTransactionsForm = false;
   displayPortfolioManagement = false;
@@ -40,13 +40,23 @@ export class AppComponent implements OnInit {
     this.displayPortfolioManagement = false;
   }
 
-  displayExpensesList(display: boolean) {
+  displayExpensesSummary(display: boolean) {
     this.display = display;
     this.displayForm = false;
+    this.displayList = false;
     this.displayTransactionsList = false;
     this.displayTransactionsForm = false;
     this.displayPortfolioManagement = false;
-    this.displayList = display;
+  }
+
+  displayExpensesList(_display: boolean) {
+    const showList = !this.displayList;
+    this.display = !showList;
+    this.displayForm = false;
+    this.displayList = showList;
+    this.displayTransactionsList = false;
+    this.displayTransactionsForm = false;
+    this.displayPortfolioManagement = false;
   }
 
   displayExpensesForm(display: boolean) {
