@@ -9,6 +9,7 @@ import { Router } from '@angular/router'
 })
 export class ToolbarComponent implements OnInit {
   @Input() showMonthBar = true;
+  @Input() loggedIn = false;
   public currentMonth: Date;
   @Output() public monthChangedEvent = new EventEmitter<Date>();
   @Output() public showExpensesListEvent = new EventEmitter<boolean>();

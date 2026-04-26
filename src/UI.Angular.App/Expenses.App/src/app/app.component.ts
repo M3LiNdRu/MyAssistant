@@ -8,7 +8,7 @@ import { SocialAuthService } from "@abacritt/angularx-social-login";
     standalone: false
 })
 export class AppComponent implements OnInit {
-  title = 'Expenses.App';
+  title = 'MyAssistant';
   current = new Date();
   display = true;
   displayForm = false;

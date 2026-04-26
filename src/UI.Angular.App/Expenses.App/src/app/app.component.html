@@ -1,4 +1,4 @@
-<app-toolbar [showMonthBar]="!displayPortfolioManagement" (monthChangedEvent)="useMonth($event)" (showExpensesSummaryEvent)="displayExpensesSummary($event)" (showExpensesListEvent)="displayExpensesList($event)" (showPortfoliosEvent)="displayPortfolios($event)"></app-toolbar>
+<app-toolbar [loggedIn]="loggedIn" [showMonthBar]="!displayPortfolioManagement" (monthChangedEvent)="useMonth($event)" (showExpensesSummaryEvent)="displayExpensesSummary($event)" (showExpensesListEvent)="displayExpensesList($event)" (showPortfoliosEvent)="displayPortfolios($event)"></app-toolbar>
 <div class="content" role="main">
   @if (display && loggedIn) {
     <div>
@@ -31,11 +31,7 @@
       <app-portfolio-management (displaySummaryEvent)="displaySummary($any($event))"></app-portfolio-management>
     </div>
   }
-  @if (!loggedIn) {
-    <div>
-      <span>Please, login</span>
-    </div>
-  }
+
 </div>
 <app-footer></app-footer>
 <router-outlet></router-outlet>

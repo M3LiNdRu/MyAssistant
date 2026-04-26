@@ -2,18 +2,20 @@
     <mat-toolbar-row>
         <span>MyAssistant</span>
         <span class="toolbar-spacer"></span>
-        <button mat-button (click)="showExpensesSummary()">
-            <mat-icon>receipt_long</mat-icon>
-            <span>Expenses</span>
-        </button>
-        <button mat-button (click)="showPortfolios()">
-            <mat-icon>folder_special</mat-icon>
-            <span>Portfolio</span>
-        </button>
+        @if (loggedIn) {
+            <button mat-button (click)="showExpensesSummary()">
+                <mat-icon>receipt_long</mat-icon>
+                <span>Expenses</span>
+            </button>
+            <button mat-button (click)="showPortfolios()">
+                <mat-icon>folder_special</mat-icon>
+                <span>Portfolio</span>
+            </button>
+        }
         <span class="toolbar-spacer"></span>
         <app-login></app-login>
     </mat-toolbar-row>
-    @if (showMonthBar) {
+    @if (loggedIn && showMonthBar) {
     <mat-toolbar-row>
         <button mat-icon-button class="toolbar-icon" (click)="previous()">
             <mat-icon>arrow_circle_left</mat-icon>
