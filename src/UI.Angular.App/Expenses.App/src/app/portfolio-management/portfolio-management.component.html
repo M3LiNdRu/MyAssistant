@@ -1,10 +1,12 @@
 <div class="container">
   <h2>Portfolio Management</h2>
 
-  <button mat-raised-button color="primary" (click)="showForm()">
-    <mat-icon>add</mat-icon>
-    Create New Portfolio
-  </button>
+  @if (featureFlags.enablePortfolioCreation) {
+    <button mat-raised-button color="primary" (click)="showForm()">
+      <mat-icon>add</mat-icon>
+      Create New Portfolio
+    </button>
+  }
 
   @if (isFormVisible) {
     <mat-card class="form-card">

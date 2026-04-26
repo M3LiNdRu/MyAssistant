@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Portfolio } from '../portfolio';
 import { Transaction } from '../investment';
 import { InvestmentsService } from '../investments.service';
+import { FeatureFlagsService } from '../feature-flags.service';
 
 @Component({
   selector: 'app-portfolio-management',
@@ -24,7 +25,8 @@ export class PortfolioManagementComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private investmentsService: InvestmentsService
+    private investmentsService: InvestmentsService,
+    public featureFlags: FeatureFlagsService
   ) {
     this.createForm();
   }

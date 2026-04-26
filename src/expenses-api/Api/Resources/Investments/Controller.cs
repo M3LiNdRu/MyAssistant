@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using MyAssistant.Apis.Expenses.Api.Attributes;
+using MyAssistant.Apis.Expenses.Api.FeatureFlags;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace MyAssistant.Apis.Expenses.Api.Resources.Investments
@@ -42,6 +43,7 @@ namespace MyAssistant.Apis.Expenses.Api.Resources.Investments
         [HttpPost]
         [Route("/api/v1/portfolio")]
         [ValidateModelState]
+        [RequireFeature(nameof(FeatureFlagSettings.EnablePortfolioCreation))]
         [SwaggerOperation("CreatePortfolio")]
         [SwaggerResponse(statusCode: 200, type: typeof(PortfolioResponse), description: "Portfolio created successfully")]
         public virtual async Task<IActionResult> CreatePortfolio(

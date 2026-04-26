@@ -13,6 +13,7 @@ using MyAssistant.Apis.Expenses.Api.Resources.Historigrams;
 using MyAssistant.Apis.Expenses.Api.Resources.Investments;
 using MyAssistant.Apis.Expenses.Api.Resources.Summary;
 using MyAssistant.Apis.Expenses.Api.Resources.Tags;
+using MyAssistant.Apis.Expenses.Api.FeatureFlags;
 using MyAssistant.Apis.Expenses.Api.Swagger;
 using System.Collections.Generic;
 
@@ -37,6 +38,7 @@ namespace MyAssistant.Apis.Expenses.Api
                 .AddMvc()
                 .Services
                 .AddOptions()
+                .Configure<FeatureFlagSettings>(Configuration.GetSection("FeatureFlags"))
                 .AddGoogleAuthentication(
                     authority: Configuration.GetValue<string>("Authentication:Google:Authority"), 
                     audience: Configuration.GetValue<string>("Authentication:Google:ClientId"),
