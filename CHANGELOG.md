@@ -1,3 +1,16 @@
+# [1.2.0](https://github.com/M3LiNdRu/MyAssistant/compare/v1.1.0...v1.2.0) (2026-04-26)
+
+
+### Bug Fixes
+
+* display expenses summary ([2636510](https://github.com/M3LiNdRu/MyAssistant/commit/2636510097973ecd2e4b364df5a11290face2309))
+* toolbar behavior ([fd6213e](https://github.com/M3LiNdRu/MyAssistant/commit/fd6213ec1a2805379300087992784624314d05cf))
+
+
+### Features
+
+* disable create portfolios through feature flag ([3a77279](https://github.com/M3LiNdRu/MyAssistant/commit/3a77279ccbf5d96d43c274eb6ab3b0a0d422918d))
+
 # [1.1.0](https://github.com/M3LiNdRu/MyAssistant/compare/v1.0.0...v1.1.0) (2026-04-25)
 
 
