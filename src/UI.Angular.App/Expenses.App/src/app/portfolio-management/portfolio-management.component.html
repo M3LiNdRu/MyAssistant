@@ -8,6 +8,15 @@
     </button>
   }
 
+  <button mat-raised-button color="accent" (click)="showTransactionForm()">
+    <mat-icon>add_circle</mat-icon>
+    Add Transaction
+  </button>
+
+  @if (isTransactionFormVisible) {
+    <app-transactions-form (displaySummaryEvent)="onTransactionSaved()"></app-transactions-form>
+  }
+
   @if (isFormVisible) {
     <mat-card class="form-card">
       <h3>{{ editingPortfolioId ? 'Edit Portfolio' : 'Create New Portfolio' }}</h3>
@@ -29,6 +38,15 @@
           <button mat-raised-button type="button" (click)="cancelForm()">Cancel</button>
         </div>
       </form>
+    </mat-card>
+  }
+
+  @if (portfolios.length > 0) {
+    <mat-card class="portfolio-card">
+      <h3>{{ portfolios[0].name }}</h3>
+      @if (portfolios[0].description) {
+        <p>{{ portfolios[0].description }}</p>
+      }
     </mat-card>
   }
 

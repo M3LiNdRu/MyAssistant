@@ -18,6 +18,7 @@ export class PortfolioManagementComponent implements OnInit {
   recentTransactions: Transaction[] = [];
   portfolioForm!: FormGroup;
   isFormVisible = false;
+  isTransactionFormVisible = false;
   editingPortfolioId: string | null = null;
 
   portfolioColumns: string[] = ['name', 'description', 'createdAt', 'actions'];
@@ -97,5 +98,14 @@ export class PortfolioManagementComponent implements OnInit {
   cancelForm(): void {
     this.isFormVisible = false;
     this.portfolioForm.reset();
+  }
+
+  showTransactionForm(): void {
+    this.isTransactionFormVisible = true;
+  }
+
+  onTransactionSaved(): void {
+    this.isTransactionFormVisible = false;
+    this.loadRecentTransactions();
   }
 }
