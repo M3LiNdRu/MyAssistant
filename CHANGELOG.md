@@ -1,3 +1,10 @@
+# [1.3.0](https://github.com/M3LiNdRu/MyAssistant/compare/v1.2.0...v1.3.0) (2026-04-26)
+
+
+### Features
+
+* create investments from UI ([bf64237](https://github.com/M3LiNdRu/MyAssistant/commit/bf642378922d6620e4b20757d968aea3f5eb0943))
+
 # [1.2.0](https://github.com/M3LiNdRu/MyAssistant/compare/v1.1.0...v1.2.0) (2026-04-26)
 
 
