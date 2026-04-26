@@ -10,7 +10,7 @@
   },
   "private": true,
   "dependencies": {
-    "@abacritt/angularx-social-login": "^2.5.1",
+    "@abacritt/angularx-social-login": "2.5.1",
     "@angular/animations": "^20.3.15",
     "@angular/cdk": "^20.2.14",
     "@angular/common": "^20.3.15",
@@ -43,6 +43,7 @@
     "angular-google-charts": {
       "@angular/common": "^16.2.11",
       "@angular/core": "^16.2.11"
-    }
+    },
+    "@abacritt/angularx-social-login": "2.5.1"
   }
 }
