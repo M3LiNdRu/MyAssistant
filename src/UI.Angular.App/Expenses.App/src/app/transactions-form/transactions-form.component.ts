@@ -67,15 +67,16 @@ export class TransactionsFormComponent implements OnInit {
       fees: this.fb.array([]),
       date: [new Date(), Validators.required],
       notes: ['']
-    }, { validators: totalAmountValidator });
+    });
   }
 
   get totalAmountMismatch(): boolean {
-    return this.transactionForm.hasError('totalAmountMismatch');
+    const result = totalAmountValidator(this.transactionForm);
+    return result !== null;
   }
 
   get expectedTotalAmount(): number {
-    return this.transactionForm.getError('totalAmountMismatch')?.expected ?? 0;
+    return totalAmountValidator(this.transactionForm)?.['totalAmountMismatch']?.expected ?? 0;
   }
 
   get fees(): FormArray {
