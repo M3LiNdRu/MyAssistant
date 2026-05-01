@@ -72,22 +72,22 @@
 
         <ng-container matColumnDef="symbol">
           <th mat-header-cell *matHeaderCellDef>Symbol</th>
-          <td mat-cell *matCellDef="let t">{{ t.symbol }}</td>
+          <td mat-cell *matCellDef="let t">{{ t.stock.symbol }}</td>
         </ng-container>
 
-        <ng-container matColumnDef="assetType">
+        <ng-container matColumnDef="stockType">
           <th mat-header-cell *matHeaderCellDef>Asset Type</th>
-          <td mat-cell *matCellDef="let t">{{ t.assetType }}</td>
+          <td mat-cell *matCellDef="let t">{{ t.stock.type }}</td>
         </ng-container>
 
         <ng-container matColumnDef="quantity">
           <th mat-header-cell *matHeaderCellDef>Quantity</th>
-          <td mat-cell *matCellDef="let t">{{ t.quantity | number:'1.0-6' }}</td>
+          <td mat-cell *matCellDef="let t">{{ t.stock.quantity | number:'1.0-6' }}</td>
         </ng-container>
 
         <ng-container matColumnDef="price">
           <th mat-header-cell *matHeaderCellDef>Price</th>
-          <td mat-cell *matCellDef="let t">{{ t.price | currency }}</td>
+          <td mat-cell *matCellDef="let t">{{ t.stock.price.amount | currency:t.stock.price.currencyCode }}</td>
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="transactionColumns"></tr>

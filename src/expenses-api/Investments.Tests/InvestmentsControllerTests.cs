@@ -179,11 +179,8 @@ public class InvestmentsControllerTests
         {
             Id = Guid.NewGuid().ToString(),
             Portfolio = new PortfolioDto { Id = "p1", Name = "My Portfolio" },
-            Symbol = "AAPL",
-            AssetType = "Stock",
             Type = TransactionType.Buy,
-            Quantity = 10,
-            Price = 150m,
+            Stock = new Stock { Symbol = "AAPL", Type = "Stock", Quantity = 10, Price = new Money { Amount = 150m } },
             Date = DateTime.UtcNow,
             CreatedAt = DateTime.UtcNow,
             UpdatedAt = DateTime.UtcNow
@@ -194,11 +191,8 @@ public class InvestmentsControllerTests
         var request = new TransactionRequest
         {
             PortfolioId = "p1",
-            Symbol = "AAPL",
-            AssetType = "Stock",
             Type = TransactionType.Buy,
-            Quantity = 10,
-            Price = 150m,
+            Stock = new Stock { Symbol = "AAPL", Type = "Stock", Quantity = 10, Price = new Money { Amount = 150m } },
             Date = DateTime.UtcNow
         };
 
@@ -206,9 +200,9 @@ public class InvestmentsControllerTests
 
         var ok = Assert.IsType<OkObjectResult>(result);
         var response = Assert.IsType<TransactionResponse>(ok.Value);
-        Assert.Equal("AAPL", response.Symbol);
+        Assert.Equal("AAPL", response.Stock.Symbol);
         Assert.Equal(TransactionType.Buy, response.Type);
-        Assert.Equal(10, response.Quantity);
+        Assert.Equal(10, response.Stock.Quantity);
         Assert.Equal("p1", response.Portfolio.Id);
         Assert.Equal("My Portfolio", response.Portfolio.Name);
     }
@@ -219,7 +213,7 @@ public class InvestmentsControllerTests
         _portfoliosServiceMock.Setup(s => s.GetPortfolioByIdAsync("p1", It.IsAny<CancellationToken>()))
                               .ReturnsAsync((Portfolio?)null!);
 
-        var request = new TransactionRequest { PortfolioId = "p1", Symbol = "X", Type = TransactionType.Buy, Date = DateTime.UtcNow };
+        var request = new TransactionRequest { PortfolioId = "p1", Type = TransactionType.Buy, Stock = new Stock { Symbol = "X" }, Date = DateTime.UtcNow };
 
         var result = await _sut.AddTransaction(request, CancellationToken.None);
 
@@ -234,7 +228,7 @@ public class InvestmentsControllerTests
         _portfoliosServiceMock.Setup(s => s.GetPortfolioByIdAsync("p1", It.IsAny<CancellationToken>()))
                               .ReturnsAsync(portfolio);
 
-        var request = new TransactionRequest { PortfolioId = "p1", Symbol = "X", Type = TransactionType.Buy, Date = DateTime.UtcNow };
+        var request = new TransactionRequest { PortfolioId = "p1", Type = TransactionType.Buy, Stock = new Stock { Symbol = "X" }, Date = DateTime.UtcNow };
 
         var result = await _sut.AddTransaction(request, CancellationToken.None);
 

@@ -3,14 +3,31 @@ export interface PortfolioDto {
   name: string;
 }
 
+export interface Stock {
+  symbol: string;
+  type: string;
+  quantity: number;
+  price: Money;
+}
+
+export interface Money {
+  amount: number;
+  currencyCode: string;
+}
+
+export interface TransactionFee {
+  description: string;
+  fee: Money;
+}
+
 export interface Transaction {
   id: string;
   portfolio: PortfolioDto;
-  symbol: string;
-  assetType: string;
   type: 'Buy' | 'Sell';
-  quantity: number;
-  price: number;
+  broker: string;
+  stock: Stock;
+  totalAmount: Money;
+  fees: TransactionFee[];
   date: Date;
   notes?: string;
   createdAt: Date;
@@ -19,11 +36,11 @@ export interface Transaction {
 
 export interface TransactionRequest {
   portfolioId: string;
-  symbol: string;
-  assetType: string;
   type: 'Buy' | 'Sell';
-  quantity: number;
-  price: number;
+  broker: string;
+  stock: Stock;
+  totalAmount: Money;
+  fees?: TransactionFee[];
   date: Date;
   notes?: string;
 }

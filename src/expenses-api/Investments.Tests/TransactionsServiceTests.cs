@@ -25,11 +25,8 @@ public class TransactionsServiceTests
         var transaction = new Transaction
         {
             Portfolio = new PortfolioDto { Id = "p1", Name = "My Portfolio" },
-            Symbol = "AAPL",
-            AssetType = "Stock",
             Type = TransactionType.Buy,
-            Quantity = 10,
-            Price = 150m,
+            Stock = new Stock { Symbol = "AAPL", Type = "Stock", Quantity = 10, Price = new Money { Amount = 150m } },
             Date = DateTime.UtcNow
         };
         var stored = transaction;

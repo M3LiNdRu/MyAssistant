@@ -193,11 +193,8 @@ namespace MyAssistant.Apis.Expenses.Api.Resources.Investments
             {
                 Id = t.Id,
                 Portfolio = t.Portfolio,
-                Symbol = t.Symbol,
-                AssetType = t.AssetType,
                 Type = t.Type,
-                Quantity = t.Quantity,
-                Price = t.Price,
+                Stock = t.Stock,
                 Date = t.Date,
                 Notes = t.Notes,
                 CreatedAt = t.CreatedAt,
@@ -223,11 +220,11 @@ namespace MyAssistant.Apis.Expenses.Api.Resources.Investments
             var transaction = new Transaction
             {
                 Portfolio = new PortfolioDto { Id = portfolio.Id, Name = portfolio.Name },
-                Symbol = body.Symbol,
-                AssetType = body.AssetType,
                 Type = body.Type,
-                Quantity = body.Quantity,
-                Price = body.Price,
+                Stock = body.Stock,
+                Broker = body.Broker,
+                TotalAmount = body.TotalAmount,
+                Fees = body.Fees,
                 Date = body.Date,
                 Notes = body.Notes
             };
@@ -238,11 +235,11 @@ namespace MyAssistant.Apis.Expenses.Api.Resources.Investments
             {
                 Id = transaction.Id,
                 Portfolio = transaction.Portfolio,
-                Symbol = transaction.Symbol,
-                AssetType = transaction.AssetType,
                 Type = transaction.Type,
-                Quantity = transaction.Quantity,
-                Price = transaction.Price,
+                Stock = transaction.Stock,
+                Broker = transaction.Broker,
+                TotalAmount = transaction.TotalAmount,
+                Fees = transaction.Fees,
                 Date = transaction.Date,
                 Notes = transaction.Notes,
                 CreatedAt = transaction.CreatedAt,

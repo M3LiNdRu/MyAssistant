@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Library.MongoDb;
 
 namespace MyAssistant.Apis.Expenses.Api.Resources.Investments
@@ -9,15 +10,15 @@ namespace MyAssistant.Apis.Expenses.Api.Resources.Investments
 
         public PortfolioDto Portfolio { get; set; }
 
-        public string Symbol { get; set; }
-
-        public string AssetType { get; set; }
-
         public TransactionType Type { get; set; }
 
-        public decimal Quantity { get; set; }
+        public Stock Stock { get; set; }
 
-        public decimal Price { get; set; }
+        public Money TotalAmount { get; set; }
+
+        public List<TransactionFee> Fees { get; set; } = new();
+
+        public string Broker { get; set; }
 
         public DateTime Date { get; set; }
 
@@ -32,5 +33,25 @@ namespace MyAssistant.Apis.Expenses.Api.Resources.Investments
     {
         Buy,
         Sell
+    }
+
+    public record Stock
+    {
+        public string Symbol { get; init; }
+        public string Type { get; init; }
+        public decimal Quantity { get; init; }
+        public Money Price { get; init; }
+    }
+
+    public record Money
+    {
+        public decimal Amount { get; init; }
+        public string CurrencyCode { get; init; } = "EUR";
+    }
+
+    public record TransactionFee
+    {
+        public string Description { get; init; }
+        public Money Fee { get; init; }
     }
 }

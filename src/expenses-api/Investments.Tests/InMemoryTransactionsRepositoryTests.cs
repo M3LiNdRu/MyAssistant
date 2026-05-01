@@ -16,11 +16,8 @@ public class InMemoryTransactionsRepositoryTests
         var transaction = new Transaction
         {
             Portfolio = new PortfolioDto { Id = "p1", Name = "My Portfolio" },
-            Symbol = "AAPL",
-            AssetType = "Stock",
             Type = TransactionType.Buy,
-            Quantity = 5,
-            Price = 200m,
+            Stock = new Stock { Symbol = "AAPL", Type = "Stock", Quantity = 5, Price = new Money { Amount = 200m } },
             Date = DateTime.UtcNow
         };
 
@@ -38,10 +35,8 @@ public class InMemoryTransactionsRepositoryTests
         var transaction = new Transaction
         {
             Portfolio = new PortfolioDto { Id = "p1", Name = "My Portfolio" },
-            Symbol = "TSLA",
             Type = TransactionType.Sell,
-            Quantity = 2,
-            Price = 300m,
+            Stock = new Stock { Symbol = "TSLA", Quantity = 2, Price = new Money { Amount = 300m } },
             Date = DateTime.UtcNow
         };
 
@@ -53,8 +48,8 @@ public class InMemoryTransactionsRepositoryTests
     [Fact]
     public async Task AddAsync_EachTransaction_GetsUniqueId()
     {
-        var t1 = new Transaction { Portfolio = new PortfolioDto { Id = "p1", Name = "P" }, Symbol = "A", Type = TransactionType.Buy, Date = DateTime.UtcNow };
-        var t2 = new Transaction { Portfolio = new PortfolioDto { Id = "p1", Name = "P" }, Symbol = "B", Type = TransactionType.Buy, Date = DateTime.UtcNow };
+        var t1 = new Transaction { Portfolio = new PortfolioDto { Id = "p1", Name = "P" }, Type = TransactionType.Buy, Stock = new Stock { Symbol = "A" }, Date = DateTime.UtcNow };
+        var t2 = new Transaction { Portfolio = new PortfolioDto { Id = "p1", Name = "P" }, Type = TransactionType.Buy, Stock = new Stock { Symbol = "B" }, Date = DateTime.UtcNow };
 
         await _sut.AddAsync(t1, CancellationToken.None);
         await _sut.AddAsync(t2, CancellationToken.None);

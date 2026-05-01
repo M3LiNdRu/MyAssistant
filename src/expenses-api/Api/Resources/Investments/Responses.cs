@@ -103,20 +103,20 @@ namespace MyAssistant.Apis.Expenses.Api.Resources.Investments
         [DataMember(Name = "portfolio")]
         public PortfolioDto Portfolio { get; set; }
 
-        [DataMember(Name = "symbol")]
-        public string Symbol { get; set; }
-
-        [DataMember(Name = "assetType")]
-        public string AssetType { get; set; }
-
         [DataMember(Name = "type")]
         public TransactionType Type { get; set; }
 
-        [DataMember(Name = "quantity")]
-        public decimal Quantity { get; set; }
+        [DataMember(Name = "stock")]
+        public Stock Stock { get; set; }
 
-        [DataMember(Name = "price")]
-        public decimal Price { get; set; }
+        [DataMember(Name = "totalAmount")]
+        public Money TotalAmount { get; set; }
+
+        [DataMember(Name = "fees")]
+        public List<TransactionFee> Fees { get; set; }
+
+        [DataMember(Name = "broker")]
+        public string Broker { get; set; }
 
         [DataMember(Name = "date")]
         public DateTime Date { get; set; }
