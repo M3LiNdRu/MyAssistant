@@ -22,7 +22,7 @@ export class PortfolioManagementComponent implements OnInit {
   editingPortfolioId: string | null = null;
 
   portfolioColumns: string[] = ['name', 'description', 'createdAt', 'actions'];
-  transactionColumns: string[] = ['date', 'portfolio', 'type', 'symbol', 'stockType', 'quantity', 'price'];
+  transactionColumns: string[] = ['date', 'type', 'stockType', 'symbol', 'quantity', 'price', 'totalAmount'];
 
   constructor(
     private fb: FormBuilder,
