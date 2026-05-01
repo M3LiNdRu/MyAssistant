@@ -1,3 +1,10 @@
+# [1.5.0](https://github.com/M3LiNdRu/MyAssistant/compare/v1.4.1...v1.5.0) (2026-05-01)
+
+
+### Features
+
+* show last 10 transactions information ([3ab2399](https://github.com/M3LiNdRu/MyAssistant/commit/3ab23995be206e25a851976fdef354f2db46355d))
+
 ## [1.4.1](https://github.com/M3LiNdRu/MyAssistant/compare/v1.4.0...v1.4.1) (2026-05-01)
 
 
