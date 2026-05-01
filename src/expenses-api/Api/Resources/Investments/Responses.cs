@@ -16,6 +16,9 @@ namespace MyAssistant.Apis.Expenses.Api.Resources.Investments
         [DataMember(Name = "description")]
         public string Description { get; set; }
 
+        [DataMember(Name = "strategy")]
+        public List<PortfolioStrategy> Strategy { get; set; }
+
         [DataMember(Name = "createdAt")]
         public DateTime CreatedAt { get; set; }
 

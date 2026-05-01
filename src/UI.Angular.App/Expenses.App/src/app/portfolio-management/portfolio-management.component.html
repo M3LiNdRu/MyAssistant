@@ -1,5 +1,10 @@
 <div class="container">
-  <h2>Portfolio Management</h2>
+  @if (portfolios.length > 0) {
+    <h2>{{ portfolios[0].name }}</h2>
+    @if (portfolios[0].description) {
+      <p>{{ portfolios[0].description }}</p>
+    }
+  }
 
   @if (featureFlags.enablePortfolioCreation) {
     <button mat-raised-button color="primary" (click)="showForm()">
@@ -15,39 +20,6 @@
 
   @if (isTransactionFormVisible) {
     <app-transactions-form (displaySummaryEvent)="onTransactionSaved()"></app-transactions-form>
-  }
-
-  @if (isFormVisible) {
-    <mat-card class="form-card">
-      <h3>{{ editingPortfolioId ? 'Edit Portfolio' : 'Create New Portfolio' }}</h3>
-      <form [formGroup]="portfolioForm" (ngSubmit)="savePortfolio()">
-        <mat-form-field appearance="fill">
-          <mat-label>Portfolio Name</mat-label>
-          <input matInput formControlName="name" placeholder="e.g., Retirement Fund">
-        </mat-form-field>
-
-        <mat-form-field appearance="fill">
-          <mat-label>Description</mat-label>
-          <textarea matInput formControlName="description" placeholder="Optional description"></textarea>
-        </mat-form-field>
-
-        <div class="button-group">
-          <button mat-raised-button color="primary" type="submit" [disabled]="portfolioForm.invalid">
-            {{ editingPortfolioId ? 'Update' : 'Create' }}
-          </button>
-          <button mat-raised-button type="button" (click)="cancelForm()">Cancel</button>
-        </div>
-      </form>
-    </mat-card>
-  }
-
-  @if (portfolios.length > 0) {
-    <mat-card class="portfolio-card">
-      <h3>{{ portfolios[0].name }}</h3>
-      @if (portfolios[0].description) {
-        <p>{{ portfolios[0].description }}</p>
-      }
-    </mat-card>
   }
 
   <mat-card class="table-card">

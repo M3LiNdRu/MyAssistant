@@ -54,7 +54,8 @@ namespace MyAssistant.Apis.Expenses.Api.Resources.Investments
             {
                 UserId = GetUserId(),
                 Name = body.Name,
-                Description = body.Description
+                Description = body.Description,
+                Strategy = body.Strategy
             };
 
             await _portfoliosService.AddPortfolioAsync(portfolio, cancellationToken);
@@ -64,6 +65,7 @@ namespace MyAssistant.Apis.Expenses.Api.Resources.Investments
                 Id = portfolio.Id,
                 Name = portfolio.Name,
                 Description = portfolio.Description,
+                Strategy = portfolio.Strategy,
                 CreatedAt = portfolio.CreatedAt,
                 UpdatedAt = portfolio.UpdatedAt
             };
@@ -85,6 +87,7 @@ namespace MyAssistant.Apis.Expenses.Api.Resources.Investments
                 Id = p.Id,
                 Name = p.Name,
                 Description = p.Description,
+                Strategy = p.Strategy,
                 CreatedAt = p.CreatedAt,
                 UpdatedAt = p.UpdatedAt
             });
@@ -113,6 +116,7 @@ namespace MyAssistant.Apis.Expenses.Api.Resources.Investments
                 Id = portfolio.Id,
                 Name = portfolio.Name,
                 Description = portfolio.Description,
+                Strategy = portfolio.Strategy,
                 CreatedAt = portfolio.CreatedAt,
                 UpdatedAt = portfolio.UpdatedAt
             };
@@ -139,6 +143,7 @@ namespace MyAssistant.Apis.Expenses.Api.Resources.Investments
 
             portfolio.Name = body.Name;
             portfolio.Description = body.Description;
+            portfolio.Strategy = body.Strategy;
 
             await _portfoliosService.UpdatePortfolioAsync(portfolio, cancellationToken);
 
@@ -147,6 +152,7 @@ namespace MyAssistant.Apis.Expenses.Api.Resources.Investments
                 Id = portfolio.Id,
                 Name = portfolio.Name,
                 Description = portfolio.Description,
+                Strategy = portfolio.Strategy,
                 CreatedAt = portfolio.CreatedAt,
                 UpdatedAt = portfolio.UpdatedAt
             };
