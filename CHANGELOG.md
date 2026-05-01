@@ -1,3 +1,15 @@
+# [1.4.0](https://github.com/M3LiNdRu/MyAssistant/compare/v1.3.0...v1.4.0) (2026-05-01)
+
+
+### Bug Fixes
+
+* use enums as strings ([bf0d01a](https://github.com/M3LiNdRu/MyAssistant/commit/bf0d01a75aec1012af9cbf44c7534baabaff2b56))
+
+
+### Features
+
+* new info fields in the transaction ([10f1a31](https://github.com/M3LiNdRu/MyAssistant/commit/10f1a31a986c0b95cfef02e84e5d9cacb0fba6a4))
+
 # [1.3.0](https://github.com/M3LiNdRu/MyAssistant/compare/v1.2.0...v1.3.0) (2026-04-26)
 
 
