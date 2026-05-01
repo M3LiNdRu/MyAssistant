@@ -16,6 +16,7 @@ using MyAssistant.Apis.Expenses.Api.Resources.Tags;
 using MyAssistant.Apis.Expenses.Api.FeatureFlags;
 using MyAssistant.Apis.Expenses.Api.Swagger;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace MyAssistant.Apis.Expenses.Api
 {
@@ -36,6 +37,7 @@ namespace MyAssistant.Apis.Expenses.Api
 
             services
                 .AddMvc()
+                .AddJsonOptions(o => o.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()))
                 .Services
                 .AddOptions()
                 .Configure<FeatureFlagSettings>(Configuration.GetSection("FeatureFlags"))
