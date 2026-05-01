@@ -1,3 +1,10 @@
+## [1.4.1](https://github.com/M3LiNdRu/MyAssistant/compare/v1.4.0...v1.4.1) (2026-05-01)
+
+
+### Bug Fixes
+
+* if amount missmatch just display a warning but let commit the transaction ([fdfe875](https://github.com/M3LiNdRu/MyAssistant/commit/fdfe8758a34d72743cc52c447b2d3ceceeaaecf0))
+
 # [1.4.0](https://github.com/M3LiNdRu/MyAssistant/compare/v1.3.0...v1.4.0) (2026-05-01)
 
 
