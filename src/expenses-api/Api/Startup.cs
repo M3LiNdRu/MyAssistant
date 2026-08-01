@@ -32,8 +32,17 @@ namespace MyAssistant.Apis.Expenses.Api
             Configuration = configuration;
         }
 
+        private const string DevCorsPolicy = "DevCors";
+
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options =>
+            {
+                options.AddPolicy(DevCorsPolicy, policy =>
+                    policy.WithOrigins("http://localhost:4200", "http://localhost:4201")
+                          .AllowAnyHeader()
+                          .AllowAnyMethod());
+            });
 
             services
                 .AddMvc()
@@ -98,7 +107,12 @@ namespace MyAssistant.Apis.Expenses.Api
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
         {
             app.UseRouting();
-            
+
+            if (env.IsDevelopment())
+            {
+                app.UseCors(DevCorsPolicy);
+            }
+
             app.UseDefaultFiles();
             app.UseStaticFiles();
 

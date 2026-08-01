@@ -17,6 +17,7 @@ namespace MyAssistant.Apis.Expenses.Api.Resources.Expenses
         Task AddAsync(Expense expense, CancellationToken cancellationToken);
         Task<IEnumerable<Expense>> GetByCategoryAsync(string category, CancellationToken cancellationToken);
         Task<IEnumerable<Expense>> GetByMonthAsync(DateTime date, CancellationToken cancellationToken);
+        Task<IEnumerable<Expense>> GetFromDateAsync(DateTime since, CancellationToken cancellationToken);
     }
 
     public class InMemoryExpensesRepository : IExpensesRepository
@@ -73,6 +74,14 @@ namespace MyAssistant.Apis.Expenses.Api.Resources.Expenses
                     .Where(e => e.Timestamp >= date)
                     .AsEnumerable());
         }
+
+        public Task<IEnumerable<Expense>> GetFromDateAsync(DateTime since, CancellationToken cancellationToken)
+        {
+            return Task.FromResult(_buffer
+                    .Values
+                    .Where(e => e.Timestamp >= since)
+                    .AsEnumerable());
+        }
     }
 
     public class MongoDbExpensesRepository : DataStore<Expense>, IExpensesRepository
@@ -104,6 +113,11 @@ namespace MyAssistant.Apis.Expenses.Api.Resources.Expenses
         public Task<IEnumerable<Expense>> GetByMonthAsync(DateTime date, CancellationToken cancellationToken)
         {
             return base.FindAllAsync(expense => expense.Timestamp >= date && expense.Timestamp < date.AddMonths(1), cancellationToken);
+        }
+
+        public Task<IEnumerable<Expense>> GetFromDateAsync(DateTime since, CancellationToken cancellationToken)
+        {
+            return base.FindAllAsync(expense => expense.Timestamp >= since, cancellationToken);
         }
     }
 

@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  apiUrl: "https://my-assistant-expenses-api.azurewebsites.net/",
+  apiUrl: "http://localhost:5000/",
   GoogleClientId: "1012495556001-1arrtrlhjcpnac4ql6g9783odd8j0h78.apps.googleusercontent.com",
   enablePortfolioCreation: true
 };

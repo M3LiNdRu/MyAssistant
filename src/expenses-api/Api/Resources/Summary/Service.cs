@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using MyAssistant.Apis.Expenses.Api.Resources.Expenses;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -11,6 +12,7 @@ namespace MyAssistant.Apis.Expenses.Api.Resources.Summary
     {
         Task<CurrentSummary> GetCurrentSummaryAsync(CancellationToken cancellationToken);
         Task<CompleteSummary> GetCompleteSummaryAsync(int year, int month, CancellationToken cancellationToken);
+        Task<CategoryBreakdown> GetCategoryBreakdownAsync(CancellationToken cancellationToken);
     }
 
     public class SummaryService : ISummaryService
@@ -66,5 +68,44 @@ namespace MyAssistant.Apis.Expenses.Api.Resources.Summary
             return result;
         }
 
+        public async Task<CategoryBreakdown> GetCategoryBreakdownAsync(CancellationToken cancellationToken)
+        {
+            var since = new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1).AddMonths(-11);
+            var expenses = (await expensesRepository.GetFromDateAsync(since, cancellationToken)).ToList();
+
+            var months = Enumerable.Range(0, 12)
+                .Select(i => since.AddMonths(i))
+                .Select(d => d.ToString("yyyy-MM"))
+                .ToList();
+
+            var byCategory = expenses
+                .Where(e => e.Amount < 0)
+                .GroupBy(e => e.Category)
+                .Select(g =>
+                {
+                    var monthlyAmounts = months
+                        .Select(m => Math.Abs(g
+                            .Where(e => e.Timestamp.ToString("yyyy-MM") == m)
+                            .Sum(e => e.Amount)))
+                        .ToList();
+                    var nonZero = monthlyAmounts.Where(a => a > 0).ToList();
+                    var avg = nonZero.Count > 0 ? nonZero.Average() : 0;
+                    return new CategoryRow
+                    {
+                        Category = g.Key,
+                        MonthlyAmounts = monthlyAmounts,
+                        Average = Math.Round(avg, 2)
+                    };
+                })
+                .OrderBy(r => r.Category)
+                .ToList();
+
+            return new CategoryBreakdown
+            {
+                Months = months,
+                Categories = byCategory,
+                TotalAverage = Math.Round(byCategory.Sum(r => r.Average), 2)
+            };
+        }
     }
 }

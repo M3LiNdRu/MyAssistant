@@ -16,6 +16,7 @@ import { Historigram } from '../historigram';
 export class MonthSummaryComponent implements OnChanges {
 
   @Input() public date = new Date();
+  selectedTab = 0;
   
   summary: MonthlySummary;
   historigram: Historigram;
@@ -79,6 +80,7 @@ export class MonthSummaryComponent implements OnChanges {
   getSummary(): void {
     this.summariesService.getMonthlySummary(this.date.getFullYear(), this.date.getMonth()+1)
     .subscribe(summary => {
+      if (!summary) return;
       this.summary = summary;
       this.list = Object.entries(summary.spentByCategory).map(([key, value]) => ({key: key, value: value})).sort((n1,n2) => n2.value - n1.value);
       this.resetSummaryChart();

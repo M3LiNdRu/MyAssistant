@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Runtime.Serialization;
+using System.Text.Json.Serialization;
 
 namespace MyAssistant.Apis.Expenses.Api.Resources.Summary
 {
@@ -21,5 +22,21 @@ namespace MyAssistant.Apis.Expenses.Api.Resources.Summary
         public decimal Saved { get; set; }
         public Dictionary<string, decimal> SpentByCategory { get; set; } = new Dictionary<string, decimal>();
         public Dictionary<string, int> ProgressBar { get; set; } = new Dictionary<string, int>();
+    }
+
+    [DataContract]
+    public record CategoryBreakdown
+    {
+        public List<string> Months { get; set; } = new List<string>();
+        public List<CategoryRow> Categories { get; set; } = new List<CategoryRow>();
+        public decimal TotalAverage { get; set; }
+    }
+
+    [DataContract]
+    public record CategoryRow
+    {
+        public string Category { get; set; }
+        public List<decimal> MonthlyAmounts { get; set; } = new List<decimal>();
+        public decimal Average { get; set; }
     }
 }

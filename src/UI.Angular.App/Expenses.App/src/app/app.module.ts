@@ -46,6 +46,7 @@ import { NotAuthorizedComponent } from './not-authorized/not-authorized.componen
 import { TransactionsListComponent } from './transactions-list/transactions-list.component';
 import { TransactionsFormComponent } from './transactions-form/transactions-form.component';
 import { PortfolioManagementComponent } from './portfolio-management/portfolio-management.component';
+import { CategoryBreakdownComponent } from './category-breakdown/category-breakdown.component';
 
 
 @NgModule({ declarations: [
@@ -66,6 +67,7 @@ import { PortfolioManagementComponent } from './portfolio-management/portfolio-m
         TransactionsListComponent,
         TransactionsFormComponent,
         PortfolioManagementComponent,
+        CategoryBreakdownComponent,
     ],
     bootstrap: [AppComponent], imports: [BrowserModule,
         AppRoutingModule,

@@ -1,0 +1,13 @@
+.table-container {
+  height: calc(100vh - 200px);
+  overflow: auto;
+}
+
+table {
+  width: 100%;
+}
+
+.current-month {
+  color: blue;
+  font-style: italic;
+}

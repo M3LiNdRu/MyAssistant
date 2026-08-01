@@ -1,7 +1,7 @@
 openapi: 3.0.0
 info:
   description: ""
-  version: "0.2.0"
+  version: "0.3.0"
   title: "Expenses API"
 paths:
   /api/v1/expenses:
@@ -9,7 +9,6 @@ paths:
       tags:
         - Expenses
       summary: "Get all expenses"
-      description: ""
       operationId: "GetAllExpenses"
       responses:
         '200':
@@ -17,13 +16,12 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GetAllExpenses.Response'
+                $ref: '#/components/schemas/ExpensesResponse'
   /api/v1/expenses/monthly:
     get:
       tags:
         - Expenses
-      summary: "Get monthly expenses"
-      description: ""
+      summary: "Get current month expenses"
       operationId: "GetMonthlyExpenses"
       responses:
         '200':
@@ -31,25 +29,50 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GetAllExpenses.Response'
+                $ref: '#/components/schemas/ExpensesResponse'
+  /api/v1/expenses/monthly/{year}/{month}:
+    get:
+      tags:
+        - Expenses
+      summary: "Get expenses for a specific month"
+      operationId: "GetMonthlyExpensesByYearAndMonth"
+      parameters:
+        - name: year
+          in: path
+          required: true
+          schema:
+            type: integer
+            example: 2025
+        - name: month
+          in: path
+          required: true
+          schema:
+            type: integer
+            example: 7
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExpensesResponse'
   /api/v1/expense:
     post:
       tags:
         - Expenses
       summary: "Add a new expense"
-      description: ""
       operationId: "AddExpense"
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/Expense"
+              $ref: '#/components/schemas/Expense'
       responses:
         '200':
           description: Successful operation
         '400':
-          description: BadRequest
+          description: Bad Request
         '401':
           description: Unauthorized
   /api/v1/expense/{id}:
@@ -57,7 +80,6 @@ paths:
       tags:
         - Expenses
       summary: "Delete an expense"
-      description: ""
       operationId: "DelExpense"
       parameters:
         - name: id
@@ -65,21 +87,20 @@ paths:
           required: true
           description: Expense Id
           schema:
-            type : integer
-            example: 1
+            type: string
+            example: "64f1a2b3c4d5e6f7a8b9c0d1"
       responses:
         '200':
           description: Successful operation
         '400':
-          description: BadRequest
+          description: Bad Request
         '401':
           description: Unauthorized
   /api/v1/categories:
     get:
       tags:
-       - Categories
+        - Categories
       summary: "Get all categories"
-      description: ""
       operationId: "GetAllCategories"
       responses:
         '200':
@@ -87,72 +108,133 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GetAllCategories.Response'
+                $ref: '#/components/schemas/CategoriesResponse'
   /api/v1/category:
     post:
       tags:
-       - Categories
+        - Categories
       summary: "Add a new category"
-      description: ""
       operationId: "AddCategory"
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/Category"
+              $ref: '#/components/schemas/Category'
       responses:
         '200':
           description: Successful operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GetAllCategories.Response'
+                $ref: '#/components/schemas/CategoriesResponse'
   /api/v1/category/{name}:
     delete:
       tags:
-       - Categories
-      summary: "Rename a new category"
-      description: ""
+        - Categories
+      summary: "Remove a category"
       operationId: "RemoveCategory"
       parameters:
         - name: name
           in: path
           required: true
-          description: Category Name
+          description: Category name
           schema:
-            type : string
+            type: string
             example: Carburant
       responses:
         '200':
           description: Successful operation
         '400':
-          description: BadRequest
+          description: Bad Request
         '401':
           description: Unauthorized
+  /api/v1/tags:
+    get:
+      tags:
+        - Tags
+      summary: "Get all tags"
+      operationId: "GetAllTags"
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TagsResponse'
+  /api/v1/summary/current:
+    get:
+      tags:
+        - Summary
+      summary: "Get current month summary"
+      operationId: "GetCurrentSummary"
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CurrentSummary'
+  /api/v1/summary/monthly/{year}/{month}:
+    get:
+      tags:
+        - Summary
+      summary: "Get complete summary for a specific month"
+      operationId: "GetMonthlySummary"
+      parameters:
+        - name: year
+          in: path
+          required: true
+          schema:
+            type: integer
+            example: 2025
+        - name: month
+          in: path
+          required: true
+          schema:
+            type: integer
+            example: 7
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompleteSummary'
+  /api/v1/summary/category-breakdown:
+    get:
+      tags:
+        - Summary
+      summary: "Get monthly expense breakdown by category for the last 12 months"
+      operationId: "GetCategoryBreakdown"
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CategoryBreakdown'
+  /api/v1/historigram/savings:
+    get:
+      tags:
+        - Historigrams
+      summary: "Get savings historigram for the last 12 months"
+      operationId: "GetSavingsHistorigram"
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SavingsHistorigram'
 components:
   schemas:
-    Category:
-      type: object
-      required:
-      - name
-      - description
-      properties:
-       name:
-        type: string
-        example: Carburant
-       description:
-        type: string
-        example: Despeses de carburant
     Expense:
       type: object
       required:
-      - category
-      - amount
+        - category
+        - amount
       properties:
-        id:
-          type: integer
-          example: 1
         timestamp:
           type: string
           format: date-time
@@ -165,30 +247,166 @@ components:
         amount:
           type: number
           format: float
-          example: 56.90
+          example: -56.90
         currency:
           type: string
           example: EUR
-    GetAllExpenses.Response:
+        tags:
+          type: array
+          items:
+            type: string
+    ExpensesResponse:
       type: object
       required:
-      - expenses
+        - expenses
       properties:
         expenses:
           type: array
           items:
             $ref: '#/components/schemas/Expense'
-          nullable: false
-    GetAllCategories.Response:
+    Category:
       type: object
       required:
-      - categories
+        - name
+        - description
       properties:
-        expenses:
+        name:
+          type: string
+          example: Carburant
+        description:
+          type: string
+          example: Despeses de carburant
+    CategoriesResponse:
+      type: object
+      properties:
+        categories:
           type: array
           items:
             $ref: '#/components/schemas/Category'
-          nullable: false
+    TagsResponse:
+      type: object
+      required:
+        - tags
+      properties:
+        tags:
+          type: array
+          items:
+            type: string
+    CurrentSummary:
+      type: object
+      properties:
+        month:
+          type: string
+          example: July
+        year:
+          type: string
+          example: "2025"
+        totalAmount:
+          type: number
+          format: float
+          example: -450.00
+        progressBar:
+          type: object
+          additionalProperties:
+            type: integer
+          description: Category name to percentage of total spending
+    CompleteSummary:
+      type: object
+      properties:
+        month:
+          type: string
+          example: July
+        year:
+          type: string
+          example: "2025"
+        start:
+          type: number
+          format: float
+          description: Total income (positive amounts)
+          example: 2000.00
+        saved:
+          type: number
+          format: float
+          description: Net amount (income minus expenses)
+          example: 500.00
+        spentByCategory:
+          type: object
+          additionalProperties:
+            type: number
+            format: float
+          description: Category name to absolute amount spent
+        progressBar:
+          type: object
+          additionalProperties:
+            type: integer
+          description: Category name to percentage of total spending
+    CategoryBreakdown:
+      type: object
+      properties:
+        months:
+          type: array
+          items:
+            type: string
+          description: Ordered list of month labels in yyyy-MM format
+          example: ["2024-08", "2024-09"]
+        categories:
+          type: array
+          items:
+            $ref: '#/components/schemas/CategoryRow'
+        totalAverage:
+          type: number
+          format: float
+          description: Sum of all per-category averages
+          example: 1234.56
+    CategoryRow:
+      type: object
+      properties:
+        category:
+          type: string
+          example: Carburant
+        monthlyAmounts:
+          type: array
+          items:
+            type: number
+            format: float
+          description: Absolute amount spent per month, aligned with the months array
+        average:
+          type: number
+          format: float
+          description: Average monthly spend across months with non-zero data
+          example: 65.30
+    SavingsHistorigram:
+      type: object
+      properties:
+        totalSavings:
+          type: number
+          format: float
+          example: 5000.00
+        totalEarned:
+          type: number
+          format: float
+          example: 24000.00
+        totalSpent:
+          type: number
+          format: float
+          example: 19000.00
+        progressLine:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/HistorigramDot'
+          description: DateTime key to monthly aggregated savings/spent/earned
+    HistorigramDot:
+      type: object
+      properties:
+        saved:
+          type: number
+          format: float
+        spent:
+          type: number
+          format: float
+        earned:
+          type: number
+          format: float
   securitySchemes:
     oAuth:
       type: oauth2

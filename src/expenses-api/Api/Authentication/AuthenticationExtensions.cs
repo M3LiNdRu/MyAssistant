@@ -21,6 +21,7 @@ namespace Api.Authentication
             {
                 ValidateIssuerSigningKey = true,
                 ValidateIssuer = true,
+                ValidIssuers = authority != null ? new[] { authority, authority.Replace("https://", "") } : null,
                 ValidateAudience = true,
                 ValidateLifetime = true,
                 ClockSkew = TimeSpan.FromMinutes(60)

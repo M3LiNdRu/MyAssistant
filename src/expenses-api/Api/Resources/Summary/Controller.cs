@@ -44,5 +44,17 @@ namespace MyAssistant.Apis.Expenses.Api.Resources.Summary
 
             return Ok(summary);
         }
+
+        [HttpGet]
+        [Route("/api/v1/summary/category-breakdown")]
+        [ValidateModelState]
+        [SwaggerOperation("GetCategoryBreakdown")]
+        [SwaggerResponse(statusCode: 200, type: typeof(CategoryBreakdown), description: "Successful operation")]
+        public virtual async Task<IActionResult> GetCategoryBreakdown(CancellationToken cancellationToken)
+        {
+            var breakdown = await _service.GetCategoryBreakdownAsync(cancellationToken);
+
+            return Ok(breakdown);
+        }
     }
 }

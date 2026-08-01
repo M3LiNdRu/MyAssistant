@@ -7,6 +7,7 @@ import { catchError, map, tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { CurrentSummary } from './currentSummary';
 import { MonthlySummary } from './monthlySummary';
+import { CategoryBreakdown } from './category-breakdown';
 
 @Injectable({
   providedIn: 'root'
@@ -28,9 +29,15 @@ export class SummariesService {
   }
 
   getMonthlySummary(year: number, month: number): Observable<MonthlySummary> {
-    return this.http.get<MonthlySummary>(environment.apiUrl + '/api/v1/summary/monthly/' + year +'/' + month, this.httpOptions).pipe(
+    return this.http.get<MonthlySummary>(environment.apiUrl + 'api/v1/summary/monthly/' + year +'/' + month, this.httpOptions).pipe(
       tap(summary => console.log(`getting summary month=${summary.month}`)),
       catchError(this.handleError<any>('getting summary'))
+    );
+  }
+
+  getCategoryBreakdown(): Observable<CategoryBreakdown> {
+    return this.http.get<CategoryBreakdown>(environment.apiUrl + 'api/v1/summary/category-breakdown', this.httpOptions).pipe(
+      catchError(this.handleError<any>('getting category breakdown'))
     );
   }
 

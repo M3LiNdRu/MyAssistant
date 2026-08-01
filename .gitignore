@@ -173,6 +173,9 @@ ClientBin/
 *.publishsettings
 node_modules/
 bower_components/
+
+# Local development secrets
+appsettings.Development.json
 orleans.codegen.cs
 
 # RIA/Silverlight projects
