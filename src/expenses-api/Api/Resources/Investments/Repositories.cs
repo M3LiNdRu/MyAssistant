@@ -31,7 +31,7 @@ namespace MyAssistant.Apis.Expenses.Api.Resources.Investments
     public interface ITransactionsRepository
     {
         Task<Transaction> AddAsync(Transaction transaction, CancellationToken cancellationToken);
-        Task<IEnumerable<Transaction>> GetRecentByUserIdAsync(string userId, int limit, CancellationToken cancellationToken);
+        Task<IEnumerable<Transaction>> GetRecentAsync(int limit, CancellationToken cancellationToken);
     }
 
     public class InMemoryTransactionsRepository : ITransactionsRepository
@@ -52,10 +52,9 @@ namespace MyAssistant.Apis.Expenses.Api.Resources.Investments
             return Task.FromResult(transaction);
         }
 
-        public Task<IEnumerable<Transaction>> GetRecentByUserIdAsync(string userId, int limit, CancellationToken cancellationToken)
+        public Task<IEnumerable<Transaction>> GetRecentAsync(int limit, CancellationToken cancellationToken)
         {
             var result = _buffer.Values
-                .Where(t => t.Portfolio != null)
                 .OrderByDescending(t => t.Date)
                 .Take(limit);
             return Task.FromResult(result);
@@ -77,9 +76,9 @@ namespace MyAssistant.Apis.Expenses.Api.Resources.Investments
             return transaction;
         }
 
-        public async Task<IEnumerable<Transaction>> GetRecentByUserIdAsync(string userId, int limit, CancellationToken cancellationToken)
+        public async Task<IEnumerable<Transaction>> GetRecentAsync(int limit, CancellationToken cancellationToken)
         {
-            var all = await base.FindAllAsync(t => t.Portfolio != null, cancellationToken);
+            var all = await base.FindAllAsync(cancellationToken);
             return all.OrderByDescending(t => t.Date).Take(limit);
         }
     }

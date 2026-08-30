@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -193,7 +194,7 @@ namespace MyAssistant.Apis.Expenses.Api.Resources.Investments
             [FromQuery] int limit = 10,
             CancellationToken cancellationToken = default)
         {
-            var transactions = await _transactionsService.GetRecentTransactionsAsync(GetUserId(), limit, cancellationToken);
+            var transactions = await _transactionsService.GetRecentTransactionsAsync(limit, cancellationToken);
 
             var responses = transactions.Select(t => new TransactionResponse
             {
@@ -201,6 +202,9 @@ namespace MyAssistant.Apis.Expenses.Api.Resources.Investments
                 Portfolio = t.Portfolio,
                 Type = t.Type,
                 Stock = t.Stock,
+                TotalAmount = t.TotalAmount,
+                Fees = t.Fees,
+                Broker = t.Broker,
                 Date = t.Date,
                 Notes = t.Notes,
                 CreatedAt = t.CreatedAt,
@@ -229,7 +233,7 @@ namespace MyAssistant.Apis.Expenses.Api.Resources.Investments
                 Type = body.Type,
                 Stock = body.Stock,
                 Broker = body.Broker,
-                TotalAmount = body.TotalAmount,
+                TotalAmount = body.TotalAmount,                
                 Fees = body.Fees,
                 Date = body.Date,
                 Notes = body.Notes

@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using Library.MongoDb;
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
 
 namespace MyAssistant.Apis.Expenses.Api.Resources.Investments
 {
@@ -39,12 +41,14 @@ namespace MyAssistant.Apis.Expenses.Api.Resources.Investments
     {
         public string Symbol { get; init; }
         public string Type { get; init; }
+        [BsonRepresentation(BsonType.Decimal128)]
         public decimal Quantity { get; init; }
         public Money Price { get; init; }
     }
 
     public record Money
     {
+        [BsonRepresentation(BsonType.Decimal128)]
         public decimal Amount { get; init; }
         public string CurrencyCode { get; init; } = "EUR";
     }

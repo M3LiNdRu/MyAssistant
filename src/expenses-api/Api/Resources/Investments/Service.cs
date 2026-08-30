@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
@@ -64,7 +65,7 @@ namespace MyAssistant.Apis.Expenses.Api.Resources.Investments
     public interface ITransactionsService
     {
         Task<Transaction> AddTransactionAsync(Transaction transaction, CancellationToken cancellationToken);
-        Task<IEnumerable<Transaction>> GetRecentTransactionsAsync(string userId, int limit, CancellationToken cancellationToken);
+        Task<IEnumerable<Transaction>> GetRecentTransactionsAsync(int limit, CancellationToken cancellationToken);
     }
 
     public class TransactionsService : ITransactionsService
@@ -83,9 +84,9 @@ namespace MyAssistant.Apis.Expenses.Api.Resources.Investments
             return _repository.AddAsync(transaction, cancellationToken);
         }
 
-        public Task<IEnumerable<Transaction>> GetRecentTransactionsAsync(string userId, int limit, CancellationToken cancellationToken)
+        public Task<IEnumerable<Transaction>> GetRecentTransactionsAsync(int limit, CancellationToken cancellationToken)
         {
-            return _repository.GetRecentByUserIdAsync(userId, limit, cancellationToken);
+            return _repository.GetRecentAsync(limit, cancellationToken);
         }
     }
 
