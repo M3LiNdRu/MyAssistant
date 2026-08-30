@@ -1,3 +1,10 @@
+## [1.5.1](https://github.com/M3LiNdRu/MyAssistant/compare/v1.5.0...v1.5.1) (2026-08-30)
+
+
+### Bug Fixes
+
+* **investments:** retrieve all transactions and map totalAmount, fees and broker to response ([f3a932f](https://github.com/M3LiNdRu/MyAssistant/commit/f3a932f172b2b3cc9f820be62145e6ab34a3e395))
+
 # [1.5.0](https://github.com/M3LiNdRu/MyAssistant/compare/v1.4.1...v1.5.0) (2026-05-01)
 
 
