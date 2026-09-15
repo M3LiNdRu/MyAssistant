@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using MyAssistant.Apis.Expenses.Api.Resources.Appointments;
 using MyAssistant.Apis.Expenses.Api.Resources.Categories;
 using MyAssistant.Apis.Expenses.Api.Resources.Expenses;
 using MyAssistant.Apis.Expenses.Api.Resources.Historigrams;
@@ -98,7 +99,8 @@ namespace MyAssistant.Apis.Expenses.Api
                 .RegisterSummaryFeatures()
                 .RegisterHistorigramsFeatures()
                 .RegisterTagsFeatures()
-                .RegisterInvestmentsFeatures();
+                .RegisterInvestmentsFeatures()
+                .RegisterAppointmentsFeatures();
         }
 
         /// <summary>
