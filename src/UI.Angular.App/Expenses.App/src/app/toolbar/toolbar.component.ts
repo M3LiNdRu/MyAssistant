@@ -15,6 +15,7 @@ export class ToolbarComponent implements OnInit {
   @Output() public showExpensesListEvent = new EventEmitter<boolean>();
   @Output() public showExpensesSummaryEvent = new EventEmitter<boolean>();
   @Output() public showPortfoliosEvent = new EventEmitter<boolean>();
+  @Output() public showAppointmentsEvent = new EventEmitter<boolean>();
 
   constructor(public router: Router)
   {
@@ -36,6 +37,10 @@ export class ToolbarComponent implements OnInit {
 
   showPortfolios(): void {
     this.showPortfoliosEvent.emit(true);
+  }
+
+  showAppointments(): void {
+    this.showAppointmentsEvent.emit(true);
   }
 
   previous(): void {

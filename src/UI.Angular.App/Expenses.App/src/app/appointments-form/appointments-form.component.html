@@ -1,0 +1,24 @@
+<mat-card appearance="outlined">
+  <mat-card-content>
+    <form class="appointments-form">
+      <mat-form-field appearance="fill" class="appointments-field">
+        <mat-label>Title</mat-label>
+        <input matInput [(ngModel)]="appointment.title" [ngModelOptions]="{standalone: true}">
+      </mat-form-field>
+      <mat-form-field appearance="fill" class="appointments-field">
+        <mat-label>Description</mat-label>
+        <input matInput [(ngModel)]="appointment.description" [ngModelOptions]="{standalone: true}">
+      </mat-form-field>
+      <mat-form-field appearance="fill" class="appointments-field">
+        <mat-label>Date and time</mat-label>
+        <input matInput type="datetime-local" [(ngModel)]="dateTimeLocal" [ngModelOptions]="{standalone: true}">
+      </mat-form-field>
+    </form>
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-raised-button
+      color="primary"
+      (click)="add()"
+    >Add</button>
+  </mat-card-actions>
+</mat-card>

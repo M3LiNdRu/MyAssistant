@@ -47,6 +47,8 @@ import { TransactionsListComponent } from './transactions-list/transactions-list
 import { TransactionsFormComponent } from './transactions-form/transactions-form.component';
 import { PortfolioManagementComponent } from './portfolio-management/portfolio-management.component';
 import { CategoryBreakdownComponent } from './category-breakdown/category-breakdown.component';
+import { AppointmentsListComponent } from './appointments-list/appointments-list.component';
+import { AppointmentsFormComponent } from './appointments-form/appointments-form.component';
 
 
 @NgModule({ declarations: [
@@ -68,6 +70,8 @@ import { CategoryBreakdownComponent } from './category-breakdown/category-breakd
         TransactionsFormComponent,
         PortfolioManagementComponent,
         CategoryBreakdownComponent,
+        AppointmentsListComponent,
+        AppointmentsFormComponent,
     ],
     bootstrap: [AppComponent], imports: [BrowserModule,
         AppRoutingModule,

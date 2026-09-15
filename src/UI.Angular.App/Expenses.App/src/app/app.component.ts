@@ -16,6 +16,7 @@ export class AppComponent implements OnInit {
   displayTransactionsList = false;
   displayTransactionsForm = false;
   displayPortfolioManagement = false;
+  displayAppointments = false;
   loggedIn = false;
 
   constructor(private authService: SocialAuthService) {
@@ -38,6 +39,7 @@ export class AppComponent implements OnInit {
     this.displayTransactionsList = false;
     this.displayTransactionsForm = false;
     this.displayPortfolioManagement = false;
+    this.displayAppointments = false;
   }
 
   displayExpensesSummary(display: boolean) {
@@ -47,6 +49,7 @@ export class AppComponent implements OnInit {
     this.displayTransactionsList = false;
     this.displayTransactionsForm = false;
     this.displayPortfolioManagement = false;
+    this.displayAppointments = false;
   }
 
   displayExpensesList(_display: boolean) {
@@ -57,6 +60,7 @@ export class AppComponent implements OnInit {
     this.displayTransactionsList = false;
     this.displayTransactionsForm = false;
     this.displayPortfolioManagement = false;
+    this.displayAppointments = false;
   }
 
   displayExpensesForm(display: boolean) {
@@ -65,6 +69,7 @@ export class AppComponent implements OnInit {
     this.displayTransactionsList = false;
     this.displayTransactionsForm = false;
     this.displayPortfolioManagement = false;
+    this.displayAppointments = false;
   }
 
 displayTransactionsFormEvent(display: boolean) {
@@ -74,6 +79,7 @@ displayTransactionsFormEvent(display: boolean) {
     this.displayTransactionsList = false;
     this.displayTransactionsForm = display;
     this.displayPortfolioManagement = false;
+    this.displayAppointments = false;
   }
 
   displayPortfolios(display: boolean) {
@@ -83,6 +89,17 @@ displayTransactionsFormEvent(display: boolean) {
     this.displayTransactionsList = false;
     this.displayTransactionsForm = false;
     this.displayPortfolioManagement = display;
+    this.displayAppointments = false;
+  }
+
+  displayAppointmentsTab(display: boolean) {
+    this.display = !display;
+    this.displayForm = false;
+    this.displayList = false;
+    this.displayTransactionsList = false;
+    this.displayTransactionsForm = false;
+    this.displayPortfolioManagement = false;
+    this.displayAppointments = display;
   }
 
 }
