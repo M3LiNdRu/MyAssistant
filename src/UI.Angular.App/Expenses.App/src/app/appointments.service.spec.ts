@@ -25,16 +25,16 @@ describe('AppointmentsService', () => {
     expect(service).toBeTruthy();
   });
 
-  it('getAppointments should GET the upcoming appointments endpoint', () => {
+  it('getMonthlyAppointmentsByYearAndMonth should GET the monthly appointments endpoint', () => {
     const appointments: Appointment[] = [
       { id: '1', title: 'Dentist', description: '', dateTime: new Date() }
     ];
 
-    service.getAppointments().subscribe(result => {
+    service.getMonthlyAppointmentsByYearAndMonth(2026, 3).subscribe(result => {
       expect(result).toEqual(appointments);
     });
 
-    const req = httpMock.expectOne(environment.apiUrl + 'api/v1/appointments');
+    const req = httpMock.expectOne(environment.apiUrl + 'api/v1/appointments/monthly/2026/3');
     expect(req.request.method).toBe('GET');
     req.flush(appointments);
   });

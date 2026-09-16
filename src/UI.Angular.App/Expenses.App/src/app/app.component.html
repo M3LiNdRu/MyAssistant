@@ -1,4 +1,4 @@
-<app-toolbar [loggedIn]="loggedIn" [showMonthBar]="!displayPortfolioManagement && !displayAppointments" (monthChangedEvent)="useMonth($event)" (showExpensesSummaryEvent)="displayExpensesSummary($event)" (showExpensesListEvent)="displayExpensesList($event)" (showPortfoliosEvent)="displayPortfolios($event)" (showAppointmentsEvent)="displayAppointmentsTab($event)"></app-toolbar>
+<app-toolbar [loggedIn]="loggedIn" [showMonthBar]="!displayPortfolioManagement" (monthChangedEvent)="useMonth($event)" (showExpensesSummaryEvent)="displayExpensesSummary($event)" (showExpensesListEvent)="displayExpensesList($event)" (showPortfoliosEvent)="displayPortfolios($event)" (showAppointmentsEvent)="displayAppointmentsTab($event)"></app-toolbar>
 <div class="content" role="main">
   @if (display && loggedIn) {
     <div>
@@ -33,7 +33,7 @@
   }
   @if (displayAppointments) {
     <div>
-      <app-appointments-list></app-appointments-list>
+      <app-appointments-calendar [date]="current"></app-appointments-calendar>
     </div>
   }
 

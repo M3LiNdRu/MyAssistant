@@ -67,20 +67,25 @@ public class AppointmentsControllerTests
     }
 
     [Fact]
-    public async Task GetUpcomingAppointments_ReturnsOk_WithList()
+    public async Task GetMonthlyAppointments_ReturnsOk_WithList_UsingProvidedYearAndMonth()
     {
         var appointments = new List<Appointment>
         {
-            new() { Id = "1", Title = "A", DateTime = DateTime.UtcNow.AddDays(1) },
-            new() { Id = "2", Title = "B", DateTime = DateTime.UtcNow.AddDays(2) }
+            new() { Id = "1", Title = "A", DateTime = new DateTime(2026, 3, 5) },
+            new() { Id = "2", Title = "B", DateTime = new DateTime(2026, 3, 20) }
         };
-        _serviceMock.Setup(s => s.GetUpcomingAsync(It.IsAny<CancellationToken>()))
+        int? capturedYear = null;
+        int? capturedMonth = null;
+        _serviceMock.Setup(s => s.GetByMonthAsync(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<CancellationToken>()))
+                    .Callback<int, int, CancellationToken>((y, m, _) => { capturedYear = y; capturedMonth = m; })
                     .ReturnsAsync(appointments);
 
-        var result = await _sut.GetUpcomingAppointments(CancellationToken.None);
+        var result = await _sut.GetMonthlyAppointments(2026, 3, CancellationToken.None);
 
         var ok = Assert.IsType<OkObjectResult>(result);
         var response = Assert.IsAssignableFrom<IEnumerable<Appointment>>(ok.Value);
         Assert.Equal(2, response.Count());
+        Assert.Equal(2026, capturedYear);
+        Assert.Equal(3, capturedMonth);
     }
 }

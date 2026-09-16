@@ -1,0 +1,8 @@
+<h2 mat-dialog-title>{{ appointment.title }}</h2>
+<mat-dialog-content>
+  <p class="appointment-description">{{ appointment.description }}</p>
+  <p class="appointment-datetime">{{ appointment.dateTime | date:'fullDate' }} at {{ appointment.dateTime | date:'shortTime' }}</p>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button (click)="close()">Close</button>
+</mat-dialog-actions>

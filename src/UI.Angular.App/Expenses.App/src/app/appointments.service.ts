@@ -19,9 +19,9 @@ export class AppointmentsService {
 
   constructor(private http: HttpClient) { }
 
-  /** GET upcoming appointments from the server, ordered by dateTime ascending */
-  getAppointments(): Observable<Appointment[]> {
-    return this.http.get<Appointment[]>(environment.apiUrl + 'api/v1/appointments');
+  /** GET appointments for a given month from the server, ordered by dateTime ascending */
+  getMonthlyAppointmentsByYearAndMonth(year: number, month: number): Observable<Appointment[]> {
+    return this.http.get<Appointment[]>(environment.apiUrl + 'api/v1/appointments/monthly/' + year + '/' + month);
   }
 
   addAppointment(appointment: Appointment): Observable<boolean> {

@@ -33,23 +33,20 @@ public class AppointmentsServiceTests
     }
 
     [Fact]
-    public async Task GetUpcomingAsync_DelegatesToRepository_WithCurrentUtcTime()
+    public async Task GetByMonthAsync_DelegatesToRepository_WithFirstDayOfGivenMonth()
     {
         var appointments = new List<Appointment>
         {
-            new() { Id = "1", Title = "A", DateTime = DateTime.UtcNow.AddDays(1) }
+            new() { Id = "1", Title = "A", DateTime = new DateTime(2026, 3, 5) }
         };
-        DateTime? capturedFrom = null;
-        _repoMock.Setup(r => r.GetUpcomingAsync(It.IsAny<DateTime>(), It.IsAny<CancellationToken>()))
-                 .Callback<DateTime, CancellationToken>((from, _) => capturedFrom = from)
+        DateTime? capturedDate = null;
+        _repoMock.Setup(r => r.GetByMonthAsync(It.IsAny<DateTime>(), It.IsAny<CancellationToken>()))
+                 .Callback<DateTime, CancellationToken>((date, _) => capturedDate = date)
                  .ReturnsAsync(appointments);
 
-        var before = DateTime.UtcNow;
-        var result = await _sut.GetUpcomingAsync(CancellationToken.None);
-        var after = DateTime.UtcNow;
+        var result = await _sut.GetByMonthAsync(2026, 3, CancellationToken.None);
 
         Assert.Same(appointments, result);
-        Assert.NotNull(capturedFrom);
-        Assert.InRange(capturedFrom.Value, before, after);
+        Assert.Equal(new DateTime(2026, 3, 1), capturedDate);
     }
 }

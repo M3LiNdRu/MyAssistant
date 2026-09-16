@@ -1,0 +1,55 @@
+.calendar {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+
+  th, td {
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    vertical-align: top;
+  }
+
+  th {
+    padding: 8px;
+    text-align: center;
+  }
+}
+
+.day-cell {
+  height: 100px;
+  padding: 4px;
+
+  &.other-month {
+    opacity: 0.4;
+  }
+
+  &.today {
+    background-color: rgba(63, 81, 181, 0.08);
+  }
+}
+
+.day-number {
+  font-size: 0.85em;
+  margin-bottom: 4px;
+}
+
+.appointment-entry {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.appointment-title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 0.8em;
+}
+
+.dot {
+  flex: 0 0 auto;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}

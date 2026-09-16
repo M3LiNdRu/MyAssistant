@@ -13,7 +13,7 @@ namespace MyAssistant.Apis.Expenses.Api.Resources.Appointments
     public interface IAppointmentsRepository
     {
         Task AddAsync(Appointment appointment, CancellationToken cancellationToken);
-        Task<IEnumerable<Appointment>> GetUpcomingAsync(DateTime from, CancellationToken cancellationToken);
+        Task<IEnumerable<Appointment>> GetByMonthAsync(DateTime date, CancellationToken cancellationToken);
     }
 
     public class MongoDbAppointmentsRepository : DataStore<Appointment>, IAppointmentsRepository
@@ -27,9 +27,9 @@ namespace MyAssistant.Apis.Expenses.Api.Resources.Appointments
             return base.InsertAsync(appointment, cancellationToken);
         }
 
-        public async Task<IEnumerable<Appointment>> GetUpcomingAsync(DateTime from, CancellationToken cancellationToken)
+        public async Task<IEnumerable<Appointment>> GetByMonthAsync(DateTime date, CancellationToken cancellationToken)
         {
-            var appointments = await base.FindAllAsync(a => a.DateTime >= from, cancellationToken);
+            var appointments = await base.FindAllAsync(a => a.DateTime >= date && a.DateTime < date.AddMonths(1), cancellationToken);
             return appointments.OrderBy(a => a.DateTime);
         }
     }

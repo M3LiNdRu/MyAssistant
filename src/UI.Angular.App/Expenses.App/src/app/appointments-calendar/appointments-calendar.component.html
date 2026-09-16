@@ -1,0 +1,36 @@
+<div class="container">
+  @if (!isFormVisible) {
+    <table class="calendar mat-elevation-z8">
+      <thead>
+        <tr>
+          @for (label of weekdayLabels; track label) {
+            <th>{{ label }}</th>
+          }
+        </tr>
+      </thead>
+      <tbody>
+        @for (week of weeks; track week) {
+          <tr>
+            @for (day of week; track day.date) {
+              <td class="day-cell" [class.other-month]="!day.inCurrentMonth" [class.today]="day.isToday">
+                <div class="day-number">{{ day.date.getDate() }}</div>
+                @for (appointment of day.appointments; track appointment.id) {
+                  <div class="appointment-entry" (click)="openAppointment(appointment)">
+                    <span class="dot" [style.background-color]="colorFor(appointment)"></span>
+                    <span class="appointment-title">{{ appointment.title }}</span>
+                  </div>
+                }
+              </td>
+            }
+          </tr>
+        }
+      </tbody>
+    </table>
+
+    <app-float-button (displayExpenseFormEvent)="showForm()"></app-float-button>
+  }
+
+  @if (isFormVisible) {
+    <app-appointments-form (appointmentSavedEvent)="onAppointmentSaved()"></app-appointments-form>
+  }
+</div>

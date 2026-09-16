@@ -9,7 +9,7 @@ namespace MyAssistant.Apis.Expenses.Api.Resources.Appointments
     public interface IAppointmentsService
     {
         Task AddAsync(Appointment appointment, CancellationToken cancellationToken);
-        Task<IEnumerable<Appointment>> GetUpcomingAsync(CancellationToken cancellationToken);
+        Task<IEnumerable<Appointment>> GetByMonthAsync(int year, int month, CancellationToken cancellationToken);
     }
 
     public class AppointmentsService : IAppointmentsService
@@ -28,9 +28,10 @@ namespace MyAssistant.Apis.Expenses.Api.Resources.Appointments
             return _repository.AddAsync(appointment, cancellationToken);
         }
 
-        public Task<IEnumerable<Appointment>> GetUpcomingAsync(CancellationToken cancellationToken)
+        public Task<IEnumerable<Appointment>> GetByMonthAsync(int year, int month, CancellationToken cancellationToken)
         {
-            return _repository.GetUpcomingAsync(DateTime.UtcNow, cancellationToken);
+            var date = new DateTime(year, month, 1);
+            return _repository.GetByMonthAsync(date, cancellationToken);
         }
     }
 }

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Threading;
 using System;
 using Microsoft.AspNetCore.Authorization;
+using System.ComponentModel.DataAnnotations;
 
 namespace MyAssistant.Apis.Expenses.Api.Resources.Appointments
 {
@@ -40,13 +41,16 @@ namespace MyAssistant.Apis.Expenses.Api.Resources.Appointments
         }
 
         [HttpGet]
-        [Route("/api/v1/appointments")]
+        [Route("/api/v1/appointments/monthly/{year}/{month}")]
         [ValidateModelState]
-        [SwaggerOperation("GetUpcomingAppointments")]
+        [SwaggerOperation("GetMonthlyAppointments")]
         [SwaggerResponse(statusCode: 200, type: typeof(Response), description: "Successful operation")]
-        public virtual async Task<IActionResult> GetUpcomingAppointments(CancellationToken cancellationToken)
+        public virtual async Task<IActionResult> GetMonthlyAppointments(
+            [FromRoute][Required] int year,
+            [FromRoute][Required] int month,
+            CancellationToken cancellationToken)
         {
-            var appointments = await _service.GetUpcomingAsync(cancellationToken);
+            var appointments = await _service.GetByMonthAsync(year, month, cancellationToken);
             return Ok(appointments);
         }
     }
