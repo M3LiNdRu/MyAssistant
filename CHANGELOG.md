@@ -1,3 +1,10 @@
+# [1.7.0](https://github.com/M3LiNdRu/MyAssistant/compare/v1.6.0...v1.7.0) (2026-09-16)
+
+
+### Features
+
+* **toolbar:** hide nav labels on mobile, keep icons only ([3c6b699](https://github.com/M3LiNdRu/MyAssistant/commit/3c6b6994e289d8cffb0fe255cb514494476d233d))
+
 # [1.6.0](https://github.com/M3LiNdRu/MyAssistant/compare/v1.5.1...v1.6.0) (2026-09-16)
 
 
