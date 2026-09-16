@@ -5,4 +5,12 @@
 .toolbar-icon {
     padding: 0 14px;
 }
+
+// On small screens (phones), keep the nav icons but hide their text
+// labels so the toolbar doesn't overflow/wrap.
+@media (max-width: 599px) {
+    .nav-label {
+        display: none;
+    }
+}
   

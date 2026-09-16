@@ -5,15 +5,15 @@
         @if (loggedIn) {
             <button mat-button (click)="showExpensesSummary()">
                 <mat-icon>receipt_long</mat-icon>
-                <span>Expenses</span>
+                <span class="nav-label">Expenses</span>
             </button>
             <button mat-button (click)="showPortfolios()">
                 <mat-icon>trending_up</mat-icon>
-                <span>Investments</span>
+                <span class="nav-label">Investments</span>
             </button>
             <button mat-button (click)="showAppointments()">
                 <mat-icon>event</mat-icon>
-                <span>Appointments</span>
+                <span class="nav-label">Appointments</span>
             </button>
         }
         <span class="toolbar-spacer"></span>
