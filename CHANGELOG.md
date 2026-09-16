@@ -1,3 +1,10 @@
+# [1.8.0](https://github.com/M3LiNdRu/MyAssistant/compare/v1.7.0...v1.8.0) (2026-09-16)
+
+
+### Features
+
+* **appointments:** replace list view with monthly calendar ([db1c89a](https://github.com/M3LiNdRu/MyAssistant/commit/db1c89a8ab578dc2b797c769f66d55f549fb2e32))
+
 # [1.7.0](https://github.com/M3LiNdRu/MyAssistant/compare/v1.6.0...v1.7.0) (2026-09-16)
 
 
