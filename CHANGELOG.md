@@ -1,3 +1,12 @@
+# [1.6.0](https://github.com/M3LiNdRu/MyAssistant/compare/v1.5.1...v1.6.0) (2026-09-16)
+
+
+### Features
+
+* **appointments-api:** add appointments resource with upcoming-only listing ([50f4fb0](https://github.com/M3LiNdRu/MyAssistant/commit/50f4fb0d06f30ca84b17be7b74a098526df0e941))
+* **appointments-ui:** add Appointments tab with list and form ([9deb092](https://github.com/M3LiNdRu/MyAssistant/commit/9deb092baca633811fa7a46eb6622bce432a9a11))
+* **toolbar:** rename Portfolio tab to Investments with a trending-up icon ([4ea973f](https://github.com/M3LiNdRu/MyAssistant/commit/4ea973f02d14f3bf16b367b2b52fcf36b56a59b4))
+
 ## [1.5.1](https://github.com/M3LiNdRu/MyAssistant/compare/v1.5.0...v1.5.1) (2026-08-30)
 
 
